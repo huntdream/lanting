@@ -32,6 +32,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Deploying'
+        sh 'which git'
         sh 'npm run gh-pages'
       }
     }
