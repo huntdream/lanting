@@ -23,13 +23,14 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Building'
-        sh 'npm build'
+        sh 'npm run build'
       }
     }
 
     stage('Deploy') {
       steps {
         echo 'Deploying'
+        sh 'npm run gh-pages'
       }
     }
 
