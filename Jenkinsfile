@@ -11,6 +11,7 @@ pipeline {
         echo 'Installing node modules'
         sh 'node -v'
         sh 'npm config set registry https://registry.npm.taobao.org'
+        sh 'npm set sass_binary_site=https://npm.taobao.org/mirrors/node-sass'
         sh 'npm install'
       }
     }
