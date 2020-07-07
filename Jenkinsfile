@@ -1,11 +1,10 @@
 pipeline {
   agent {
-      docker { 
-        image 'node:12-alpine' 
-      }
+    docker {
+      image 'node:12-alpine'
+    }
+
   }
-
-
   stages {
     stage('Install') {
       steps {
@@ -18,7 +17,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Testing'
-        sh 'npm test' 
+        sh 'npm test'
       }
     }
 
@@ -29,10 +28,11 @@ pipeline {
       }
     }
 
-    stage('Deploy'){
+    stage('Deploy') {
       steps {
         echo 'Deploying'
       }
     }
+
   }
 }
