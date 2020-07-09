@@ -4,6 +4,7 @@
 :root {
   font-size: 16px;
   line-height: 1.5;
+  font: 400 16px / 1.5 'Roboto', sans-serif;
 
   &.light {
     @extend %light;
@@ -16,7 +17,6 @@
 
 body {
   margin: 0;
-  font: 400 16px / 1.5 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color);
