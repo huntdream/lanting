@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/lanting/static/css/main.11b230cb.chunk.css",
-    "main.js": "/lanting/static/js/main.5dec1932.chunk.js",
-    "main.js.map": "/lanting/static/js/main.5dec1932.chunk.js.map",
-    "runtime-main.js": "/lanting/static/js/runtime-main.73d63d14.js",
-    "runtime-main.js.map": "/lanting/static/js/runtime-main.73d63d14.js.map",
-    "static/js/2.e8d4fad8.chunk.js": "/lanting/static/js/2.e8d4fad8.chunk.js",
-    "static/js/2.e8d4fad8.chunk.js.map": "/lanting/static/js/2.e8d4fad8.chunk.js.map",
-    "index.html": "/lanting/index.html",
-    "precache-manifest.27fe823c24cc3012cebe60ecb15f983d.js": "/lanting/precache-manifest.27fe823c24cc3012cebe60ecb15f983d.js",
-    "service-worker.js": "/lanting/service-worker.js",
-    "static/css/main.11b230cb.chunk.css.map": "/lanting/static/css/main.11b230cb.chunk.css.map",
-    "static/js/2.e8d4fad8.chunk.js.LICENSE.txt": "/lanting/static/js/2.e8d4fad8.chunk.js.LICENSE.txt",
-    "static/media/index.scss": "/lanting/static/media/MaterialIcons-Regular.e79bfd88.eot"
+    "main.css": "/lanting.maoyu.info/static/css/main.956b3450.chunk.css",
+    "main.js": "/lanting.maoyu.info/static/js/main.980ba086.chunk.js",
+    "main.js.map": "/lanting.maoyu.info/static/js/main.980ba086.chunk.js.map",
+    "runtime-main.js": "/lanting.maoyu.info/static/js/runtime-main.8e1db54d.js",
+    "runtime-main.js.map": "/lanting.maoyu.info/static/js/runtime-main.8e1db54d.js.map",
+    "static/js/2.a701b962.chunk.js": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js",
+    "static/js/2.a701b962.chunk.js.map": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js.map",
+    "index.html": "/lanting.maoyu.info/index.html",
+    "precache-manifest.3dda6f54f29566f54de43852fbd4e23c.js": "/lanting.maoyu.info/precache-manifest.3dda6f54f29566f54de43852fbd4e23c.js",
+    "service-worker.js": "/lanting.maoyu.info/service-worker.js",
+    "static/css/main.956b3450.chunk.css.map": "/lanting.maoyu.info/static/css/main.956b3450.chunk.css.map",
+    "static/js/2.a701b962.chunk.js.LICENSE.txt": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/lanting.maoyu.info/static/media/MaterialIcons-Regular.e79bfd88.eot"
   },
   "entrypoints": [
-    "static/js/runtime-main.73d63d14.js",
-    "static/js/2.e8d4fad8.chunk.js",
-    "static/css/main.11b230cb.chunk.css",
-    "static/js/main.5dec1932.chunk.js"
+    "static/js/runtime-main.8e1db54d.js",
+    "static/js/2.a701b962.chunk.js",
+    "static/css/main.956b3450.chunk.css",
+    "static/js/main.980ba086.chunk.js"
   ]
 }
