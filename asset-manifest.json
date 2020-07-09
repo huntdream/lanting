@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/lanting.maoyu.info/static/css/main.956b3450.chunk.css",
-    "main.js": "/lanting.maoyu.info/static/js/main.980ba086.chunk.js",
-    "main.js.map": "/lanting.maoyu.info/static/js/main.980ba086.chunk.js.map",
-    "runtime-main.js": "/lanting.maoyu.info/static/js/runtime-main.8e1db54d.js",
-    "runtime-main.js.map": "/lanting.maoyu.info/static/js/runtime-main.8e1db54d.js.map",
-    "static/js/2.a701b962.chunk.js": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js",
-    "static/js/2.a701b962.chunk.js.map": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js.map",
-    "index.html": "/lanting.maoyu.info/index.html",
-    "precache-manifest.3dda6f54f29566f54de43852fbd4e23c.js": "/lanting.maoyu.info/precache-manifest.3dda6f54f29566f54de43852fbd4e23c.js",
-    "service-worker.js": "/lanting.maoyu.info/service-worker.js",
-    "static/css/main.956b3450.chunk.css.map": "/lanting.maoyu.info/static/css/main.956b3450.chunk.css.map",
-    "static/js/2.a701b962.chunk.js.LICENSE.txt": "/lanting.maoyu.info/static/js/2.a701b962.chunk.js.LICENSE.txt",
-    "static/media/index.scss": "/lanting.maoyu.info/static/media/MaterialIcons-Regular.e79bfd88.eot"
+    "main.css": "/static/css/main.5e5c6d5f.chunk.css",
+    "main.js": "/static/js/main.980ba086.chunk.js",
+    "main.js.map": "/static/js/main.980ba086.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.247f53a4.js",
+    "runtime-main.js.map": "/static/js/runtime-main.247f53a4.js.map",
+    "static/js/2.a701b962.chunk.js": "/static/js/2.a701b962.chunk.js",
+    "static/js/2.a701b962.chunk.js.map": "/static/js/2.a701b962.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.e4475edc110f73f0250b1d48d27ea2d5.js": "/precache-manifest.e4475edc110f73f0250b1d48d27ea2d5.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.5e5c6d5f.chunk.css.map": "/static/css/main.5e5c6d5f.chunk.css.map",
+    "static/js/2.a701b962.chunk.js.LICENSE.txt": "/static/js/2.a701b962.chunk.js.LICENSE.txt",
+    "static/media/index.scss": "/static/media/MaterialIcons-Regular.e79bfd88.eot"
   },
   "entrypoints": [
-    "static/js/runtime-main.8e1db54d.js",
+    "static/js/runtime-main.247f53a4.js",
     "static/js/2.a701b962.chunk.js",
-    "static/css/main.956b3450.chunk.css",
+    "static/css/main.5e5c6d5f.chunk.css",
     "static/js/main.980ba086.chunk.js"
   ]
 }
