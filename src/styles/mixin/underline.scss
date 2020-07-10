@@ -1,0 +1,17 @@
+@mixin underline($bg: var(--secondary-text)) {
+  &::after {
+    content: '';
+    height: 0.125rem;
+    display: inline-block;
+    background-color: $bg;
+    position: absolute;
+    width: 0;
+    left: 0;
+    bottom: -2px;
+    transition: width 300ms;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
