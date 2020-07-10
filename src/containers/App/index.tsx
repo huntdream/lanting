@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Index from 'containers/Index';
 import Edit from 'containers/Edit';
 import './style.scss';
+import Nav from 'components/Nav';
 
 function App() {
   useEffect(() => {
@@ -12,9 +13,11 @@ function App() {
   return (
     <div className='app'>
       <BrowserRouter>
+        <Nav />
+
         <Route path='/' exact component={Index} />
         <Switch>
-          <Route path='/new' component={Edit} />
+          <Route path='/edit' component={Edit} />
         </Switch>
       </BrowserRouter>
     </div>
