@@ -1,0 +1,24 @@
+.prismjscode {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1em 0;
+
+  &-header {
+    display: flex;
+    padding: 5px 1em;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  &-switch {
+    color: #595959;
+    width: 150px;
+  }
+
+  pre[class*='language-'] {
+    margin: 0;
+  }
+}

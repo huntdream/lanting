@@ -1,0 +1,186 @@
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  SyntheticEvent,
+  useCallback,
+  KeyboardEvent,
+} from 'react';
+import {
+  Editor,
+  EditorState,
+  DraftHandleValue,
+  RichUtils,
+  convertToRaw,
+  RawDraftContentState,
+  convertFromRaw,
+} from 'draft-js';
+import Prismjs from 'prismjs';
+import 'prismjs/themes/prism-tomorrow.css';
+import classnames from 'classnames';
+import { getSelectionRange } from './helpers';
+import StyleControls from './StyleControls';
+import decorators from './Decorator';
+import blockRenderMap from './BlockRenderMap';
+import utils from './utils';
+import blockStyleFn from './BlockStyleFn';
+import 'draft-js/dist/Draft.css';
+import blockRenderer from './BlockRenderer';
+import './style.scss';
+
+export interface LantingEditorProps {
+  readOnly?: boolean;
+  rawContent?: string;
+  onChange?: (rawContent: RawDraftContentState) => void;
+}
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+const LantingEditor: React.FC<LantingEditorProps> = ({
+  rawContent,
+  onChange,
+}) => {
+  const editorRef = useRef<Editor>(null);
+  const EmptyState = EditorState.createEmpty(decorators);
+  const [readOnly, setReadOnly] = useState(false);
+  const [showInlineTool, setShowInlineTool] = useState(false);
+  const [inlineToolPos, setInlineToolPos] = useState<Position>({ x: 0, y: 0 });
+  const [editorState, setEditorState] = useState<EditorState>(EmptyState);
+
+  useEffect(() => {
+    if (!readOnly) {
+      focusEditor();
+    }
+    Prismjs.highlightAll();
+  }, []);
+
+  useEffect(() => {
+    console.log(rawContent);
+    if (rawContent) {
+      setEditorState(utils.convertToState(rawContent));
+    }
+  }, [rawContent]);
+
+  const focusEditor = () => editorRef.current && editorRef.current.focus();
+
+  const handleStateChange = (editorState: EditorState) => {
+    const rawContent = convertToRaw(editorState.getCurrentContent());
+    setEditorState(editorState);
+    if (onChange) {
+      onChange(rawContent);
+    }
+  };
+
+  const handleKeyCommand = (
+    command: string,
+    editorState: EditorState
+  ): DraftHandleValue => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+
+    if (newState) {
+      setEditorState(newState);
+      return 'handled';
+    }
+    return 'not-handled';
+  };
+
+  const getSelectionCoords = () => {
+    const selectionRange = getSelectionRange();
+    const editorBounds = document
+      .getElementById('lanting-editor')
+      ?.getBoundingClientRect();
+
+    if (
+      selectionRange &&
+      selectionRange.startOffset !== selectionRange.endOffset &&
+      editorBounds
+    ) {
+      const selectionBounds = selectionRange.getBoundingClientRect();
+
+      const x = (selectionBounds.right + selectionBounds.left) / 2;
+      const y = selectionBounds.top - 48;
+
+      return { x, y };
+    }
+
+    return null;
+  };
+
+  const handleMouseUp = useCallback((event: SyntheticEvent<HTMLElement>) => {
+    const pos = getSelectionCoords();
+
+    // if (pos) {
+    //   setInlineToolPos(pos)
+    //   setShowInlineTool(true)
+    // } else {
+    //   setShowInlineTool(false)
+    // }
+  }, []);
+
+  const handleFocus = (event: SyntheticEvent<HTMLDivElement>) => {
+    document.addEventListener(
+      'selectionchange',
+      (handleMouseUp as unknown) as EventListener
+    );
+  };
+
+  const handleBlur = (event: SyntheticEvent<HTMLDivElement>) => {
+    document.removeEventListener(
+      'selectionchange',
+      (handleMouseUp as unknown) as EventListener
+    );
+  };
+
+  const onTab = (event: React.KeyboardEvent) => {
+    if (utils.hasSelectionInBlock('code-block', editorState)) {
+      handleStateChange(utils.onTabInCode(event, editorState));
+    }
+  };
+
+  const handleReturn = (
+    event: KeyboardEvent,
+    editorState: EditorState
+  ): DraftHandleValue => {
+    const currentBlock = utils.getCurrentBlock(editorState);
+
+    if (['blockquote', 'code-block'].includes(currentBlock.getType())) {
+      handleStateChange(RichUtils.insertSoftNewline(editorState));
+      return 'handled';
+    }
+
+    return 'not-handled';
+  };
+
+  return (
+    <div
+      className={classnames('lanting-editor', {
+        'lanting-editor-hideplaceholder': utils.hidePlaceholder(editorState),
+      })}
+      id='lanting-editor'
+    >
+      {!readOnly && (
+        <StyleControls onChange={handleStateChange} editorState={editorState} />
+      )}
+      <Editor
+        ref={editorRef}
+        readOnly={readOnly}
+        placeholder='Your Story'
+        onChange={handleStateChange}
+        editorState={editorState}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onTab={onTab}
+        blockRenderMap={blockRenderMap}
+        blockRendererFn={blockRenderer}
+        blockStyleFn={blockStyleFn}
+        handleKeyCommand={handleKeyCommand}
+        handleReturn={handleReturn}
+      />
+    </div>
+  );
+};
+
+export default LantingEditor;
