@@ -1,0 +1,47 @@
+.lanting-nav {
+  &-inner {
+    max-width: 100%;
+    width: 48rem;
+    margin: 0 auto;
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+  }
+
+  &-title {
+    display: flex;
+    align-items: flex-end;
+    line-height: 1;
+  }
+
+  &-link {
+    text-decoration: none;
+    color: var(--primary-text);
+  }
+
+  &-name {
+    margin: 0;
+  }
+
+  &-bio {
+    color: var(--secondary-text);
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  &-edit {
+    margin-left: auto;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.25rem;
+    border-radius: 5px;
+    color: var(--secondary-icon);
+
+    &:hover {
+      background-color: var(--hover-overlay);
+    }
+  }
+}
