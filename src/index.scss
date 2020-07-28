@@ -2,10 +2,6 @@
 @import './styles/theme/dark.scss';
 
 :root {
-  font-size: 16px;
-  line-height: 1.5;
-  font: 400 16px / 1.5 'Roboto', sans-serif;
-
   &.light {
     @extend %light;
   }
@@ -15,12 +11,23 @@
   }
 }
 
+html {
+  font-size: 16px;
+  line-height: 1.5;
+  font: 400 16px / 1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Ubuntu, 'Helvetica Neue', sans-serif;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color);
   color: var(--primary-text);
+
+  &.theme-fade {
+    transition: background 300ms ease;
+  }
 }
 
 *,
