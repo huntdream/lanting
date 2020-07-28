@@ -1,0 +1,31 @@
+.lanting-signin {
+  width: 48rem;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+
+  &-form {
+    width: 20rem;
+    margin: 0 auto;
+  }
+
+  &-username,
+  &-password {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+
+    label {
+      color: var(--primary-text);
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+  }
+
+  &-submit {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
