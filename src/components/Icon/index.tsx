@@ -1,5 +1,6 @@
 import React, { CSSProperties, HTMLAttributes } from 'react';
 import cls from 'classnames';
+import './style.scss';
 
 interface IconProps extends HTMLAttributes<HTMLElement> {
   className?: string;
@@ -16,7 +17,12 @@ const Icon: React.FC<IconProps> = ({
 }) => {
   return (
     <i
-      className={cls('material-icons', 'lanting-icon--clickable', className)}
+      className={cls(
+        'material-icons',
+        onClick ? 'lanting-icon--clickable' : undefined,
+        className
+      )}
+      onClick={onClick}
       style={style}
       {...props}
     >

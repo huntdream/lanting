@@ -1,0 +1,13 @@
+.lanting-input {
+  border: 1px solid #dfe1e5;
+  outline: none;
+  border-radius: 3px;
+  padding: 6px;
+
+  transition: border-color 200ms;
+
+  &:hover,
+  &:focus {
+    border-color: #1771e6;
+  }
+}

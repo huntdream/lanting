@@ -1,0 +1,31 @@
+@import 'styles/mixin/underline';
+
+.lanting-post {
+  padding: 1rem 0;
+
+  &-header {
+  }
+
+  &-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    position: relative;
+    display: inline;
+    cursor: pointer;
+
+    @include underline;
+  }
+
+  &-content {
+    font-size: 1rem;
+    color: var(--secondary-text);
+    font-weight: 500;
+  }
+
+  &-footer {
+    font-size: 0.875rem;
+    color: var(--secondary-text);
+    margin-top: 0.75rem;
+  }
+}

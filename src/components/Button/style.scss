@@ -1,0 +1,43 @@
+.lanting-button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 0.75rem;
+  height: 2.25rem;
+  border-radius: 6px;
+  font-weight: 600;
+
+  transition: background 200ms;
+
+  &--primary {
+    background-color: var(--primary-button-background);
+    color: var(--primary-button-text);
+
+    &:hover {
+      background-color: #1771e6;
+    }
+  }
+
+  &--secondary {
+    background-color: var(--secondary-button-background);
+
+    &:hover {
+      background-color: var(--hover-overlay);
+    }
+  }
+
+  &--disabled {
+    color: var(--disabled-text);
+    background-color: var(--disabled-button-background);
+    cursor: default;
+
+    &:hover {
+      background-color: var(--disabled-button-background);
+    }
+  }
+}

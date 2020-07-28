@@ -1,8 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import classNames from 'classnames';
 import './style.scss';
 import { Link, useLocation } from 'react-router-dom';
 import Icon from 'components/Icon';
+
+import ThemeToggle from 'components/ThemeToggle';
 
 interface NavProps {}
 
@@ -27,6 +29,7 @@ const Nav: React.FC<NavProps> = () => {
             <Icon>edit</Icon>
           </Link>
         )}
+        <ThemeToggle />
       </div>
     </div>
   );
