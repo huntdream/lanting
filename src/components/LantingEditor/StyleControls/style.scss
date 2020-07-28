@@ -1,11 +1,7 @@
 .stylecontrols {
   display: flex;
   align-items: center;
-
-  &-block {
-    display: flex;
-    align-items: center;
-  }
+  flex-wrap: wrap;
 
   &-button {
     display: inline-flex;

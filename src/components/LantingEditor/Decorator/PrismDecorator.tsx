@@ -44,7 +44,6 @@ class PrismDecorator {
     const text = block.getText();
     const blockKey = block.getKey();
 
-    console.log(type, text, blockKey);
     const decorations: Array<string> = Array(text.length).fill(null);
 
     if (!['code-block'].includes(type)) return Immutable.List(decorations);

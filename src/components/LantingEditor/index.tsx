@@ -2,7 +2,6 @@ import React, {
   useState,
   useRef,
   useEffect,
-  SyntheticEvent,
   useCallback,
   KeyboardEvent,
 } from 'react';
@@ -11,9 +10,7 @@ import {
   EditorState,
   DraftHandleValue,
   RichUtils,
-  convertToRaw,
-  RawDraftContentState,
-  convertFromRaw,
+  ContentState,
 } from 'draft-js';
 import Prismjs from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -31,7 +28,7 @@ import './style.scss';
 export interface LantingEditorProps {
   readOnly?: boolean;
   rawContent?: string;
-  onChange?: (rawContent: RawDraftContentState) => void;
+  onChange?: (rawContent: ContentState) => void;
 }
 
 interface Position {
@@ -45,9 +42,7 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
 }) => {
   const editorRef = useRef<Editor>(null);
   const EmptyState = EditorState.createEmpty(decorators);
-  const [readOnly, setReadOnly] = useState(false);
-  const [showInlineTool, setShowInlineTool] = useState(false);
-  const [inlineToolPos, setInlineToolPos] = useState<Position>({ x: 0, y: 0 });
+  const [readOnly] = useState(false);
   const [editorState, setEditorState] = useState<EditorState>(EmptyState);
 
   useEffect(() => {
@@ -55,10 +50,9 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
       focusEditor();
     }
     Prismjs.highlightAll();
-  }, []);
+  }, [readOnly]);
 
   useEffect(() => {
-    console.log(rawContent);
     if (rawContent) {
       setEditorState(utils.convertToState(rawContent));
     }
@@ -67,10 +61,10 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
   const focusEditor = () => editorRef.current && editorRef.current.focus();
 
   const handleStateChange = (editorState: EditorState) => {
-    const rawContent = convertToRaw(editorState.getCurrentContent());
     setEditorState(editorState);
+
     if (onChange) {
-      onChange(rawContent);
+      onChange(editorState.getCurrentContent());
     }
   };
 
@@ -109,9 +103,7 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     return null;
   };
 
-  const handleMouseUp = useCallback((event: SyntheticEvent<HTMLElement>) => {
-    const pos = getSelectionCoords();
-
+  const handleMouseUp = useCallback(() => {
     // if (pos) {
     //   setInlineToolPos(pos)
     //   setShowInlineTool(true)
@@ -120,14 +112,14 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     // }
   }, []);
 
-  const handleFocus = (event: SyntheticEvent<HTMLDivElement>) => {
+  const handleFocus = () => {
     document.addEventListener(
       'selectionchange',
       (handleMouseUp as unknown) as EventListener
     );
   };
 
-  const handleBlur = (event: SyntheticEvent<HTMLDivElement>) => {
+  const handleBlur = () => {
     document.removeEventListener(
       'selectionchange',
       (handleMouseUp as unknown) as EventListener
@@ -174,7 +166,7 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
         onBlur={handleBlur}
         onTab={onTab}
         blockRenderMap={blockRenderMap}
-        blockRendererFn={blockRenderer}
+        blockRendererFn={blockRenderer(editorState)}
         blockStyleFn={blockStyleFn}
         handleKeyCommand={handleKeyCommand}
         handleReturn={handleReturn}

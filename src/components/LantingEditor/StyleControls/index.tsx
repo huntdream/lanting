@@ -15,8 +15,8 @@ const StyleControls: React.FC<StyleControlsProps> = ({
 }) => {
   return (
     <div className='stylecontrols'>
-      <BlockStyle editorState={editorState} onChange={onChange} />
       <InlineStyle editorState={editorState} onChange={onChange} />
+      <BlockStyle editorState={editorState} onChange={onChange} />
     </div>
   );
 };

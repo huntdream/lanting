@@ -1,8 +1,9 @@
 import React from 'react';
 import './style.scss';
 import StyleButton from './StyleButton';
-import { EditorState, RichUtils } from 'draft-js';
+import { EditorState, RichUtils, Modifier, AtomicBlockUtils } from 'draft-js';
 import Icon from 'components/Icon';
+import bg from 'assets/images/bg.jpg';
 
 interface BlockStyleProps {
   editorState: EditorState;
@@ -20,6 +21,10 @@ const styleMap = [
     label: <Icon>code</Icon>,
     style: 'code-block',
   },
+  {
+    label: <Icon>image</Icon>,
+    style: 'image',
+  },
 ];
 
 const BlockStyle: React.FC<BlockStyleProps> = ({ editorState, onChange }) => {
@@ -30,11 +35,44 @@ const BlockStyle: React.FC<BlockStyleProps> = ({ editorState, onChange }) => {
     .getType();
 
   const handleBlockStyleToggle = (blockType: string) => {
-    onChange(RichUtils.toggleBlockType(editorState, blockType));
+    if (blockType === 'image') {
+      setImage();
+    } else {
+      onChange(RichUtils.toggleBlockType(editorState, blockType));
+    }
+  };
+
+  const setImage = () => {
+    const selectionState = editorState.getSelection();
+
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(
+      'PHOTO',
+      'MUTABLE',
+      { src: bg }
+    );
+
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+
+    const contentStateWithPhoto = Modifier.applyEntity(
+      contentStateWithEntity,
+      selectionState,
+      entityKey
+    );
+
+    const newEditorState = EditorState.push(
+      editorState,
+      contentStateWithPhoto,
+      'apply-entity'
+    );
+
+    onChange(
+      AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+    );
   };
 
   return (
-    <div className='stylecontrols-block'>
+    <>
       {styleMap.map(({ label, style }) => (
         <StyleButton
           active={style === blockType}
@@ -44,7 +82,7 @@ const BlockStyle: React.FC<BlockStyleProps> = ({ editorState, onChange }) => {
           onToggle={() => handleBlockStyleToggle(style)}
         />
       ))}
-    </div>
+    </>
   );
 };
 

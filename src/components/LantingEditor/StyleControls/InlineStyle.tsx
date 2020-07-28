@@ -24,7 +24,7 @@ const InlineStyle: React.FC<InlineStyleProps> = ({ editorState, onChange }) => {
   };
 
   return (
-    <div className='stylecontrols-block'>
+    <>
       {styleMap.map(({ label, style }) => (
         <StyleButton
           active={inlineTypes.has(style)}
@@ -33,7 +33,7 @@ const InlineStyle: React.FC<InlineStyleProps> = ({ editorState, onChange }) => {
           onToggle={() => handleInlineStyleToggle(style)}
         />
       ))}
-    </div>
+    </>
   );
 };
 

@@ -1,20 +1,19 @@
-import React from 'react';
-import { ContentBlock } from 'draft-js';
-import Code from '../BlockRenderMap/Code';
+import { ContentBlock, EditorState } from 'draft-js';
+import Image from '../components/Image';
 
-const blockRenderer = (contentBlock: ContentBlock) => {
+const blockRenderer = (editorState: EditorState) => (
+  contentBlock: ContentBlock
+) => {
   const type = contentBlock.getType();
-  const text = contentBlock.getText();
 
-  if (type === 'code-block') {
-    // return {
-    //   component: Code,
-    //   editable: true,
-    //   props: {
-    //     children: text,
-    //   },
-    // };
+  if (type === 'atomic') {
+    return {
+      component: Image,
+      editable: false,
+    };
   }
+
+  return null;
 };
 
 export default blockRenderer;
