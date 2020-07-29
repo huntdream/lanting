@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React, { useMemo, useEffect } from 'react';
+import { Formik, Form } from 'formik';
 import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
@@ -60,7 +60,7 @@ const SignIn: React.FC<SignInProps> = () => {
               localStorage.setItem('lanting-token', token);
               history.replace('/');
             })
-            .finally(() => {
+            .catch(() => {
               setSubmitting(false);
             });
         }}
