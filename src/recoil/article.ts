@@ -23,10 +23,10 @@ export const articleListState = selectorFamily<
   Pagination & SerializableParam
 >({
   key: 'ArticleList',
-  get: (param) => async ({ get }) => {
+  get: (params) => async ({ get }) => {
     const response = await request
       .get<any, IFeed>('/article', {
-        params: param,
+        params,
       })
       .catch(() => {
         return get(articleState);
