@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Index from 'containers/Index';
 import './style.scss';
 import { useRecoilState } from 'recoil';
 import { themeState, Theme } from 'recoil/theme';
 import SignUp from 'containers/SignUp';
 import SignIn from 'containers/SignIn';
 import ErrorBoundary from 'components/ErrorBoundary';
+import Edit from 'containers/Edit';
+import Feed from 'containers/Feed';
+import Nav from 'components/Nav';
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -32,15 +34,20 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <BrowserRouter>
-        <div className='app'>
-          <Switch>
-            <Route path='/signup' exact component={SignUp} />
-            <Route path='/signin' exact component={SignIn} />
-            <Route path='/' component={Index} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className='app'>
+        <Suspense fallback={<div>Loading</div>}>
+          <BrowserRouter>
+            <Nav />
+
+            <Switch>
+              <Route path='/signup' component={SignUp} />
+              <Route path='/signin' component={SignIn} />
+              <Route path='/edit' component={Edit} />
+              <Route path='/' exact component={Feed} />
+            </Switch>
+          </BrowserRouter>
+        </Suspense>
+      </div>
     </ErrorBoundary>
   );
 }
