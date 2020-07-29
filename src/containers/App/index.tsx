@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import './style.scss';
 import { useRecoilState } from 'recoil';
 import { themeState, Theme } from 'recoil/theme';
@@ -9,6 +9,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Edit from 'containers/Edit';
 import Feed from 'containers/Feed';
 import Nav from 'components/Nav';
+import history from 'utils/history';
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -34,19 +35,18 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className='app'>
-        <Suspense fallback={<div>Loading</div>}>
-          <BrowserRouter>
-            <Nav />
-
+      <div className='lanting-app'>
+        <Router history={history}>
+          <Nav />
+          <Suspense fallback={<div>Loading</div>}>
             <Switch>
+              <Route path='/' exact component={Feed} />
               <Route path='/signup' component={SignUp} />
               <Route path='/signin' component={SignIn} />
               <Route path='/edit' component={Edit} />
-              <Route path='/' exact component={Feed} />
             </Switch>
-          </BrowserRouter>
-        </Suspense>
+          </Suspense>
+        </Router>
       </div>
     </ErrorBoundary>
   );
