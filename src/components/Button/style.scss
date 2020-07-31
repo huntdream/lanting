@@ -25,6 +25,7 @@
 
   &--secondary {
     background-color: var(--secondary-button-background);
+    color: var(--primary-text);
 
     &:hover {
       background-color: var(--hover-overlay);
@@ -39,5 +40,9 @@
     &:hover {
       background-color: var(--disabled-button-background);
     }
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 }
