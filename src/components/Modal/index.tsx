@@ -32,8 +32,11 @@ const Modal: React.FC<ModalProps> = ({
           <div className='lanting-modal-mask'></div>
           <div className='lanting-modal-wrapper' onClick={onClose}>
             <div className='lanting-modal-inner'>
-              <div className='lanting-modal-main' onClick={stopPropagation}>
-                <div className={cls('lanting-modal-body', className)}>
+              <div className='lanting-modal-main'>
+                <div
+                  className={cls('lanting-modal-body', className)}
+                  onClick={stopPropagation}
+                >
                   <div className='lanting-modal-header'>
                     <h2 className='lanting-modal-title'>{title}</h2>
                     <Button
