@@ -31,13 +31,11 @@ const Edit: React.FC<EditProps> = () => {
   return (
     <div className='lanting-edit'>
       <div className='lanting-edit-header'>
-        <div>
-          <Input
-            placeholder='Title'
-            value={title}
-            onChange={({ target: { value } }) => setTitle(value)}
-          />
-        </div>
+        <Input
+          placeholder='Title'
+          value={title}
+          onChange={({ target: { value } }) => setTitle(value)}
+        />
         <Button onClick={publish}>Publish</Button>
       </div>
       <LantingEditor onChange={onChange} />
