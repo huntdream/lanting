@@ -15,7 +15,6 @@ import {
 import Prismjs from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import classnames from 'classnames';
-import { getSelectionRange } from './helpers';
 import StyleControls from './StyleControls';
 import decorators from './Decorator';
 import blockRenderMap from './BlockRenderMap';
@@ -81,27 +80,27 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     return 'not-handled';
   };
 
-  const getSelectionCoords = () => {
-    const selectionRange = getSelectionRange();
-    const editorBounds = document
-      .getElementById('lanting-editor')
-      ?.getBoundingClientRect();
+  // const getSelectionCoords = () => {
+  //   const selectionRange = getSelectionRange();
+  //   const editorBounds = document
+  //     .getElementById('lanting-editor')
+  //     ?.getBoundingClientRect();
 
-    if (
-      selectionRange &&
-      selectionRange.startOffset !== selectionRange.endOffset &&
-      editorBounds
-    ) {
-      const selectionBounds = selectionRange.getBoundingClientRect();
+  //   if (
+  //     selectionRange &&
+  //     selectionRange.startOffset !== selectionRange.endOffset &&
+  //     editorBounds
+  //   ) {
+  //     const selectionBounds = selectionRange.getBoundingClientRect();
 
-      const x = (selectionBounds.right + selectionBounds.left) / 2;
-      const y = selectionBounds.top - 48;
+  //     const x = (selectionBounds.right + selectionBounds.left) / 2;
+  //     const y = selectionBounds.top - 48;
 
-      return { x, y };
-    }
+  //     return { x, y };
+  //   }
 
-    return null;
-  };
+  //   return null;
+  // };
 
   const handleMouseUp = useCallback(() => {
     // if (pos) {

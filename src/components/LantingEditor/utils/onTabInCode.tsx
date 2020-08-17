@@ -6,9 +6,6 @@ const onTabInCode = (event: KeyboardEvent<{}>, editorState: EditorState) => {
 
   const contentState = editorState.getCurrentContent();
   const selection = editorState.getSelection();
-  const startKey = selection.getStartKey();
-  const currentBlock = contentState.getBlockForKey(startKey);
-  const text = currentBlock.getText();
 
   const indention = '  ';
 
