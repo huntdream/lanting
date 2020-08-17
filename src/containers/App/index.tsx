@@ -10,6 +10,7 @@ import Edit from 'containers/Edit';
 import Feed from 'containers/Feed';
 import Nav from 'components/Nav';
 import history from 'utils/history';
+import Article from 'containers/Article';
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -44,6 +45,7 @@ function App() {
               <Route path='/signup' component={SignUp} />
               <Route path='/signin' component={SignIn} />
               <Route path='/edit' component={Edit} />
+              <Route path='/article/:id' component={Article} />
             </Switch>
           </Suspense>
         </Router>
