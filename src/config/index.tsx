@@ -2,8 +2,12 @@ interface Config {
   baseurl: string;
 }
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const config: Config = {
-  baseurl: 'http://localhost:4000/api/v1',
+  baseurl: isProd
+    ? 'https://api.maoyu.info/api/v1'
+    : 'http://localhost:4000/api/v1',
 };
 
 export default config;
