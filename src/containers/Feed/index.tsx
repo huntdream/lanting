@@ -1,25 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Post from 'components/Post';
 
-import { useRecoilValue } from 'recoil';
-import { articleListState } from 'recoil/article';
-
 import './style.scss';
+import { IFeed } from 'recoil/article';
+import request from 'utils/request';
 
 interface FeedProps {}
 
 const Feed: React.FC<FeedProps> = () => {
-  const feed = useRecoilValue(
-    articleListState({
-      size: 20,
-    })
-  );
+  const [feed, setFeed] = useState<IFeed>();
 
-  console.log(feed);
+  useEffect(() => {
+    request.get<any, IFeed>('article').then((res) => setFeed(res));
+  }, []);
 
   return (
-    <div>
-      {feed.data.map((post) => (
+    <div className='lanting-feed'>
+      {feed?.data.map((post) => (
         <Post key={post.id} {...post} />
       ))}
     </div>
