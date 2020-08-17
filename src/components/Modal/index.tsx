@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode, MouseEvent } from 'react';
+import React, { ReactNode, MouseEvent } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import { createPortal } from 'react-dom';

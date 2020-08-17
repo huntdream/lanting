@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import './style.scss';
 import { Link, useLocation } from 'react-router-dom';
