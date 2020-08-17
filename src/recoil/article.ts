@@ -5,12 +5,29 @@ export interface IArticle {
   id: number;
   title: string;
   content: string;
+  excerpt: string;
 }
 
 export type IFeed = Data<IArticle>;
 
-export const articleState = atom<IFeed>({
+//Article
+export const articleState = atom<IArticle>({
   key: 'article',
+  default: {} as IArticle,
+});
+
+export const articleSelector = selectorFamily<IArticle, number>({
+  key: 'articleSelector',
+  get: (id: number) => async ({ get }) => {
+    const response = await request.get<any, IArticle>(`/article/${id}`);
+
+    return response;
+  },
+});
+
+//Feed
+export const feedState = atom<IFeed>({
+  key: 'feed',
   default: {
     data: [],
     count: 0,
@@ -18,18 +35,19 @@ export const articleState = atom<IFeed>({
   },
 });
 
-export const articleListState = selectorFamily<
+export const feedSelector = selectorFamily<
   IFeed,
   Pagination & SerializableParam
 >({
-  key: 'ArticleList',
+  key: 'getFeed',
   get: (params) => async ({ get }) => {
+    console.log('???');
     const response = await request
       .get<any, IFeed>('/article', {
         params,
       })
       .catch(() => {
-        return get(articleState);
+        return get(feedState);
       });
 
     return response;
