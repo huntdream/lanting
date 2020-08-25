@@ -6,12 +6,14 @@ import { useParams } from 'react-router-dom';
 
 interface ArticleProps {}
 
+interface ArticleParams {
+  id: string;
+}
+
 const Article: React.FC<ArticleProps> = () => {
-  const { id } = useParams();
+  const { id } = useParams<ArticleParams>();
 
-  const article = useRecoilValue(articleSelector(id));
-
-  console.log(article);
+  const article = useRecoilValue(articleSelector(parseInt(id, 10)));
 
   return (
     <div className='lanting-article'>
