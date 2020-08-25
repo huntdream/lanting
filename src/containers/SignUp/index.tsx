@@ -4,6 +4,7 @@ import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
 import Button from 'components/Button';
+import { Link } from 'react-router-dom';
 
 interface SignUpProps {}
 
@@ -38,7 +39,7 @@ const SignUp: React.FC<SignUpProps> = () => {
         initialValues={initialValues}
       >
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className='lanting-signup-form'>
             <div className='lanting-signup-username'>
               <label htmlFor='username'>Username</label>
               <Input
@@ -59,7 +60,10 @@ const SignUp: React.FC<SignUpProps> = () => {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className='lanting-signup-submit'>
+              <Link to='/signin' style={{ textDecoration: 'none' }}>
+                Already have an account？
+              </Link>
               <Button type='submit' disabled={isSubmitting}>
                 Submit
               </Button>
