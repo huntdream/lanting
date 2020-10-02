@@ -2,10 +2,17 @@ import React from 'react';
 import './style.scss';
 import { IArticle } from 'recoil/article';
 import { Link } from 'react-router-dom';
+import Date from 'components/Date';
 
 interface PostProps extends IArticle {}
 
-const Post: React.FC<PostProps> = ({ id, title, content, excerpt }) => {
+const Post: React.FC<PostProps> = ({
+  id,
+  title,
+  content,
+  excerpt,
+  createdAt,
+}) => {
   return (
     <article className='lanting-post'>
       <header className='lanting-post-header'>
@@ -14,7 +21,9 @@ const Post: React.FC<PostProps> = ({ id, title, content, excerpt }) => {
         </Link>
       </header>
       <main className='lanting-post-content'>{excerpt}</main>
-      <footer className='lanting-post-footer'></footer>
+      <footer className='lanting-post-footer'>
+        <Date date={createdAt} />
+      </footer>
     </article>
   );
 };

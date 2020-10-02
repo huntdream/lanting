@@ -14,18 +14,19 @@
   &-title {
     font-size: 1.125rem;
     font-weight: 500;
-    margin: 0;
     position: relative;
     display: inline;
     cursor: pointer;
-
+    margin: 0;
     @include underline;
+    line-height: 1;
   }
 
   &-content {
     font-size: 0.9rem;
     color: var(--secondary-text);
     font-weight: 500;
+    margin-top: 0.5rem;
   }
 
   &-footer {
