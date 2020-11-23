@@ -125,14 +125,14 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     );
   };
 
-  const onTab = (event: React.KeyboardEvent) => {
+  const onTab = (event: KeyboardEvent<{}>) => {
     if (utils.hasSelectionInBlock('code-block', editorState)) {
       handleStateChange(utils.onTabInCode(event, editorState));
     }
   };
 
   const handleReturn = (
-    event: KeyboardEvent,
+    event: KeyboardEvent<{}>,
     editorState: EditorState
   ): DraftHandleValue => {
     const currentBlock = utils.getCurrentBlock(editorState);
