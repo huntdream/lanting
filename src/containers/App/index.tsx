@@ -1,16 +1,12 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense, useMemo } from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import './style.scss';
 import { useRecoilState } from 'recoil';
 import { themeState, Theme } from 'recoil/theme';
-import SignUp from 'containers/SignUp';
-import SignIn from 'containers/SignIn';
 import ErrorBoundary from 'components/ErrorBoundary';
-import Edit from 'containers/Edit';
-import Feed from 'containers/Feed';
 import Nav from 'components/Nav';
 import history from 'utils/history';
-import Article from 'containers/Article';
+import routes from 'routes';
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -34,19 +30,26 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  const pages = useMemo(
+    () =>
+      routes.map((route) => (
+        <Route
+          path={route.path}
+          exact={route.exact}
+          component={route.component}
+          key={route.path}
+        />
+      )),
+    []
+  );
+
   return (
     <ErrorBoundary>
       <div className='lanting-app'>
         <Router history={history}>
           <Nav />
           <Suspense fallback={<div>Loading</div>}>
-            <Switch>
-              <Route path='/' exact component={Feed} />
-              <Route path='/signup' component={SignUp} />
-              <Route path='/signin' component={SignIn} />
-              <Route path='/edit' component={Edit} />
-              <Route path='/article/:id' component={Article} />
-            </Switch>
+            <Switch>{pages}</Switch>
           </Suspense>
         </Router>
       </div>
