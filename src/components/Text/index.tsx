@@ -1,10 +1,10 @@
 import Error from './Error';
 
-interface Text {
+interface IText {
   Error: typeof Error;
 }
 
-const Text = {
+const Text: IText = {
   Error,
 };
 

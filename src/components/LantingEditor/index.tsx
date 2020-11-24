@@ -30,11 +30,6 @@ export interface LantingEditorProps {
   onChange?: (rawContent: ContentState) => void;
 }
 
-interface Position {
-  x: number;
-  y: number;
-}
-
 const LantingEditor: React.FC<LantingEditorProps> = ({
   rawContent,
   onChange,
