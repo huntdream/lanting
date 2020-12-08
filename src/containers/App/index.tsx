@@ -48,9 +48,11 @@ function App() {
       <div className='lanting-app'>
         <Router history={history}>
           <Nav />
-          <Suspense fallback={<div>Loading</div>}>
-            <Switch>{pages}</Switch>
-          </Suspense>
+          <main className='lanting-app-main'>
+            <Suspense fallback={<div>Loading</div>}>
+              <Switch>{pages}</Switch>
+            </Suspense>
+          </main>
         </Router>
       </div>
     </ErrorBoundary>

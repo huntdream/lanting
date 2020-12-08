@@ -16,7 +16,7 @@ const Nav: React.FC<NavProps> = () => {
   }, [pathname]);
 
   return (
-    <div className={classNames(`lanting-nav`)}>
+    <nav className={classNames(`lanting-nav`)}>
       <div className='lanting-nav-inner'>
         <div className='lanting-nav-title'>
           <Link to='/' className='lanting-nav-link'>
@@ -31,7 +31,7 @@ const Nav: React.FC<NavProps> = () => {
         )}
         <ThemeToggle />
       </div>
-    </div>
+    </nav>
   );
 };
 
