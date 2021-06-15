@@ -22,7 +22,7 @@ const Nav: React.FC<NavProps> = () => {
           <Link to='/' className='lanting-nav-link'>
             <h2 className='lanting-nav-name'>兰亭</h2>
           </Link>
-          <div className='lanting-nav-bio'>流觞曲水</div>
+          <div className='lanting-nav-bio'>小舟从此逝，江海寄余生</div>
         </div>
         {!isEditPage && (
           <Link className='lanting-nav-edit' to='/edit'>
