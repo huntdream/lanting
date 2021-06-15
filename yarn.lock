@@ -3266,9 +3266,8 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001157:
-  version "1.0.30001159"
-  resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30001159.tgz?cache=0&sync_timestamp=1605683108135&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001159.tgz#bebde28f893fa9594dadcaa7d6b8e2aa0299df20"
-  integrity sha1-vr3ij4k/qVlNrcqn1rjiqgKZ3yA=
+  version "1.0.30001237"
+  resolved "https://registry.nlark.com/caniuse-lite/download/caniuse-lite-1.0.30001237.tgz"
 
 capture-exit@^2.0.0:
   version "2.0.0"
