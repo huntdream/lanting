@@ -7,6 +7,7 @@ import ErrorBoundary from 'components/ErrorBoundary';
 import Nav from 'components/Nav';
 import history from 'utils/history';
 import routes from 'routes';
+import Loading from 'components/Loading';
 
 function App() {
   const [theme, setTheme] = useRecoilState(themeState);
@@ -49,7 +50,7 @@ function App() {
         <Router history={history}>
           <Nav />
           <main className='lanting-app-main'>
-            <Suspense fallback={<div>Loading</div>}>
+            <Suspense fallback={<Loading />}>
               <Switch>{pages}</Switch>
             </Suspense>
           </main>
