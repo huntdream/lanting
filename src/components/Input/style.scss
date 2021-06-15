@@ -10,4 +10,8 @@
   &:focus {
     border-color: #1771e6;
   }
+
+  &--borderless {
+    border: none;
+  }
 }

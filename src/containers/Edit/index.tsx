@@ -44,6 +44,7 @@ const Edit: React.FC<EditProps> = () => {
     <div className='lanting-edit'>
       <div className='lanting-edit-header'>
         <Input
+          borderless
           placeholder='Title'
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}

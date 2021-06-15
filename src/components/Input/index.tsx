@@ -2,13 +2,21 @@ import React, { forwardRef, InputHTMLAttributes } from 'react';
 import cls from 'classnames';
 import './style.scss';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  borderless?: boolean;
+}
 
 const Input: React.FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <input ref={ref} className={cls('lanting-input', className)} {...props} />
+  ({ className, borderless, ...props }, ref) => {
+    const classNames = cls(
+      'lanting-input',
+      {
+        'lanting-input--borderless': borderless,
+      },
+      className
     );
+
+    return <input ref={ref} className={classNames} {...props} />;
   }
 );
 
