@@ -2,6 +2,8 @@
 @import './styles/theme/dark.scss';
 
 :root {
+  --warning-color: #ff4d4f;
+
   &.light {
     @extend %light;
   }

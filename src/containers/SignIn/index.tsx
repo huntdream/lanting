@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Formik, Form } from 'formik';
 import request from 'utils/request';
 import Input from 'components/Input';
@@ -21,19 +21,20 @@ interface SignInResponse extends IUser {
   token: string;
 }
 
-const SignInSchema = Yup.object<FormValues>().shape({
+const Schema = Yup.object<FormValues>().shape({
   username: Yup.string()
-    .min(5, 'Sorry, your username must be between 6 and 16 characters long.')
+    .min(5, 'Sorry, your username must be between 5 and 16 characters long.')
     .max(16, 'Sorry, your username must be between 6 and 16 characters long.')
     .required(),
   password: Yup.string()
-    .min(5, 'Sorry, your username must be between 6 and 16 characters long.')
+    .min(6, 'Sorry, your username must be between 6 and 16 characters long.')
     .max(16, 'Sorry, your username must be between 6 and 16 characters long.')
     .required(),
 });
 
 const SignIn: React.FC<SignInProps> = () => {
   const setUser = useSetRecoilState(userState);
+  const [errorMsg, setErrorMsg] = useState('');
   const history = useHistory();
 
   const initialValues: FormValues = useMemo(
@@ -47,7 +48,7 @@ const SignIn: React.FC<SignInProps> = () => {
   return (
     <div className='lanting-signin'>
       <Formik
-        validationSchema={SignInSchema}
+        validationSchema={Schema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
 
@@ -60,7 +61,8 @@ const SignIn: React.FC<SignInProps> = () => {
               localStorage.setItem('lanting-token', token);
               history.replace('/');
             })
-            .catch(() => {
+            .catch((err) => {
+              setErrorMsg(err.message);
               setSubmitting(false);
             });
         }}
@@ -69,10 +71,11 @@ const SignIn: React.FC<SignInProps> = () => {
         {({
           values,
           errors,
-          handleChange,
-          handleSubmit,
           isSubmitting,
           isValid,
+          touched,
+          handleChange,
+          handleSubmit,
         }) => (
           <Form onSubmit={handleSubmit} className='lanting-signin-form'>
             <div className='lanting-signin-username'>
@@ -86,7 +89,9 @@ const SignIn: React.FC<SignInProps> = () => {
                 onChange={handleChange}
               />
 
-              <Text.Error>{errors.username}</Text.Error>
+              <Text.Error>
+                {errors.username && touched.username ? errors.username : null}
+              </Text.Error>
             </div>
             <div className='lanting-signin-password'>
               <label htmlFor='password'>Password</label>
@@ -100,13 +105,16 @@ const SignIn: React.FC<SignInProps> = () => {
                 onChange={handleChange}
               />
 
-              <Text.Error>{errors.password}</Text.Error>
+              <Text.Error>
+                {errors.password && touched.password ? errors.password : null}
+              </Text.Error>
             </div>
+            <Text.Error>{errorMsg}</Text.Error>
             <div className='lanting-signin-submit'>
               <Link to='/signup' style={{ textDecoration: 'none' }}>
                 Create account
               </Link>
-              <Button type='submit' disabled={isSubmitting || !isValid}>
+              <Button type='submit' disabled={isSubmitting}>
                 Sign In
               </Button>
             </div>
