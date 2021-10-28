@@ -31,7 +31,7 @@ const styleMap = [
 ];
 
 const BlockStyle: React.FC<BlockStyleProps> = ({ editorState, onChange }) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const selection = editorState.getSelection();
   const blockType = editorState
