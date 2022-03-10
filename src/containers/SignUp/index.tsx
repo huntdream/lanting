@@ -4,7 +4,7 @@ import request from 'utils/request';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Text from 'components/Text';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import './style.scss';
@@ -30,7 +30,7 @@ const Schema = Yup.object<FormValues>().shape({
 const SignUp: React.FC<SignUpProps> = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
-  const { replace } = useHistory();
+  const navigate = useNavigate();
 
   const initialValues: FormValues = useMemo(
     () => ({
@@ -51,7 +51,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             })
             .then(() => {
               setSubmitting(false);
-              replace('/');
+              navigate('/', { replace: true });
             })
             .catch((err) => {
               setErrorMsg(err.message);

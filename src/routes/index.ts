@@ -4,28 +4,27 @@ const routes = [
   {
     name: 'Lanting',
     path: '/',
-    exact: true,
-    component: lazy(() => import('../containers/Feed')),
+    element: lazy(() => import('../containers/Feed')),
   },
   {
     name: 'Article',
     path: '/article/:id',
-    component: lazy(() => import('../containers/Article')),
+    element: lazy(() => import('../containers/Article')),
   },
   {
     name: 'Sign In',
     path: '/signin',
-    component: lazy(() => import('../containers/SignIn')),
+    element: lazy(() => import('../containers/SignIn')),
   },
   {
     name: 'Sign Up',
     path: '/signup',
-    component: lazy(() => import('../containers/SignUp')),
+    element: lazy(() => import('../containers/SignUp')),
   },
   {
     name: 'New Story',
     path: '/edit',
-    component: lazy(() => import('../containers/Edit')),
+    element: lazy(() => import('../containers/Edit')),
   },
 ];
 

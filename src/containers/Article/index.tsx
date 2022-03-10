@@ -11,7 +11,7 @@ interface ArticleParams {
 }
 
 const Article: React.FC<ArticleProps> = () => {
-  const { id } = useParams<ArticleParams>();
+  const { id = '' } = useParams<keyof ArticleParams>();
 
   const article = useRecoilValue(articleSelector(parseInt(id, 10)));
 

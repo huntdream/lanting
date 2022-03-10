@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userState, IUser } from 'recoil/user';
 import Button from 'components/Button';
@@ -35,7 +35,7 @@ const Schema = Yup.object<FormValues>().shape({
 const SignIn: React.FC<SignInProps> = () => {
   const setUser = useSetRecoilState(userState);
   const [errorMsg, setErrorMsg] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const initialValues: FormValues = useMemo(
     () => ({
@@ -59,7 +59,7 @@ const SignIn: React.FC<SignInProps> = () => {
             .then(({ token, ...user }) => {
               setUser(user);
               localStorage.setItem('lanting-token', token);
-              history.replace('/');
+              navigate('/');
             })
             .catch((err) => {
               setErrorMsg(err.message);

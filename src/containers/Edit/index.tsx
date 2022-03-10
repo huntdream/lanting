@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import Input from 'components/Input';
 import request from 'utils/request';
 import { IArticle } from 'recoil/article';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface EditProps {}
 
@@ -15,7 +15,7 @@ const Edit: React.FC<EditProps> = () => {
   const [title, setTitle] = useState('');
   const [value, setValue] = useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onChange = (rawContent: ContentState) => {
     const html = stateToHTML(rawContent);
@@ -33,9 +33,9 @@ const Edit: React.FC<EditProps> = () => {
       })
       .then((res) => {
         if (res.id) {
-          history.push(`/article/${res.id}`);
+          navigate(`/article/${res.id}`);
         } else {
-          history.push('/');
+          navigate('/');
         }
       });
   };

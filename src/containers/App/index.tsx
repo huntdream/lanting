@@ -1,11 +1,10 @@
-import React, { useEffect, Suspense, useMemo } from 'react';
-import { Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect, Suspense } from 'react';
+import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import './style.scss';
 import { useRecoilState } from 'recoil';
 import { themeState, Theme } from 'recoil/theme';
 import ErrorBoundary from 'components/ErrorBoundary';
 import Nav from 'components/Nav';
-import history from 'utils/history';
 import routes from 'routes';
 import Loading from 'components/Loading';
 
@@ -31,30 +30,22 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const pages = useMemo(
-    () =>
-      routes.map((route) => (
-        <Route
-          path={route.path}
-          exact={route.exact}
-          component={route.component}
-          key={route.path}
-        />
-      )),
-    []
+  const pages = useRoutes(
+    routes.map(({ path, element: Component }) => ({
+      path,
+      element: (
+        <Suspense fallback={<Loading />}>
+          <Component />
+        </Suspense>
+      ),
+    }))
   );
 
   return (
     <ErrorBoundary>
       <div className='lanting-app'>
-        <Router history={history}>
-          <Nav />
-          <main className='lanting-app-main'>
-            <Suspense fallback={<Loading />}>
-              <Switch>{pages}</Switch>
-            </Suspense>
-          </main>
-        </Router>
+        <Nav />
+        <main className='lanting-app-main'>{pages}</main>
       </div>
     </ErrorBoundary>
   );
