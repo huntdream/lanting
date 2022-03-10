@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense } from 'react';
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import './style.scss';
 import { useRecoilState } from 'recoil';
 import { themeState, Theme } from 'recoil/theme';
