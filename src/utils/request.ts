@@ -12,7 +12,7 @@ request.interceptors.request.use((config) => {
   const token = localStorage.getItem('lanting-token');
 
   if (token && config.url && !TOKEN_WHITELIST.includes(config.url)) {
-    config.headers.Authorization = 'Bearer ' + token;
+    config.headers!.Authorization = 'Bearer ' + token;
   }
 
   return config;
