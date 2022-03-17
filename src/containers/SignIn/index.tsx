@@ -4,8 +4,6 @@ import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
 import { useNavigate, Link } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { userState, IUser } from 'recoil/user';
 import Button from 'components/Button';
 import * as Yup from 'yup';
 import Text from 'components/Text';
@@ -17,7 +15,7 @@ interface FormValues {
   password: string;
 }
 
-interface SignInResponse extends IUser {
+interface SignInResponse {
   token: string;
 }
 
@@ -33,7 +31,7 @@ const Schema: Yup.SchemaOf<FormValues> = Yup.object({
 });
 
 const SignIn: React.FC<SignInProps> = () => {
-  const setUser = useSetRecoilState(userState);
+  const [, setUser] = useState<any>();
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 

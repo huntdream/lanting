@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.scss';
-import { useRecoilValue } from 'recoil';
-import { articleSelector } from 'recoil/article';
 import { useParams } from 'react-router-dom';
 
 interface ArticleProps {}
@@ -13,7 +11,7 @@ interface ArticleParams {
 const Article: React.FC<ArticleProps> = () => {
   const { id = '' } = useParams<keyof ArticleParams>();
 
-  const article = useRecoilValue(articleSelector(parseInt(id, 10)));
+  const [article, setArticle] = useState<any>();
 
   return (
     <div className='lanting-article'>

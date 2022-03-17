@@ -1,15 +1,15 @@
-import React, { useEffect, Suspense } from 'react';
+import React, { useEffect, Suspense, useState } from 'react';
 import { useRoutes } from 'react-router-dom';
 import './style.scss';
-import { useRecoilState } from 'recoil';
-import { themeState, Theme } from 'recoil/theme';
+
 import ErrorBoundary from 'components/ErrorBoundary';
 import Nav from 'components/Nav';
 import routes from 'routes';
 import Loading from 'components/Loading';
+import AppContext, { IAppContext, Theme } from './context';
 
 function App() {
-  const [theme, setTheme] = useRecoilState(themeState);
+  const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
     const prevTheme = (localStorage.getItem('theme') || 'light') as Theme;
@@ -41,13 +41,20 @@ function App() {
     }))
   );
 
+  const context: IAppContext = {
+    theme,
+    setTheme,
+  };
+
   return (
-    <ErrorBoundary>
-      <div className='lanting-app'>
-        <Nav />
-        <main className='lanting-app-main'>{pages}</main>
-      </div>
-    </ErrorBoundary>
+    <AppContext.Provider value={context}>
+      <ErrorBoundary>
+        <div className='lanting-app'>
+          <Nav />
+          <main className='lanting-app-main'>{pages}</main>
+        </div>
+      </ErrorBoundary>
+    </AppContext.Provider>
   );
 }
 

@@ -6,7 +6,7 @@ import { stateToHTML } from 'draft-js-export-html';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import request from 'utils/request';
-import { IArticle } from 'recoil/article';
+import { IArticle } from 'typing/article';
 import { useNavigate } from 'react-router-dom';
 
 interface EditProps {}

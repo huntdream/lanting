@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { IArticle } from 'recoil/article';
+import { IArticle } from 'typing/article';
 import { Link } from 'react-router-dom';
 import Date from 'components/Date';
 

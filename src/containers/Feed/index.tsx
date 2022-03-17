@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from 'components/Post';
 import './style.scss';
-import { IFeed } from 'recoil/article';
+import { IFeed } from 'typing/article';
 import request from 'utils/request';
 import Exception from 'components/Exception';
 

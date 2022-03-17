@@ -1,10 +1,17 @@
+import Exception from 'components/Exception';
 import React from 'react';
 
 interface IProps {}
 
 class ErrorBoundary extends React.Component<IProps> {
-  static getDerivedStateFromError() {
-    return 'Error';
+  state: Readonly<{ error: boolean }> = {
+    error: false,
+  };
+
+  static getDerivedStateFromError(error: any) {
+    return {
+      error: !!error,
+    };
   }
 
   componentDidCatch(error: any, errorInfo: any) {
@@ -12,6 +19,10 @@ class ErrorBoundary extends React.Component<IProps> {
   }
 
   render() {
+    if (this.state.error) {
+      return <Exception />;
+    }
+
     return this.props.children;
   }
 }
