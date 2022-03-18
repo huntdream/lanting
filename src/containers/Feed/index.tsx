@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Post from 'components/Post';
 import './style.scss';
 import { IFeed } from 'typing/article';
-import request from 'utils/request';
-import Exception from 'components/Exception';
+import useSWR from 'swr';
 
 interface FeedProps {}
 
 const Feed: React.FC<FeedProps> = () => {
-  const [feed, setFeed] = useState<IFeed>();
-  const [error, setError] = useState<any>();
-
-  useEffect(() => {
-    request
-      .get<any, IFeed>('article')
-      .then((res) => setFeed(res))
-      .catch((err) => {
-        setError(true);
-      });
-  }, []);
-
-  if (error) {
-    return <Exception>Something went wrong</Exception>;
-  }
+  const { data: feed } = useSWR<IFeed>('article');
 
   return (
     <div className='lanting-feed'>

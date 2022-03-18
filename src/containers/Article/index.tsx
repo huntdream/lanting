@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.scss';
 import { useParams } from 'react-router-dom';
+import useSWR from 'swr';
 
 interface ArticleProps {}
 
@@ -11,7 +12,7 @@ interface ArticleParams {
 const Article: React.FC<ArticleProps> = () => {
   const { id = '' } = useParams<keyof ArticleParams>();
 
-  const [article, setArticle] = useState<any>();
+  const { data: article = {} } = useSWR<any>(`/article/${id}`);
 
   return (
     <div className='lanting-article'>
