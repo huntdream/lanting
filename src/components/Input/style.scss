@@ -3,8 +3,9 @@
   outline: none;
   border-radius: 3px;
   padding: 6px;
-
+  color: var(--primary-text);
   transition: border-color 200ms;
+  background: none;
 
   &:hover,
   &:focus {
