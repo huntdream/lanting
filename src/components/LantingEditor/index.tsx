@@ -11,6 +11,7 @@ import {
   DraftHandleValue,
   RichUtils,
   ContentState,
+  getDefaultKeyBinding,
 } from 'draft-js';
 import Prismjs from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -52,7 +53,7 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     }
   }, [rawContent]);
 
-  const focusEditor = () => editorRef.current && editorRef.current.focus();
+  const focusEditor = () => editorRef.current?.focus();
 
   const handleStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
@@ -62,68 +63,46 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     }
   };
 
+  const handleTab = () => {
+    if (utils.hasSelectionInBlock('code-block', editorState)) {
+      handleStateChange(utils.onTabInCode(editorState));
+    }
+  };
+
   const handleKeyCommand = (
     command: string,
     editorState: EditorState
   ): DraftHandleValue => {
+    if (command === 'Tab') {
+      handleTab();
+
+      return 'handled';
+    }
+
     const newState = RichUtils.handleKeyCommand(editorState, command);
 
     if (newState) {
       setEditorState(newState);
       return 'handled';
     }
+
     return 'not-handled';
   };
 
-  // const getSelectionCoords = () => {
-  //   const selectionRange = getSelectionRange();
-  //   const editorBounds = document
-  //     .getElementById('lanting-editor')
-  //     ?.getBoundingClientRect();
-
-  //   if (
-  //     selectionRange &&
-  //     selectionRange.startOffset !== selectionRange.endOffset &&
-  //     editorBounds
-  //   ) {
-  //     const selectionBounds = selectionRange.getBoundingClientRect();
-
-  //     const x = (selectionBounds.right + selectionBounds.left) / 2;
-  //     const y = selectionBounds.top - 48;
-
-  //     return { x, y };
-  //   }
-
-  //   return null;
-  // };
-
-  const handleMouseUp = useCallback(() => {
-    // if (pos) {
-    //   setInlineToolPos(pos)
-    //   setShowInlineTool(true)
-    // } else {
-    //   setShowInlineTool(false)
-    // }
-  }, []);
+  const handleMouseUp = useCallback(() => {}, []);
 
   const handleFocus = () => {
     document.addEventListener(
       'selectionchange',
-      (handleMouseUp as unknown) as EventListener
+      handleMouseUp as unknown as EventListener
     );
   };
 
   const handleBlur = () => {
     document.removeEventListener(
       'selectionchange',
-      (handleMouseUp as unknown) as EventListener
+      handleMouseUp as unknown as EventListener
     );
-  };
-
-  const onTab = (event: KeyboardEvent<{}>) => {
-    if (utils.hasSelectionInBlock('code-block', editorState)) {
-      handleStateChange(utils.onTabInCode(event, editorState));
-    }
   };
 
   const handleReturn = (
@@ -138,6 +117,15 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     }
 
     return 'not-handled';
+  };
+
+  const handleKeyBinding = (event: KeyboardEvent) => {
+    console.log(event);
+    if (event.code === 'Tab') {
+      return 'Tab';
+    }
+
+    return getDefaultKeyBinding(event);
   };
 
   return (
@@ -158,12 +146,12 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
         editorState={editorState}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        onTab={onTab}
         blockRenderMap={blockRenderMap}
         blockRendererFn={blockRenderer(editorState)}
         blockStyleFn={blockStyleFn}
         handleKeyCommand={handleKeyCommand}
         handleReturn={handleReturn}
+        keyBindingFn={handleKeyBinding}
       />
     </div>
   );

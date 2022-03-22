@@ -1,9 +1,6 @@
-import { KeyboardEvent } from 'react';
 import Draft, { EditorState } from 'draft-js';
 
-const onTabInCode = (event: KeyboardEvent<{}>, editorState: EditorState) => {
-  event.preventDefault();
-
+const onTabInCode = (editorState: EditorState) => {
   const contentState = editorState.getCurrentContent();
   const selection = editorState.getSelection();
 
