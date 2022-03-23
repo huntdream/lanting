@@ -1,11 +1,11 @@
-import AppContext from 'containers/App/context';
-import React, { useContext } from 'react';
+import { useTheme } from 'context/Theme';
+import React from 'react';
 import './style.scss';
 
 interface ThemeToggleProps {}
 
 const ThemeToggle: React.FC<ThemeToggleProps> = () => {
-  const { theme, setTheme } = useContext(AppContext);
+  const [theme, setTheme] = useTheme();
 
   const toggleTheme = () => {
     if (theme === 'dark') {
