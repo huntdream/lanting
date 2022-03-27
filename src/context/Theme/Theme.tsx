@@ -1,4 +1,10 @@
-import React, { createContext, FC, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 
 export type Theme = 'light' | 'dark';
 
@@ -13,12 +19,11 @@ export const ThemeContext = createContext<IThemeContext>({
 });
 
 const ThemeProvider: FC = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>(
+    (localStorage.getItem('theme') || 'light') as Theme
+  );
 
-  useEffect(() => {
-    const prevTheme = (localStorage.getItem('theme') || 'light') as Theme;
-    setTheme(prevTheme);
-
+  useLayoutEffect(() => {
     document.body.classList.add('theme-fade');
   }, [setTheme]);
 
