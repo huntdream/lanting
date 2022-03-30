@@ -85,7 +85,6 @@ const SignIn: React.FC<SignInProps> = () => {
                 id='username'
                 value={values.username}
                 onChange={handleChange}
-                borderless
               />
 
               <Text.Error>
@@ -102,7 +101,6 @@ const SignIn: React.FC<SignInProps> = () => {
                 id='password'
                 value={values.password}
                 onChange={handleChange}
-                borderless
               />
 
               <Text.Error>
