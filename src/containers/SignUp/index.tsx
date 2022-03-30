@@ -45,7 +45,7 @@ const SignUp: React.FC<SignUpProps> = () => {
       <Formik
         validationSchema={Schema}
         onSubmit={(values, { setSubmitting }) => {
-          request
+          return request
             .post('/auth/signup', {
               ...values,
             })

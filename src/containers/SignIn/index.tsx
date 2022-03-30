@@ -50,7 +50,7 @@ const SignIn: React.FC<SignInProps> = () => {
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
 
-          request
+          return request
             .post<any, SignInResponse>('/auth/signin', {
               ...values,
             })
