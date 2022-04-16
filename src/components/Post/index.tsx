@@ -6,13 +6,7 @@ import Date from 'components/Date';
 
 interface PostProps extends IArticle {}
 
-const Post: React.FC<PostProps> = ({
-  id,
-  title,
-  content,
-  excerpt,
-  createdAt,
-}) => {
+const Post: React.FC<PostProps> = ({ id, title, excerpt, createdAt }) => {
   return (
     <article className='lanting-post'>
       <header className='lanting-post-header'>
@@ -22,7 +16,7 @@ const Post: React.FC<PostProps> = ({
       </header>
       <main className='lanting-post-content'>{excerpt}</main>
       <footer className='lanting-post-footer'>
-        <Date date={createdAt} />
+        <Date date={createdAt} fromNow />
       </footer>
     </article>
   );
