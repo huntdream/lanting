@@ -1,5 +1,22 @@
 .lanting-upload {
+  &-input {
+    display: none;
+  }
+
+  &-preview-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
   &-preview {
-    max-width: 100%;
+    padding: 4px;
+    overflow: hidden;
+    align-self: center;
+
+    &-image,
+    &-video {
+      max-width: 100%;
+      border-radius: 4px;
+    }
   }
 }
