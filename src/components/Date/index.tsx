@@ -6,17 +6,32 @@ import './style.scss';
 interface DateProps {
   date?: string;
   format?: string;
+  fromNow?: boolean;
 }
 
-const Date: React.FC<DateProps> = ({ date, format = 'YYYY-MM-DD' }) => {
-  const formattedDate = useMemo(() => {
-    return moment(date).format(format);
-  }, [date, format]);
+const Date: React.FC<DateProps> = ({
+  date,
+  format = 'YYYY-MM-DD',
+  fromNow,
+}) => {
+  const [dateStr, datetime] = useMemo(() => {
+    const momented = moment(date);
+
+    let theDate = '';
+
+    if (fromNow) {
+      theDate = momented.fromNow();
+    } else {
+      theDate = momented.format(format);
+    }
+
+    return [theDate, momented.format('YYYY-MM-DD HH:mm')];
+  }, [date, format, fromNow]);
 
   return (
-    <div className='lanting-date' title={date}>
+    <div className='lanting-date' title={datetime}>
       <Icon className='lanting-date-icon'>date_range</Icon>
-      {formattedDate}
+      {dateStr}
     </div>
   );
 };
