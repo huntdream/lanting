@@ -1,0 +1,13 @@
+.lanting-editor-media {
+  display: flex;
+  justify-content: center;
+
+  &-image {
+    max-width: 100%;
+  }
+
+  &-video {
+    max-width: 100%;
+    height: 400px;
+  }
+}

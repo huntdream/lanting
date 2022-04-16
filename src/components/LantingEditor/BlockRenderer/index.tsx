@@ -1,19 +1,18 @@
 import { ContentBlock, EditorState } from 'draft-js';
-import Image from '../components/Image';
+import Media from '../components/Media';
 
-const blockRenderer = (editorState: EditorState) => (
-  contentBlock: ContentBlock
-) => {
-  const type = contentBlock.getType();
+const blockRenderer =
+  (editorState: EditorState) => (contentBlock: ContentBlock) => {
+    const type = contentBlock.getType();
 
-  if (type === 'atomic') {
-    return {
-      component: Image,
-      editable: false,
-    };
-  }
+    if (type === 'atomic') {
+      return {
+        component: Media,
+        editable: false,
+      };
+    }
 
-  return null;
-};
+    return null;
+  };
 
 export default blockRenderer;

@@ -10,8 +10,8 @@ import {
   EditorState,
   DraftHandleValue,
   RichUtils,
-  ContentState,
   getDefaultKeyBinding,
+  convertToRaw,
 } from 'draft-js';
 import Prismjs from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -27,17 +27,17 @@ import './style.scss';
 
 export interface LantingEditorProps {
   readOnly?: boolean;
-  rawContent?: string;
-  onChange?: (rawContent: ContentState) => void;
+  rawContent?: EditorState;
+  onChange?: (rawContent: EditorState) => void;
 }
 
 const LantingEditor: React.FC<LantingEditorProps> = ({
+  readOnly,
   rawContent,
   onChange,
 }) => {
   const editorRef = useRef<Editor>(null);
   const EmptyState = EditorState.createEmpty(decorators);
-  const [readOnly] = useState(false);
   const [editorState, setEditorState] = useState<EditorState>(EmptyState);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
 
   useEffect(() => {
     if (rawContent) {
-      setEditorState(utils.convertToState(rawContent));
+      setEditorState(rawContent);
     }
   }, [rawContent]);
 
@@ -57,9 +57,10 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
 
   const handleStateChange = (editorState: EditorState) => {
     setEditorState(editorState);
+    console.log(convertToRaw(editorState.getCurrentContent()));
 
     if (onChange) {
-      onChange(editorState.getCurrentContent());
+      onChange(editorState);
     }
   };
 
@@ -120,7 +121,6 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
   };
 
   const handleKeyBinding = (event: KeyboardEvent) => {
-    console.log(event);
     if (event.code === 'Tab') {
       return 'Tab';
     }

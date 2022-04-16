@@ -1,0 +1,17 @@
+.lanting-editor-media-upload {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &-content {
+    padding: 0.8rem;
+  }
+
+  &-footer {
+    justify-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.8rem;
+    border-top: 1px solid var(--border-color);
+  }
+}
