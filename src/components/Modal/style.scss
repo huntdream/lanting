@@ -23,7 +23,6 @@
   &-inner {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: stretch;
     padding: 76px 0.5rem;
     min-height: 100vh;
@@ -37,9 +36,10 @@
 
   &-body {
     position: relative;
+    display: flex;
+    flex-direction: column;
     width: 500px;
     max-width: 100%;
-    min-height: 500px;
     background-color: var(--card-background);
     border-radius: 8px;
     box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1),
@@ -58,6 +58,7 @@
 
   &-title {
     font-size: 1.25rem;
+    text-transform: capitalize;
   }
 
   &-close {
@@ -74,5 +75,9 @@
     &:hover {
       background-color: var(--hover-overlay);
     }
+  }
+
+  &-content {
+    flex: 1;
   }
 }
