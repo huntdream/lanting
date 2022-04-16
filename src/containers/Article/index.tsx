@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import './style.scss';
-import { useParams } from 'react-router-dom';
-import useSWR from 'swr';
+import { useNavigate, useParams } from 'react-router-dom';
+import LantingEditor from 'components/LantingEditor';
+import useArticle from 'api/useArticle';
+import { EditorState } from 'draft-js';
+import Date from 'components/Date';
+import Icon from 'components/Icon';
 
 interface ArticleProps {}
 
@@ -11,16 +15,32 @@ interface ArticleParams {
 
 const Article: React.FC<ArticleProps> = () => {
   const { id = '' } = useParams<keyof ArticleParams>();
+  const navigate = useNavigate();
 
-  const { data: article = {} } = useSWR<any>(`/article/${id}`);
+  const { article } = useArticle(id);
+
+  const rawContent = useMemo(() => {
+    if (article?.content) {
+      return EditorState.createWithContent(article.content);
+    }
+  }, [article]);
+
+  const navigateToEdit = () => {
+    navigate(`/edit/${id}`);
+  };
 
   return (
     <div className='lanting-article'>
       <h2 className='lanting-article-title'>{article?.title}</h2>
-      <div
-        className='lanting-article-content'
-        dangerouslySetInnerHTML={{ __html: article.content }}
-      ></div>
+      <div className='lanting-article-meta'>
+        <Date date={article?.createdAt} />
+        <Icon onClick={navigateToEdit} className='lanting-article-meta-edit'>
+          edit
+        </Icon>
+      </div>
+      <div className='lanting-article-content'>
+        <LantingEditor readOnly rawContent={rawContent} />
+      </div>
     </div>
   );
 };

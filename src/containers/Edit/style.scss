@@ -1,5 +1,5 @@
 .lanting-edit {
-  width: 48rem;
+  max-width: 48rem;
   padding: 1.5rem 0;
   margin: 0 auto;
 
@@ -8,5 +8,11 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+
+    .lanting-input {
+      width: 80%;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
   }
 }

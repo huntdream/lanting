@@ -23,7 +23,12 @@ const routes = [
   },
   {
     name: 'New Story',
-    path: '/edit',
+    path: '/edit/',
+    element: lazy(() => import('../containers/Edit')),
+  },
+  {
+    name: 'Edit',
+    path: '/edit/:id',
     element: lazy(() => import('../containers/Edit')),
   },
 ];

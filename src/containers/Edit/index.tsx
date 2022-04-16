@@ -1,35 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './style.scss';
 import LantingEditor from 'components/LantingEditor';
-import { ContentState } from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
+import { convertToRaw, EditorState } from 'draft-js';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import request from 'utils/request';
 import { IArticle } from 'typing/article';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import useArticle from 'api/useArticle';
 
 interface EditProps {}
 
 const Edit: React.FC<EditProps> = () => {
+  const { id = '' } = useParams<{ id: string }>();
+
+  const { article } = useArticle(id, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<EditorState>();
 
   const navigate = useNavigate();
 
-  const onChange = (rawContent: ContentState) => {
-    const html = stateToHTML(rawContent);
+  const rawContent = useMemo(() => {
+    if (article?.content) {
+      const content = EditorState.createWithContent(article.content);
 
-    console.log(html);
-    setValue(html);
+      setValue(content);
+      return content;
+    }
+  }, [article]);
+
+  useEffect(() => {
+    if (article) {
+      setTitle(article.title);
+    }
+  }, [article]);
+
+  const onChange = (contentState: EditorState) => {
+    setValue(contentState);
   };
 
   const publish = () => {
     console.log('publishing');
+
+    let content = '';
+    let excerpt = '';
+
+    if (value) {
+      const state = convertToRaw(value.getCurrentContent());
+
+      content = JSON.stringify(state);
+      excerpt = state.blocks.find((block) => block.text)?.text || '';
+    }
+
     request
-      .post<any, IArticle>('article', {
+      .post<any, IArticle>(`article/${id}`, {
+        id: article?.id,
         title,
-        content: value,
+        excerpt,
+        content,
       })
       .then((res) => {
         if (res.id) {
@@ -37,6 +69,9 @@ const Edit: React.FC<EditProps> = () => {
         } else {
           navigate('/');
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -51,7 +86,7 @@ const Edit: React.FC<EditProps> = () => {
         />
         <Button onClick={publish}>Publish</Button>
       </div>
-      <LantingEditor onChange={onChange} />
+      <LantingEditor onChange={onChange} rawContent={rawContent} />
     </div>
   );
 };

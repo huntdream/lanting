@@ -5,5 +5,33 @@
 
   &-title {
     text-align: center;
+    margin-bottom: 6px;
+  }
+
+  &-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-text);
+    margin-bottom: 1.5rem;
+    position: relative;
+
+    > * {
+      margin: 0 4px;
+    }
+
+    &-edit {
+      font-size: 1.2rem;
+      position: absolute;
+      right: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    &:hover & {
+      &-edit {
+        opacity: 1;
+      }
+    }
   }
 }
