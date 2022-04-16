@@ -26,7 +26,7 @@ const Nav: React.FC<NavProps> = () => {
         </div>
         {!isEditPage && (
           <Link className='lanting-nav-edit' to='/edit'>
-            <Icon>edit</Icon>
+            <Icon clickable>edit</Icon>
           </Link>
         )}
         <ThemeToggle />

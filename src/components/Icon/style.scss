@@ -1,5 +1,12 @@
 .lanting-icon {
+  padding: 0.25rem;
+
   &--clickable {
     cursor: pointer;
+
+    &:hover {
+      border-radius: 5px;
+      background-color: var(--hover-overlay);
+    }
   }
 }

@@ -4,7 +4,9 @@ import './style.scss';
 
 interface IconProps extends HTMLAttributes<HTMLElement> {
   className?: string;
+  size?: number;
   style?: CSSProperties;
+  clickable?: boolean;
   children: string;
 }
 
@@ -12,18 +14,21 @@ const Icon: React.FC<IconProps> = ({
   className,
   children,
   style,
+  size,
+  clickable,
   onClick,
   ...props
 }) => {
   return (
     <i
       className={cls(
+        'lanting-icon',
         'material-icons',
-        onClick ? 'lanting-icon--clickable' : undefined,
+        onClick || clickable ? 'lanting-icon--clickable' : undefined,
         className
       )}
       onClick={onClick}
-      style={style}
+      style={{ fontSize: size, ...style }}
       {...props}
     >
       {children}
