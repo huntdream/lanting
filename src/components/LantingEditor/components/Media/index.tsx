@@ -14,8 +14,6 @@ const Media: React.FC<ImageProps> = ({ contentState, block, ...props }) => {
 
   const aspectRatio = width / height;
 
-  console.log(type, url, name, height, width);
-
   const renderMedia = () => {
     if (type === 'image') {
       return (
