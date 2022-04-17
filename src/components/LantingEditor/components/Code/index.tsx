@@ -1,8 +1,17 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, {
+  useState,
+  ChangeEvent,
+  useEffect,
+  useRef,
+  ReactNode,
+} from 'react';
 import './style.scss';
+import Prismjs from 'prismjs';
 import Icon from 'components/Icon';
 
-interface CodeProps {}
+interface CodeProps {
+  children?: ReactNode;
+}
 
 interface Lang {
   label: string;
@@ -27,6 +36,24 @@ const LANGS: Lang[] = [
 
 const Code: React.FC<CodeProps> = ({ children, ...props }) => {
   const [selectedLang, setSelectedLang] = useState('javascript');
+  const ref = useRef<HTMLPreElement>(null);
+
+  const highlight = () => {
+    if (ref.current) {
+      Prismjs.highlightElement(ref.current);
+    }
+  };
+
+  useEffect(() => {
+    highlight();
+  }, [selectedLang]);
+
+  const copy = () => {
+    if (ref.current) {
+      const text = ref.current.innerText;
+      navigator.clipboard.writeText(text);
+    }
+  };
 
   const handleLangChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedLang(event.target.value);
@@ -46,9 +73,9 @@ const Code: React.FC<CodeProps> = ({ children, ...props }) => {
             </option>
           ))}
         </select>
-        <Icon>description</Icon>
+        <Icon onClick={copy}>content_copy</Icon>
       </div>
-      <pre className={`language-${selectedLang}`}>
+      <pre className={`language-${selectedLang}`} ref={ref}>
         <code {...props}>{children}</code>
       </pre>
     </div>
