@@ -40,7 +40,6 @@ const Code: React.FC<CodeProps> = ({ children, ...props }) => {
 
   const highlight = () => {
     if (ref.current) {
-      Prismjs.highlightElement(ref.current);
     }
   };
 
