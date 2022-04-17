@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import cls from 'classnames';
 import './style.scss';
 
 interface ErrorProps {
   className?: string;
+  children?: ReactNode;
 }
 
 const Error: React.FC<ErrorProps> = ({ className, children }) => {

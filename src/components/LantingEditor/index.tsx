@@ -13,7 +13,6 @@ import {
   getDefaultKeyBinding,
   convertToRaw,
 } from 'draft-js';
-import Prismjs from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
 import classnames from 'classnames';
 import StyleControls from './StyleControls';
@@ -44,12 +43,12 @@ const LantingEditor: React.FC<LantingEditorProps> = ({
     if (!readOnly) {
       focusEditor();
     }
-    Prismjs.highlightAll();
   }, [readOnly]);
 
   useEffect(() => {
     if (rawContent) {
-      setEditorState(rawContent);
+      const newState = EditorState.set(rawContent, { decorator: decorators });
+      setEditorState(newState);
     }
   }, [rawContent]);
 

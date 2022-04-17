@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './style.scss';
 
-interface UnderlineProps {}
+interface UnderlineProps {
+  children?: ReactNode;
+}
 
 const Underline: React.FC<UnderlineProps> = ({ children }) => {
   return <div className='lanting-underline'>{children}</div>;

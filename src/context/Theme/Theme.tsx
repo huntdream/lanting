@@ -1,6 +1,7 @@
 import React, {
   createContext,
   FC,
+  ReactNode,
   useEffect,
   useLayoutEffect,
   useState,
@@ -18,7 +19,11 @@ export const ThemeContext = createContext<IThemeContext>({
   setTheme: () => {},
 });
 
-const ThemeProvider: FC = ({ children }) => {
+interface Props {
+  children?: ReactNode;
+}
+
+const ThemeProvider: FC<Props> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem('theme') || 'light') as Theme
   );

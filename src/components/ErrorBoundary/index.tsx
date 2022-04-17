@@ -1,7 +1,9 @@
 import Exception from 'components/Exception';
-import React from 'react';
+import React, { ReactNode } from 'react';
 
-interface IProps {}
+interface IProps {
+  children?: ReactNode;
+}
 
 class ErrorBoundary extends React.Component<IProps> {
   state: Readonly<{ error: boolean }> = {
