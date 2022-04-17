@@ -23,7 +23,7 @@ const useUpload = () => {
   }, []);
 
   const upload = useCallback(
-    (file) => {
+    (file: File) => {
       if (file && token) {
         const formData = new FormData();
 
