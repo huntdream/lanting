@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import LantingEditor from 'components/LantingEditor';
 import useArticle from 'api/useArticle';
-import { EditorState } from 'draft-js';
 import Date from 'components/Date';
 import Icon from 'components/Icon';
 
@@ -19,12 +18,6 @@ const Article: React.FC<ArticleProps> = () => {
 
   const { article } = useArticle(id);
 
-  const rawContent = useMemo(() => {
-    if (article?.content) {
-      return EditorState.createWithContent(article.content);
-    }
-  }, [article]);
-
   const navigateToEdit = () => {
     navigate(`/edit/${id}`);
   };
@@ -39,7 +32,7 @@ const Article: React.FC<ArticleProps> = () => {
         </Icon>
       </div>
       <div className='lanting-article-content'>
-        <LantingEditor readOnly rawContent={rawContent} />
+        <LantingEditor />
       </div>
     </div>
   );

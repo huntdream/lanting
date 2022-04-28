@@ -1,11 +1,10 @@
-import { ContentState, convertFromRaw } from 'draft-js';
 import useSWR, { SWRConfiguration } from 'swr';
 import request from 'utils/request';
 
 export interface IArticle {
   id: number;
   title: string;
-  content: ContentState;
+  content: string;
   excerpt: string;
   createdAt?: string;
 }
@@ -17,7 +16,7 @@ const fetcher = (url: string) =>
       if (content) {
         return {
           ...article,
-          content: convertFromRaw(JSON.parse(content)),
+          content,
         };
       }
     }
