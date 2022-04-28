@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import LantingEditor from 'components/LantingEditor';
-import { convertToRaw, EditorState } from 'draft-js';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import request from 'utils/request';
@@ -20,18 +19,8 @@ const Edit: React.FC<EditProps> = () => {
   });
 
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState<EditorState>();
 
   const navigate = useNavigate();
-
-  const rawContent = useMemo(() => {
-    if (article?.content) {
-      const content = EditorState.createWithContent(article.content);
-
-      setValue(content);
-      return content;
-    }
-  }, [article]);
 
   useEffect(() => {
     if (article) {
@@ -39,22 +28,11 @@ const Edit: React.FC<EditProps> = () => {
     }
   }, [article]);
 
-  const onChange = (contentState: EditorState) => {
-    setValue(contentState);
-  };
-
   const publish = () => {
     console.log('publishing');
 
     let content = '';
     let excerpt = '';
-
-    if (value) {
-      const state = convertToRaw(value.getCurrentContent());
-
-      content = JSON.stringify(state);
-      excerpt = state.blocks.find((block) => block.text)?.text || '';
-    }
 
     request
       .post<any, IArticle>(`article/${id}`, {
@@ -86,7 +64,7 @@ const Edit: React.FC<EditProps> = () => {
         />
         <Button onClick={publish}>Publish</Button>
       </div>
-      <LantingEditor onChange={onChange} rawContent={rawContent} />
+      <LantingEditor />
     </div>
   );
 };
