@@ -3,28 +3,40 @@
   cursor: pointer;
   outline: none;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  padding: 0 0.75rem;
-  height: 2.25rem;
+  padding: 6px 8px;
+  height: 32px;
+  line-height: 32px;
   border-radius: 6px;
   font-weight: 600;
 
   transition: background 200ms;
 
-  &--primary {
-    background-color: var(--primary-button-background);
-    color: var(--primary-button-text);
+  &-contained {
+    &--primary {
+      background-color: var(--primary-button-background);
+      color: var(--primary-button-text);
 
-    &:hover {
-      background-color: #1771e6;
+      &:hover {
+        background-color: #1771e6;
+      }
+    }
+
+    &--secondary {
+      background-color: var(--secondary-button-background);
+      color: var(--primary-text);
+
+      &:hover {
+        background-color: var(--hover-overlay);
+      }
     }
   }
 
-  &--secondary {
-    background-color: var(--secondary-button-background);
+  &-text {
+    background-color: transparent;
     color: var(--primary-text);
 
     &:hover {
@@ -32,14 +44,13 @@
     }
   }
 
-  &--disabled {
-    color: var(--disabled-text);
-    background-color: var(--disabled-button-background);
-    cursor: default;
+  &-icon {
+    padding: 0;
+  }
 
-    &:hover {
-      background-color: var(--disabled-button-background);
-    }
+  &--disabled {
+    opacity: 0.65;
+    pointer-events: none;
   }
 
   &:active {

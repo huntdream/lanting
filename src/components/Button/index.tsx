@@ -1,6 +1,7 @@
-import React, { CSSProperties, ButtonHTMLAttributes } from 'react';
+import React, { CSSProperties, ButtonHTMLAttributes, forwardRef } from 'react';
 import cls from 'classnames';
 import './style.scss';
+import Icon from 'components/Icon';
 
 type ButtonColor = 'primary' | 'secondary';
 
@@ -9,31 +10,48 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   style?: CSSProperties;
   disabled?: boolean;
   color?: ButtonColor;
+  icon?: string;
+  variant?: 'contained' | 'text';
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  className,
-  disabled,
-  style,
-  color = 'primary',
-  ...props
-}) => {
-  return (
-    <button
-      {...props}
-      className={cls(
-        'lanting-button',
-        `lanting-button--${color}`,
-        { 'lanting-button--disabled': disabled },
-        className
-      )}
-      style={style}
-      disabled={disabled}
-    >
-      {children}
-    </button>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      children,
+      className,
+      disabled,
+      icon,
+      style,
+      variant = 'contained',
+      color = 'primary',
+      ...props
+    },
+    ref
+  ) => {
+    const iconOnly = icon && !children;
+
+    return (
+      <button
+        {...props}
+        ref={ref}
+        className={cls(
+          'lanting-button',
+          `lanting-button-${variant}`,
+          `lanting-button-${variant}--${color}`,
+          {
+            'lanting-button--disabled': disabled,
+            'lanting-button-icon': iconOnly,
+          },
+          className
+        )}
+        style={style}
+        disabled={disabled}
+      >
+        {icon && <Icon>{icon}</Icon>}
+        {children}
+      </button>
+    );
+  }
+);
 
 export default Button;
