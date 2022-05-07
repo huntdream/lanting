@@ -1,7 +1,7 @@
 .lanting-editor {
   .editor-container {
     border-radius: 2px;
-    color: #000;
+    color: var(--primary-text);
     position: relative;
     line-height: 20px;
     font-weight: 400;
@@ -11,7 +11,6 @@
   }
 
   .editor-inner {
-    background: #fff;
     position: relative;
   }
 
@@ -72,7 +71,7 @@
   }
 
   .editor-code {
-    background-color: rgb(240, 242, 245);
+    background-color: var(--code-bg-color);
     font-family: Menlo, Consolas, Monaco, monospace;
     display: block;
     padding: 8px 8px 8px 52px;
@@ -100,6 +99,7 @@
     text-align: right;
     min-width: 25px;
   }
+
   .editor-code:after {
     content: attr(data-highlight-language);
     top: 0;
@@ -173,8 +173,7 @@
   }
 
   .editor-quote {
-    margin: 0;
-    margin-left: 20px;
+    margin: 0 0 10px 20px;
     font-size: 15px;
     color: rgb(101, 103, 107);
     border-left-color: rgb(206, 208, 212);
