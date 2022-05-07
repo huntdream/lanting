@@ -1,0 +1,10 @@
+.lanting-select {
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 0 8px;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: var(--hover-overlay);
+  }
+}
