@@ -3,6 +3,8 @@
   border-radius: var(--border-radius);
   padding: 0 8px;
   font-size: 1rem;
+  background-color: transparent;
+  color: var(--primary-text);
 
   &:hover {
     background-color: var(--hover-overlay);
