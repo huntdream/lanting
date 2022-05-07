@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import './style.scss';
+import React, { useEffect, useRef, useState } from 'react';
 import LantingEditor from 'components/LantingEditor';
 import Button from 'components/Button';
 import Input from 'components/Input';
@@ -7,11 +6,15 @@ import request from 'utils/request';
 import { IArticle } from 'typing/article';
 import { useNavigate, useParams } from 'react-router-dom';
 import useArticle from 'api/useArticle';
+import { EditorState, TextNode } from 'lexical';
+
+import './style.scss';
 
 interface EditProps {}
 
 const Edit: React.FC<EditProps> = () => {
   const { id = '' } = useParams<{ id: string }>();
+  const ref = useRef<EditorState>();
 
   const { article } = useArticle(id, {
     revalidateOnFocus: false,
@@ -31,8 +34,17 @@ const Edit: React.FC<EditProps> = () => {
   const publish = () => {
     console.log('publishing');
 
-    let content = '';
-    let excerpt = '';
+    const json = ref.current?.toJSON();
+
+    const textNode = json?._nodeMap.find(
+      (node) => node[1].__type === 'text'
+    )?.[1] as TextNode;
+
+    const excerpt = textNode?.__text;
+
+    const content = JSON.stringify(json);
+
+    console.log(json);
 
     request
       .post<any, IArticle>(`article/${id}`, {
@@ -53,6 +65,10 @@ const Edit: React.FC<EditProps> = () => {
       });
   };
 
+  const handleEditorChange = (editorState: EditorState) => {
+    ref.current = editorState;
+  };
+
   return (
     <div className='lanting-edit'>
       <div className='lanting-edit-header'>
@@ -62,9 +78,14 @@ const Edit: React.FC<EditProps> = () => {
           value={title}
           onChange={({ target: { value } }) => setTitle(value)}
         />
-        <Button onClick={publish}>Publish</Button>
+        <Button onClick={publish} disabled={!title}>
+          Publish
+        </Button>
       </div>
-      <LantingEditor />
+      <LantingEditor
+        onChange={handleEditorChange}
+        initialEditorState={article?.content}
+      />
     </div>
   );
 };

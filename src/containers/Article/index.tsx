@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import LantingEditor from 'components/LantingEditor';
@@ -18,6 +18,10 @@ const Article: React.FC<ArticleProps> = () => {
 
   const { article } = useArticle(id);
 
+  console.log(article);
+
+  useEffect(() => {}, [article]);
+
   const navigateToEdit = () => {
     navigate(`/edit/${id}`);
   };
@@ -32,7 +36,9 @@ const Article: React.FC<ArticleProps> = () => {
         </Icon>
       </div>
       <div className='lanting-article-content'>
-        <LantingEditor />
+        {article?.content && (
+          <LantingEditor initialEditorState={article?.content} readOnly />
+        )}
       </div>
     </div>
   );
