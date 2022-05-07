@@ -1,0 +1,27 @@
+.lanting-dropdown {
+  z-index: 5;
+  position: absolute;
+  box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1),
+    inset 0 0 0 1px var(--shadow-inset);
+  border-radius: 8px;
+  min-width: 100px;
+  background-color: var(--bg-color);
+  padding: 8px;
+  display: block;
+
+  &-label {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--primary-text);
+
+    &-text {
+      margin: 0 12px;
+    }
+
+    &:hover {
+      background-color: var(--hover-overlay);
+    }
+  }
+}
