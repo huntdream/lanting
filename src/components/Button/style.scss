@@ -53,6 +53,10 @@
     pointer-events: none;
   }
 
+  &--active {
+    background-color: var(--active-color);
+  }
+
   &:active {
     transform: scale(0.98);
   }

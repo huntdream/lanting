@@ -6,6 +6,7 @@ import Icon from 'components/Icon';
 type ButtonColor = 'primary' | 'secondary';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
   className?: string;
   style?: CSSProperties;
   disabled?: boolean;
@@ -17,6 +18,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      active,
       children,
       className,
       disabled,
@@ -41,6 +43,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             'lanting-button--disabled': disabled,
             'lanting-button-icon': iconOnly,
+            'lanting-button--active': active,
           },
           className
         )}
