@@ -1,5 +1,6 @@
-import { useTheme } from 'context/Theme';
 import React from 'react';
+import Icon from 'components/Icon';
+import { useTheme } from 'context/Theme';
 import './style.scss';
 
 interface ThemeToggleProps {}
@@ -17,7 +18,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = () => {
 
   return (
     <div className='lanting-themetoggle' onClick={toggleTheme}>
-      {theme === 'dark' ? '🌙' : '☀️'}
+      <Icon>{theme === 'dark' ? 'dark_mode' : 'light_mode'}</Icon>
     </div>
   );
 };
