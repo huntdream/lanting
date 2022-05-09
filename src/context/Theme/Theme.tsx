@@ -35,6 +35,14 @@ const ThemeProvider: FC<Props> = ({ children }) => {
 
   useLayoutEffect(() => {
     document.body.classList.add('theme-fade');
+
+    window
+      .matchMedia('(prefers-color-scheme: dark)')
+      .addEventListener('change', (e) => {
+        const colorScheme = e.matches ? 'dark' : 'light';
+
+        setTheme(colorScheme);
+      });
   }, []);
 
   useEffect(() => {
