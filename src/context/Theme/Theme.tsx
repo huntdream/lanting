@@ -23,6 +23,11 @@ interface Props {
   children?: ReactNode;
 }
 
+const MetaThemeColor = {
+  light: '#fff',
+  dark: '#18191a',
+};
+
 const ThemeProvider: FC<Props> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(
     (localStorage.getItem('theme') || 'light') as Theme
@@ -42,6 +47,9 @@ const ThemeProvider: FC<Props> = ({ children }) => {
     }
 
     localStorage.setItem('theme', theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+
+    meta?.setAttribute('content', MetaThemeColor[theme]);
   }, [theme]);
 
   const context = {
