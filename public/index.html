@@ -26,9 +26,18 @@
     <script>
       (function () {
         try {
-          var mode = localStorage.getItem('theme');
-          if (!mode) return;
-          document.documentElement.classList.add(mode);
+          const theme = localStorage.getItem('theme');
+          if (!theme) return;
+          document.documentElement.classList.add(theme);
+
+          const MetaThemeColor = {
+            light: '#fff',
+            dark: '#18191a',
+          };
+
+          const meta = document.querySelector('meta[name="theme-color"]');
+
+          meta?.setAttribute('content', MetaThemeColor[theme]);
         } catch (e) {}
       })();
     </script>

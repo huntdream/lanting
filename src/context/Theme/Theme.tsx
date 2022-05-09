@@ -35,7 +35,7 @@ const ThemeProvider: FC<Props> = ({ children }) => {
 
   useLayoutEffect(() => {
     document.body.classList.add('theme-fade');
-  }, [setTheme]);
+  }, []);
 
   useEffect(() => {
     if (theme === 'light') {
