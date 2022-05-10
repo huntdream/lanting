@@ -7,16 +7,14 @@ import { useNavigate, Link } from 'react-router-dom';
 import Button from 'components/Button';
 import * as Yup from 'yup';
 import Text from 'components/Text';
+import { useUser } from 'context/App';
+import { IUser } from 'typing/user';
 
 interface SignInProps {}
 
 interface FormValues {
   username: string;
   password: string;
-}
-
-interface SignInResponse {
-  token: string;
 }
 
 const Schema: Yup.SchemaOf<FormValues> = Yup.object({
@@ -31,7 +29,7 @@ const Schema: Yup.SchemaOf<FormValues> = Yup.object({
 });
 
 const SignIn: React.FC<SignInProps> = () => {
-  const [, setUser] = useState<any>();
+  const [, setUser] = useUser();
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
 
@@ -51,12 +49,12 @@ const SignIn: React.FC<SignInProps> = () => {
           console.log(values);
 
           return request
-            .post<any, SignInResponse>('/auth/signin', {
+            .post<any, IUser>('/auth/signin', {
               ...values,
             })
             .then(({ token, ...user }) => {
               setUser(user);
-              localStorage.setItem('lanting-token', token);
+              localStorage.setItem('lanting-token', token!);
               navigate('/');
             })
             .catch((err) => {

@@ -4,6 +4,7 @@ import request from 'utils/request';
 export interface IArticle {
   id: number;
   title: string;
+  authorId: string;
   content: string;
   excerpt: string;
   createdAt?: string;

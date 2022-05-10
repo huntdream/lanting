@@ -7,6 +7,7 @@ import Nav from 'components/Nav';
 import routes from 'routes';
 import Loading from 'components/Loading';
 import ThemeProvider from 'context/Theme';
+import AppProvider from 'context/App';
 
 function App() {
   const pages = useRoutes(
@@ -21,14 +22,16 @@ function App() {
   );
 
   return (
-    <ThemeProvider>
-      <ErrorBoundary>
-        <div className='lanting-app'>
-          <Nav />
-          <main className='lanting-app-main'>{pages}</main>
-        </div>
-      </ErrorBoundary>
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider>
+        <ErrorBoundary>
+          <div className='lanting-app'>
+            <Nav />
+            <main className='lanting-app-main'>{pages}</main>
+          </div>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </AppProvider>
   );
 }
 

@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import './style.scss';
+import { IUser } from 'typing/user';
+import { useUser } from 'context/App';
 
 interface SignUpProps {}
 
@@ -28,6 +30,7 @@ const Schema = Yup.object({
 });
 
 const SignUp: React.FC<SignUpProps> = () => {
+  const [, setUser] = useUser();
   const [errorMsg, setErrorMsg] = useState('');
 
   const navigate = useNavigate();
@@ -46,11 +49,12 @@ const SignUp: React.FC<SignUpProps> = () => {
         validationSchema={Schema}
         onSubmit={(values, { setSubmitting }) => {
           return request
-            .post('/auth/signup', {
+            .post<any, IUser>('/auth/signup', {
               ...values,
             })
-            .then(({ token }: any) => {
-              localStorage.setItem('lanting-token', token);
+            .then(({ token, ...user }) => {
+              setUser(user);
+              localStorage.setItem('lanting-token', token!);
               setSubmitting(false);
               navigate('/');
             })
