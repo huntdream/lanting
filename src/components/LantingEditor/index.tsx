@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import cls from 'classnames';
 import { EditorState, LexicalEditor } from 'lexical';
 import LexicalComposer from '@lexical/react/LexicalComposer';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -11,7 +12,6 @@ import { ImageNode } from './nodes/ImageNode';
 import Editor from './Editor';
 
 import './style.scss';
-import InitializePlugin from './plugins/InitializePlugin';
 
 interface Props {
   readOnly?: boolean;
@@ -47,7 +47,11 @@ const LantingEditor: FC<Props> = ({
   };
 
   return (
-    <div className='lanting-editor'>
+    <div
+      className={cls('lanting-editor', {
+        'lanting-editor--readonly': readOnly,
+      })}
+    >
       <LexicalComposer initialConfig={editorConfig}>
         <Editor
           readOnly={readOnly}

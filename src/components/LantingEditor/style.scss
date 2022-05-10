@@ -25,6 +25,12 @@
     caret-color: #444;
   }
 
+  &--readonly {
+    .editor-input {
+      padding: 15px 0;
+    }
+  }
+
   .editor-placeholder {
     color: #999;
     overflow: hidden;
