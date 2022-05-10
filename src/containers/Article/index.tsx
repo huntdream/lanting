@@ -5,7 +5,6 @@ import LantingEditor from 'components/LantingEditor';
 import useArticle from 'api/useArticle';
 import Date from 'components/Date';
 import Icon from 'components/Icon';
-import { useUser } from 'context/App';
 
 interface ArticleProps {}
 
@@ -14,13 +13,10 @@ interface ArticleParams {
 }
 
 const Article: React.FC<ArticleProps> = () => {
-  const [user] = useUser();
   const { id = '' } = useParams<keyof ArticleParams>();
   const navigate = useNavigate();
 
   const { article } = useArticle(id);
-
-  const canEdit = user?.id === article?.authorId;
 
   const navigateToEdit = () => {
     navigate(`/edit/${id}`);
@@ -31,7 +27,7 @@ const Article: React.FC<ArticleProps> = () => {
       <h2 className='lanting-article-title'>{article?.title}</h2>
       <div className='lanting-article-meta'>
         <Date date={article?.createdAt} />
-        {canEdit && (
+        {article?.canEdit && (
           <Icon onClick={navigateToEdit} className='lanting-article-meta-edit'>
             edit
           </Icon>

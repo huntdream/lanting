@@ -8,6 +8,7 @@ export interface IArticle {
   content: string;
   excerpt: string;
   createdAt?: string;
+  canEdit: boolean;
 }
 
 const fetcher = (url: string) =>
