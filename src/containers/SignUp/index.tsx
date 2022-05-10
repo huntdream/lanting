@@ -49,9 +49,10 @@ const SignUp: React.FC<SignUpProps> = () => {
             .post('/auth/signup', {
               ...values,
             })
-            .then(() => {
+            .then(({ token }: any) => {
+              localStorage.setItem('lanting-token', token);
               setSubmitting(false);
-              navigate('/', { replace: true });
+              navigate('/');
             })
             .catch((err) => {
               setErrorMsg(err.message);
