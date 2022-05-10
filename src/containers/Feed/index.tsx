@@ -11,7 +11,7 @@ const Feed: React.FC<FeedProps> = () => {
 
   return (
     <div className='lanting-feed'>
-      {feed?.data.map((post) => (
+      {feed?.data?.map((post) => (
         <Post key={post.id} {...post} />
       ))}
     </div>
