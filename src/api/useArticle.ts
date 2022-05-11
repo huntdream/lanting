@@ -1,5 +1,5 @@
+import useRequest from 'hooks/useRequest';
 import useSWR, { SWRConfiguration } from 'swr';
-import request from 'utils/request';
 
 export interface IArticle {
   id: number;
@@ -11,22 +11,14 @@ export interface IArticle {
   canEdit: boolean;
 }
 
-const fetcher = (url: string) =>
-  request(url).then((article: any) => {
-    if (article) {
-      const { content } = article;
-      if (content) {
-        return {
-          ...article,
-          content,
-        };
-      }
-    }
-
-    return article;
-  });
-
 const useArticle = (id: string, config?: SWRConfiguration<IArticle>) => {
+  const [request] = useRequest();
+
+  const fetcher = (url: string) =>
+    request(url).then((article: any) => {
+      return article;
+    });
+
   const { data, error } = useSWR<IArticle>(
     id ? `/article/${id}` : null,
     fetcher,
