@@ -34,7 +34,7 @@ const Date: React.FC<DateProps> = ({
 
   return (
     <div className='lanting-date' title={datetime}>
-      <Icon className='lanting-date-icon'>date_range</Icon>
+      {dateStr && <Icon className='lanting-date-icon'>date_range</Icon>}
       {dateStr}
     </div>
   );
