@@ -86,16 +86,25 @@ export class ImageNode extends DecoratorNode<ReactNode> {
   }
 
   decorate(): ReactNode {
-    return <Image src={this.__src} alt={this.__altText} />;
+    console.log(this);
+    return (
+      <Image
+        src={this.__src}
+        alt={this.__altText}
+        height={this.__height}
+        width={this.__width}
+      />
+    );
   }
 }
 
 export function $createImageNode(
   src: string,
   altText: string,
-  maxWidth: number
+  height: number,
+  width: number
 ): ImageNode {
-  return new ImageNode(src, altText, maxWidth);
+  return new ImageNode(src, altText, 500, width, height);
 }
 
 export function $isImageNode(node?: LexicalNode): boolean {

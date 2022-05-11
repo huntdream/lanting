@@ -15,6 +15,8 @@ import { $createImageNode, ImageNode } from '../../nodes/ImageNode';
 export type InsertImagePayload = {
   altText: string;
   src: string;
+  height: number;
+  width: number;
 };
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =
@@ -36,7 +38,13 @@ const ImagesPlugin: FC = () => {
           if ($isRootNode(selection.anchor.getNode())) {
             selection.insertParagraph();
           }
-          const imageNode = $createImageNode(payload.src, payload.altText, 500);
+
+          const imageNode = $createImageNode(
+            payload.src,
+            payload.altText,
+            payload.height,
+            payload.width
+          );
           selection.insertNodes([imageNode]);
         }
         return true;

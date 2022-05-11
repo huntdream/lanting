@@ -11,11 +11,14 @@ interface Props {
 }
 
 const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
-  const [src, setSrc] = useState('');
-  const [altText, setAltText] = useState('');
+  const [image, setImage] = useState<IFile>();
 
   const handleInsert = () => {
-    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, { src });
+    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, {
+      src: image?.url,
+      height: image?.height,
+      width: image?.width,
+    });
 
     if (onClose) {
       onClose();
@@ -23,7 +26,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
   };
 
   const handleImageChange = (files: IFile[]) => {
-    setSrc(files?.[0].url);
+    setImage(files?.[0]);
   };
 
   return (
@@ -31,7 +34,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
       <Upload onChange={handleImageChange} />
 
       <div className='lanting-editor-insert-image-footer'>
-        <Button onClick={handleInsert} disabled={!src}>
+        <Button onClick={handleInsert} disabled={!image?.url}>
           Confirm
         </Button>
       </div>
