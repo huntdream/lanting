@@ -15,6 +15,10 @@ const Date: React.FC<DateProps> = ({
   fromNow,
 }) => {
   const [dateStr, datetime] = useMemo(() => {
+    if (!date) {
+      return ['', ''];
+    }
+
     const momented = moment(date);
 
     let theDate = '';
