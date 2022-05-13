@@ -53,7 +53,7 @@ const Editor: React.FC<Props> = ({
           <ListPlugin />
           <LinkPlugin />
           <ImagesPlugin />
-          <LexicalMarkdownShortcutPlugin />
+          {/* <LexicalMarkdownShortcutPlugin /> */}
         </div>
       </div>
     </>
