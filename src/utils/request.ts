@@ -1,6 +1,5 @@
 import axios from 'axios';
 import config from 'config';
-import history from './history';
 
 const request = axios.create({
   baseURL: config.baseurl,
@@ -24,9 +23,6 @@ request.interceptors.response.use(
   },
   (error) => {
     console.log(error.response);
-    if (error?.response?.status === 401) {
-      history.push('/signin');
-    }
 
     return Promise.reject(error?.response?.data);
   }
