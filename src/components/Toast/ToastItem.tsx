@@ -36,6 +36,7 @@ const ToastItem: React.FC<Props> = ({ id, text, timeout = 3000, onClose }) => {
       onClose(id);
     }, wait);
 
+    now.current = Date.now();
     setPlayState('running');
   };
 
