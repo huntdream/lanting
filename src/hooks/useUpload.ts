@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import createUID from 'utils/createUID';
 import request from 'utils/request';
 
 export interface IFile {
@@ -10,6 +11,15 @@ export interface IFile {
   width: number;
   height: number;
 }
+
+const getDate = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+
+  return `${year}-${month}-${day}`;
+};
 
 const useUpload = () => {
   const [token, setToken] = useState<string>('');
@@ -29,9 +39,12 @@ const useUpload = () => {
 
         const name = file.name;
 
+        const uid = createUID();
+        const key = getDate() + '-' + uid;
+
         formData.append('token', token);
         formData.append('file', file);
-        formData.append('key', name);
+        formData.append('key', key);
         formData.append('fname', name);
 
         return request('https://upload.qiniup.com/', {
