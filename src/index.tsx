@@ -10,15 +10,14 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 root.render(
-  <React.StrictMode>
-    <Router>
-      <SWRConfig
-        value={{
-          fetcher: request,
-        }}
-      >
-        <App />
-      </SWRConfig>
-    </Router>
-  </React.StrictMode>
+  <Router>
+    <SWRConfig
+      value={{
+        fetcher: request,
+        revalidateOnMount: true,
+      }}
+    >
+      <App />
+    </SWRConfig>
+  </Router>
 );
