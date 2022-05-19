@@ -1,13 +1,14 @@
 import React, { Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
-import './style.scss';
-
 import ErrorBoundary from 'components/ErrorBoundary';
 import Nav from 'components/Nav';
 import routes from 'routes';
 import Loading from 'components/Loading';
 import ThemeProvider from 'context/Theme';
 import AppProvider from 'context/App';
+import Toast from 'components/Toast';
+
+import './style.scss';
 
 function App() {
   const pages = useRoutes(
@@ -25,10 +26,12 @@ function App() {
     <AppProvider>
       <ThemeProvider>
         <ErrorBoundary>
-          <div className='lanting-app'>
-            <Nav />
-            <main className='lanting-app-main'>{pages}</main>
-          </div>
+          <Toast>
+            <div className='lanting-app'>
+              <Nav />
+              <main className='lanting-app-main'>{pages}</main>
+            </div>
+          </Toast>
         </ErrorBoundary>
       </ThemeProvider>
     </AppProvider>

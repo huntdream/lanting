@@ -1,0 +1,48 @@
+.lanting-toast {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  transition: height;
+  will-change: height;
+
+  &-item {
+    background-color: var(--toast-bg);
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: var(--box-shadow);
+    animation: slideIn 300ms ease-in-out;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+
+    &-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgb(171, 148, 148);
+      height: 2px;
+      animation: shrink 3000ms linear forwards;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}

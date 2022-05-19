@@ -17,6 +17,9 @@
   --shadow-1: rgb(0 0 0 / 10%);
   --shadow-2: rgb(0 0 0 / 20%);
   --shadow-inset: rgb(255 255 255 / 5%);
+  --box-shadow: 0 12px 28px 0 var(--shadow-2), 0 2px 4px 0 var(--shadow-1);
+
+  --toast-bg: #313131;
 
   --media-inner-border: rgb(255 255 255 / 5%);
 
