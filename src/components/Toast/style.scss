@@ -14,6 +14,12 @@
     margin-bottom: 12px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    .lanting-icon {
+      margin-left: 6px;
+    }
 
     &-progress {
       position: absolute;

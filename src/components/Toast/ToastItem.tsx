@@ -1,9 +1,11 @@
+import Icon from 'components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
 import './style.scss';
 
 export interface IToastItem {
   id: string;
   text: string;
+  timeout?: number;
 }
 
 interface Props extends IToastItem {
@@ -40,13 +42,18 @@ const ToastItem: React.FC<Props> = ({ id, text, timeout = 3000, onClose }) => {
     setPlayState('running');
   };
 
+  const handleClose = () => {
+    onClose(id);
+  };
+
   return (
     <div
       className='lanting-toast-item'
       onMouseEnter={handleClearTimeout}
       onMouseLeave={handleSetTimeout}
     >
-      {text}
+      <div className='lanting-toast-item-content'>{text}</div>
+      <Icon onClick={handleClose}>close</Icon>
       <div
         className='lanting-toast-item-progress'
         style={{ animationPlayState: playState }}

@@ -19,13 +19,14 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
   const [list, setList] = useState<IToastItem[]>([]);
 
   const toast = useCallback(
-    (text: string, wait: number = 2000) => {
+    (text: string, timeout: number = 3000) => {
       const id = createUID();
 
       setList(
         list.concat({
           id,
           text,
+          timeout,
         })
       );
 
