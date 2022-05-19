@@ -1,16 +1,18 @@
 import React, { useMemo } from 'react';
 import classNames from 'classnames';
-import './style.scss';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from 'components/Icon';
-
 import ThemeToggle from 'components/ThemeToggle';
+import useToast from 'components/Toast/useToast';
+
+import './style.scss';
 
 interface NavProps {}
 
 const Nav: React.FC<NavProps> = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [toast] = useToast();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
@@ -18,6 +20,10 @@ const Nav: React.FC<NavProps> = () => {
 
   const handleAccountClick = () => {
     navigate('/signin');
+  };
+
+  const handleNotify = () => {
+    toast('Hello world');
   };
 
   return (
@@ -29,13 +35,17 @@ const Nav: React.FC<NavProps> = () => {
           </Link>
           <div className='lanting-nav-bio'>小舟从此逝，江海寄余生</div>
         </div>
-        {!isEditPage && (
-          <Link className='lanting-nav-edit' to='/edit'>
-            <Icon clickable>edit</Icon>
-          </Link>
-        )}
-        <ThemeToggle />
-        <Icon onClick={handleAccountClick}>account_circle</Icon>
+
+        <div className='lanting-nav-icons'>
+          {!isEditPage && (
+            <Link className='lanting-nav-edit' to='/edit'>
+              <Icon clickable>edit</Icon>
+            </Link>
+          )}
+          <ThemeToggle />
+          <Icon onClick={handleNotify}>notifications</Icon>
+          <Icon onClick={handleAccountClick}>account_circle</Icon>
+        </div>
       </div>
     </nav>
   );

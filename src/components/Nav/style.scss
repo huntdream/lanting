@@ -31,8 +31,12 @@
     font-size: 0.875rem;
   }
 
+  &-icons {
+    display: flex;
+    align-items: center;
+  }
+
   &-edit {
-    margin-left: auto;
     cursor: pointer;
     width: 2rem;
     height: 2rem;
