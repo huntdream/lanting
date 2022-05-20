@@ -2,18 +2,26 @@ import Icon from 'components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
 import './style.scss';
 
-export interface IToastItem {
+export interface IToastConfig {
   id: string;
-  text: string;
+  close?: boolean;
   timeout?: number;
+  showProgress?: boolean;
 }
 
-interface Props extends IToastItem {
-  timeout?: number;
+interface Props extends IToastConfig {
+  text: string;
   onClose: (id: string) => void;
 }
 
-const ToastItem: React.FC<Props> = ({ id, text, timeout = 3000, onClose }) => {
+const ToastItem: React.FC<Props> = ({
+  id,
+  text,
+  close,
+  timeout = 3000,
+  showProgress,
+  onClose,
+}) => {
   const now = useRef(Date.now());
   const timer = useRef<number>(0);
   const [wait, setWait] = useState(timeout);
@@ -53,11 +61,13 @@ const ToastItem: React.FC<Props> = ({ id, text, timeout = 3000, onClose }) => {
       onMouseLeave={handleSetTimeout}
     >
       <div className='lanting-toast-item-content'>{text}</div>
-      <Icon onClick={handleClose}>close</Icon>
-      <div
-        className='lanting-toast-item-progress'
-        style={{ animationPlayState: playState }}
-      ></div>
+      {close && <Icon onClick={handleClose}>close</Icon>}
+      {showProgress && (
+        <div
+          className='lanting-toast-item-progress'
+          style={{ animationPlayState: playState }}
+        ></div>
+      )}
     </div>
   );
 };

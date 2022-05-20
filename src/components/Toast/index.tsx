@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import createUID from 'utils/createUID';
 import './style.scss';
-import ToastItem, { IToastItem } from './ToastItem';
+import ToastItem, { IToastConfig } from './ToastItem';
 
 interface IContext {
   toast: (text: string) => void;
@@ -14,22 +14,33 @@ interface ToastProps {
   children: ReactNode;
 }
 
+interface IToastItem extends IToastConfig {
+  text: string;
+}
+
 const Toast: React.FC<ToastProps> = ({ children }) => {
   const [show, setShow] = useState(false);
   const [list, setList] = useState<IToastItem[]>([]);
 
   const toast = useCallback(
-    (text: string, timeout: number = 3000) => {
-      const id = createUID();
+    (text: string, config?: IToastConfig) => {
+      const newConfig = { text, ...config };
+      const newList = [...list];
 
-      setList(
-        list.concat({
-          id,
-          text,
-          timeout,
-        })
-      );
+      if (newConfig.id) {
+        const prevIndex = list.findIndex((item) => item.id === newConfig.id);
 
+        if (prevIndex !== -1 && newConfig.id) {
+          newList[prevIndex] = newConfig as IToastItem;
+        } else {
+          newList.push(newConfig as IToastItem);
+        }
+      } else {
+        const id = createUID();
+        newList.push({ ...newConfig, id });
+      }
+
+      setList(newList);
       setShow(true);
     },
     [setShow, list]
@@ -49,8 +60,8 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
       {show
         ? createPortal(
             <div className='lanting-toast'>
-              {list.map(({ id, text }) => (
-                <ToastItem key={id} id={id} text={text} onClose={handleClose} />
+              {list.map(({ id, ...config }) => (
+                <ToastItem key={id} id={id} {...config} onClose={handleClose} />
               ))}
             </div>,
             document.body

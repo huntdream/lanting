@@ -1,5 +1,5 @@
 .lanting-toast {
-  position: absolute;
+  position: fixed;
   right: 2rem;
   bottom: 2rem;
   transition: height;
@@ -7,8 +7,8 @@
 
   &-item {
     background-color: var(--toast-bg);
-    border-radius: 8px;
-    padding: 12px;
+    border-radius: 6px;
+    padding: 6px 16px;
     box-shadow: var(--box-shadow);
     animation: slideIn 300ms ease-in-out;
     margin-bottom: 12px;
@@ -16,9 +16,12 @@
     overflow: hidden;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    min-height: 48px;
+    width: 344px;
 
     .lanting-icon {
-      margin-left: 6px;
+      margin: 0 -8px 0 8px;
     }
 
     &-progress {
