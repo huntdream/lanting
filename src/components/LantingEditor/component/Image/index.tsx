@@ -23,7 +23,7 @@ const Image: FC<Props> = ({ src, alt, width, height }) => {
       style={{
         aspectRatio,
       }}
-      src={src}
+      src={`${src}?imageView2/2/w/1000`}
       alt={alt}
     />
   );
