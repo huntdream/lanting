@@ -1,6 +1,6 @@
-import Button from 'components/Button';
+import Icon from 'components/Icon';
 import useUpload from 'hooks/useUpload';
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, ReactNode, useRef, useState } from 'react';
 import Preview from './Preview';
 import './style.scss';
 
@@ -18,6 +18,7 @@ interface UploadProps {
   accept?: string;
   multiple?: boolean;
   files?: IFile[];
+  children?: ReactNode;
   onChange?: (files: IFile[]) => void;
 }
 
@@ -25,6 +26,7 @@ const Upload: React.FC<UploadProps> = ({
   accept,
   multiple,
   files,
+  children,
   onChange,
 }) => {
   const [fileList, setFileList] = useState<IFile[]>([]);
@@ -53,6 +55,11 @@ const Upload: React.FC<UploadProps> = ({
     }
   };
 
+  const removeFile = (file: IFile) => {
+    const newFiles = fileList.filter((item) => item.key !== file.key);
+    setFileList(newFiles);
+  };
+
   const openFilePicker = () => {
     if (ref.current) {
       ref.current.click();
@@ -61,13 +68,16 @@ const Upload: React.FC<UploadProps> = ({
 
   const renderPreviewImages = () => {
     if (fileList?.length) {
-      return fileList.map((file, index) => <Preview file={file} key={index} />);
+      return fileList.map((file, index) => (
+        <Preview file={file} key={index} onRemove={() => removeFile(file)} />
+      ));
     }
   };
 
+  const showPlaceholder = multiple || fileList.length < 1;
+
   return (
     <div className='lanting-upload'>
-      <Button onClick={openFilePicker}>Upload</Button>
       <input
         type='file'
         className='lanting-upload-input'
@@ -77,6 +87,16 @@ const Upload: React.FC<UploadProps> = ({
         multiple={multiple}
       />
       <div className='lanting-upload-preview-list'>{renderPreviewImages()}</div>
+      {showPlaceholder && (
+        <div onClick={openFilePicker}>
+          {children || (
+            <div className='lanting-upload-placeholder'>
+              <Icon>file_upload</Icon>
+              <span>Upload</span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

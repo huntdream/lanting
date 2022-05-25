@@ -1,14 +1,16 @@
+import Button from 'components/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { IFile } from '.';
 import './style.scss';
 
 interface PreviewProps {
   file: IFile | File;
+  onRemove: () => void;
 }
 
 export type FileType = 'image' | 'audio' | 'video';
 
-const Preview: React.FC<PreviewProps> = ({ file }) => {
+const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
   const [url, setUrl] = useState<string | undefined>();
   const [type, setType] = useState<FileType>();
 
@@ -25,7 +27,7 @@ const Preview: React.FC<PreviewProps> = ({ file }) => {
       }
     } else {
       if (file.type.startsWith('image/')) {
-        setUrl(`${file.url}?imageView2/2/w/600`);
+        setUrl(`${file.url}?imageView2/2/w/100`);
         setType('image');
       } else if (file.type.startsWith('video/')) {
         setUrl(file.url);
@@ -55,6 +57,12 @@ const Preview: React.FC<PreviewProps> = ({ file }) => {
   return url ? (
     <div className='lanting-upload-preview' key={url}>
       {preview}
+      <Button
+        color='secondary'
+        icon='close'
+        className='lanting-upload-preview-remove'
+        onClick={onRemove}
+      />
     </div>
   ) : null;
 };
