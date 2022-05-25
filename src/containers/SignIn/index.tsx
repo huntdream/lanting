@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import Text from 'components/Text';
 import { useUser } from 'context/App';
 import { IUser } from 'typing/user';
+import useToast from 'components/Toast/useToast';
 
 interface SignInProps {}
 
@@ -32,6 +33,7 @@ const SignIn: React.FC<SignInProps> = () => {
   const [, setUser] = useUser();
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
+  const [toast] = useToast();
 
   const initialValues: FormValues = useMemo(
     () => ({
@@ -53,6 +55,7 @@ const SignIn: React.FC<SignInProps> = () => {
               ...values,
             })
             .then(({ token, ...user }) => {
+              toast('Welcome back!');
               setUser(user);
               localStorage.setItem('lanting-token', token!);
               navigate('/');
@@ -60,6 +63,7 @@ const SignIn: React.FC<SignInProps> = () => {
             .catch((err) => {
               setErrorMsg(err.message);
               setSubmitting(false);
+              toast(err.message);
             });
         }}
         initialValues={initialValues}
