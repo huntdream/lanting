@@ -10,4 +10,8 @@
       background-color: var(--hover-overlay);
     }
   }
+
+  &-round {
+    border-radius: 50%;
+  }
 }

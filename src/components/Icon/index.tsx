@@ -7,6 +7,7 @@ interface IconProps extends HTMLAttributes<HTMLElement> {
   size?: number;
   style?: CSSProperties;
   clickable?: boolean;
+  round?: boolean;
   children: string;
 }
 
@@ -15,6 +16,7 @@ const Icon: React.FC<IconProps> = ({
   children,
   style,
   size,
+  round,
   clickable,
   onClick,
   ...props
@@ -25,7 +27,10 @@ const Icon: React.FC<IconProps> = ({
         'lanting-icon',
         'material-icons',
         onClick || clickable ? 'lanting-icon--clickable' : undefined,
-        className
+        className,
+        {
+          'lanting-icon-round': round,
+        }
       )}
       onClick={onClick}
       style={{ fontSize: size, ...style }}
