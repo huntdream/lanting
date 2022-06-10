@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cls from 'classnames';
 import { EditorState, LexicalEditor } from 'lexical';
-import LexicalComposer from '@lexical/react/LexicalComposer';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { ListItemNode, ListNode } from '@lexical/list';
@@ -25,6 +25,7 @@ const LantingEditor: FC<Props> = ({
   onChange,
 }) => {
   const editorConfig = {
+    namespace: 'lanting',
     readOnly,
     theme: lanting,
     onError(error: Error) {

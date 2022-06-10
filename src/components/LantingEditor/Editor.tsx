@@ -1,13 +1,12 @@
 import React from 'react';
 import { EditorState, LexicalEditor } from 'lexical';
-import OnChangePlugin from '@lexical/react/LexicalOnChangePlugin';
-import RichTextPlugin from '@lexical/react/LexicalRichTextPlugin';
-import ContentEditable from '@lexical/react/LexicalContentEditable';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import AutoFocusPlugin from '@lexical/react/LexicalAutoFocusPlugin';
-import LinkPlugin from '@lexical/react/LexicalLinkPlugin';
-import ListPlugin from '@lexical/react/LexicalListPlugin';
-import LexicalMarkdownShortcutPlugin from '@lexical/react/LexicalMarkdownShortcutPlugin';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import Toolbar from './Toolbar';
 import InitializePlugin from './plugins/InitializePlugin';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
@@ -53,7 +52,6 @@ const Editor: React.FC<Props> = ({
           <ListPlugin />
           <LinkPlugin />
           <ImagesPlugin />
-          {/* <LexicalMarkdownShortcutPlugin /> */}
         </div>
       </div>
     </>
