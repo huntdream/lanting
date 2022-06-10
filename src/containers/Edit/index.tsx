@@ -5,7 +5,7 @@ import Input from 'components/Input';
 import { IArticle } from 'typing/article';
 import { useNavigate, useParams } from 'react-router-dom';
 import useArticle from 'api/useArticle';
-import { EditorState, TextNode } from 'lexical';
+import { EditorState } from 'lexical';
 
 import './style.scss';
 import useRequest from 'hooks/useRequest';
@@ -35,17 +35,11 @@ const Edit: React.FC<EditProps> = () => {
   const publish = () => {
     console.log('publishing');
 
-    const json = ref.current?.toJSON();
+    const content = JSON.stringify(ref.current);
 
-    const textNode = json?._nodeMap.find(
-      (node) => node[1].__type === 'text'
-    )?.[1] as TextNode;
+    const excerpt = '';
 
-    const excerpt = textNode?.__text;
-
-    const content = JSON.stringify(json);
-
-    console.log(json);
+    console.log(content);
 
     request
       .post<any, IArticle>(`article/${id}`, {
