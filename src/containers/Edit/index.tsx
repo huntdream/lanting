@@ -39,9 +39,9 @@ const Edit: React.FC<EditProps> = () => {
 
     const text = ref.current.read(() => $getRoot().getTextContent());
 
-    const excerpt = text.split('\n')[0];
+    const excerpt = text.split('\n').filter(Boolean)[0];
 
-    console.log(content);
+    console.log(text, excerpt);
 
     request
       .post<any, IArticle>(`article/${id}`, {
