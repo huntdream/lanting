@@ -10,7 +10,11 @@ import {
 } from 'lexical';
 import { FC, useEffect } from 'react';
 
-import { $createImageNode, ImageNode } from '../../nodes/ImageNode';
+import {
+  $createImageNode,
+  ImageNode,
+  ImagePayload,
+} from '../../nodes/ImageNode';
 
 export type InsertImagePayload = {
   altText: string;
@@ -32,19 +36,14 @@ const ImagesPlugin: FC = () => {
 
     return editor.registerCommand(
       INSERT_IMAGE_COMMAND,
-      (payload: InsertImagePayload) => {
+      (payload: ImagePayload) => {
         const selection = $getSelection();
         if ($isRangeSelection(selection)) {
           if ($isRootNode(selection.anchor.getNode())) {
             selection.insertParagraph();
           }
 
-          const imageNode = $createImageNode(
-            payload.src,
-            payload.altText,
-            payload.height,
-            payload.width
-          );
+          const imageNode = $createImageNode(payload);
           selection.insertNodes([imageNode]);
         }
         return true;

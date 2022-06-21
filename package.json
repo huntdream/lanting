@@ -10,7 +10,7 @@
     "gh-pages": "gh-pages -d build"
   },
   "dependencies": {
-    "@lexical/react": "^0.3.3",
+    "@lexical/react": "^0.3.5",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^14.1.0",
@@ -19,7 +19,7 @@
     "axios": "^0.26.1",
     "classnames": "^2.3.1",
     "formik": "^2.1.4",
-    "lexical": "^0.3.3",
+    "lexical": "^0.3.5",
     "moment": "^2.29.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

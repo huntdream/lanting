@@ -5,7 +5,7 @@ import Input from 'components/Input';
 import { IArticle } from 'typing/article';
 import { useNavigate, useParams } from 'react-router-dom';
 import useArticle from 'api/useArticle';
-import { EditorState } from 'lexical';
+import { $getRoot, EditorState } from 'lexical';
 
 import './style.scss';
 import useRequest from 'hooks/useRequest';
@@ -33,11 +33,13 @@ const Edit: React.FC<EditProps> = () => {
   }, [article]);
 
   const publish = () => {
-    console.log('publishing');
+    if (!ref.current) return;
 
     const content = JSON.stringify(ref.current);
 
-    const excerpt = '';
+    const text = ref.current.read(() => $getRoot().getTextContent());
+
+    const excerpt = text.split('\n')[0];
 
     console.log(content);
 
@@ -74,7 +76,7 @@ const Edit: React.FC<EditProps> = () => {
           onChange={({ target: { value } }) => setTitle(value)}
         />
         <Button onClick={publish} disabled={!title}>
-          Publish
+          {id ? 'Save' : 'Publish'}
         </Button>
       </div>
       <LantingEditor
