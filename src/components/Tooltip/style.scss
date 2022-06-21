@@ -1,0 +1,25 @@
+.lanting-tooltip {
+  display: inline-block;
+
+  &-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  &-content {
+    padding: 4px 12px;
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--bg-color);
+    font-size: 0.875rem;
+    color: var(--secondary-text);
+  }
+}
+
+@supports (display: contents) {
+  .lanting-tooltip {
+    display: contents;
+  }
+}
