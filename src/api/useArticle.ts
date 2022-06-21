@@ -1,3 +1,4 @@
+import useToast from 'components/Toast/useToast';
 import useRequest from 'hooks/useRequest';
 import useSWR, { SWRConfiguration } from 'swr';
 
@@ -13,11 +14,16 @@ export interface IArticle {
 
 const useArticle = (id: string, config?: SWRConfiguration<IArticle>) => {
   const [request] = useRequest();
+  const [toast] = useToast();
 
   const fetcher = (url: string) =>
-    request(url).then((article: any) => {
-      return article;
-    });
+    request(url)
+      .then((article: any) => {
+        return article;
+      })
+      .catch((reason) => {
+        toast(reason.message);
+      });
 
   const { data, error } = useSWR<IArticle>(
     id ? `/article/${id}` : null,
