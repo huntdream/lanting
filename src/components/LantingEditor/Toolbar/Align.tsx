@@ -1,14 +1,7 @@
 import React from 'react';
-import Divider from 'components/Divider';
-import {
-  LexicalEditor,
-  FORMAT_ELEMENT_COMMAND,
-  OUTDENT_CONTENT_COMMAND,
-  INDENT_CONTENT_COMMAND,
-} from 'lexical';
+import { LexicalEditor, FORMAT_ELEMENT_COMMAND } from 'lexical';
 import './style.scss';
 import DropDown from 'components/DropDown';
-import Icon from 'components/Icon';
 import Item from 'components/Item';
 
 interface AlignProps {

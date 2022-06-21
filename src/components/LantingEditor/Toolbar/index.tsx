@@ -16,13 +16,7 @@ import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
 import { $isCodeNode } from '@lexical/code';
-import {
-  $getSelectionStyleValueForProperty,
-  $isAtNodeEnd,
-  $isParentElementRTL,
-  $patchStyleText,
-  $wrapLeafNodesInElements,
-} from '@lexical/selection';
+import { $isParentElementRTL } from '@lexical/selection';
 
 import { IS_APPLE } from 'utils/platform';
 import Button from 'components/Button';
@@ -47,7 +41,6 @@ const Toolbar: FC<Props> = () => {
   const [blockType, setBlockType] = useState('paragraph');
   const [selectedElementKey, setSelectedElementKey] = useState<string>('');
   const [codeLanguage, setCodeLanguage] = useState<string>('');
-  const [isLink, setIsLink] = useState(false);
   const [isBold, setIsBold] = useState(false);
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
