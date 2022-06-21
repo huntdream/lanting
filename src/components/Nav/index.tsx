@@ -23,7 +23,7 @@ const Nav: React.FC<NavProps> = () => {
   };
 
   const handleNotify = () => {
-    toast('Hello world');
+    toast('This feature is still work in progress');
   };
 
   return (
