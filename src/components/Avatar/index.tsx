@@ -17,7 +17,7 @@ const Avatar: React.FC<Props> = ({ src, size = 'normal', round }) => {
         'lanting-avatar-round': round,
       })}
     >
-      {!src ? (
+      {src ? (
         <img
           src={`${src}?imageView2/2/w/100`}
           alt='Avatar'
