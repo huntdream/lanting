@@ -7,6 +7,7 @@ import {
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  ElementFormatType,
   FORMAT_TEXT_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
@@ -45,6 +46,7 @@ const Toolbar: FC<Props> = () => {
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
+  const [formatType, setFormatType] = useState<ElementFormatType>('');
   const [isCode, setIsCode] = useState(false);
   const [isRTL, setIsRTL] = useState(false);
   const [modal, showModal] = useModal();
@@ -73,6 +75,8 @@ const Toolbar: FC<Props> = () => {
 
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
+        setFormatType(element.getFormatType());
+
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
 
@@ -155,8 +159,6 @@ const Toolbar: FC<Props> = () => {
       )
     );
   }, [activeEditor, updateToolbar]);
-
-  console.log(blockType, 'blockType');
 
   return (
     <div className='lanting-editor-toolbar'>
@@ -263,7 +265,7 @@ const Toolbar: FC<Props> = () => {
             aria-label='Insert code block'
           />
           <Divider />
-          <Align editor={activeEditor} isRTL={isRTL} />
+          <Align editor={activeEditor} isRTL={isRTL} formatType={formatType} />
         </>
       )}
       {modal}

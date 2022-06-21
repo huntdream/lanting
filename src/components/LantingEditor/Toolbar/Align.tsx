@@ -1,50 +1,57 @@
 import React from 'react';
-import { LexicalEditor, FORMAT_ELEMENT_COMMAND } from 'lexical';
+import {
+  LexicalEditor,
+  FORMAT_ELEMENT_COMMAND,
+  ElementFormatType,
+} from 'lexical';
 import './style.scss';
-import DropDown from 'components/DropDown';
-import Item from 'components/Item';
+import Button from 'components/Button';
 
 interface AlignProps {
   isRTL: boolean;
   editor: LexicalEditor;
+  formatType: ElementFormatType;
 }
 
-const Align: React.FC<AlignProps> = ({ editor, isRTL }) => {
+const Align: React.FC<AlignProps> = ({ editor, isRTL, formatType }) => {
+  const handleFormat = (type: ElementFormatType) => {
+    editor.dispatchCommand(
+      FORMAT_ELEMENT_COMMAND,
+      formatType === type ? '' : type
+    );
+  };
+
   return (
-    <DropDown icon='format_align_left' label='Align'>
-      <Item
+    <>
+      <Button
         icon='format_align_left'
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');
-        }}
-      >
-        Left Align
-      </Item>
-      <Item
+        variant='text'
+        active={formatType === 'left'}
+        onClick={() => handleFormat('left')}
+        title='Left Align'
+      />
+      <Button
         icon='format_align_center'
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'center');
-        }}
-      >
-        Center Align
-      </Item>
-      <Item
+        variant='text'
+        active={formatType === 'center'}
+        onClick={() => handleFormat('center')}
+        title='Center Align'
+      />
+      <Button
         icon='format_align_right'
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'right');
-        }}
-      >
-        Right Align
-      </Item>
-      <Item
+        variant='text'
+        active={formatType === 'right'}
+        onClick={() => handleFormat('right')}
+        title='Right Align'
+      />
+      <Button
         icon='format_align_justify'
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'justify');
-        }}
-      >
-        Justify Align
-      </Item>
-    </DropDown>
+        variant='text'
+        active={formatType === 'justify'}
+        onClick={() => handleFormat('justify')}
+        title='Justify Align'
+      />
+    </>
   );
 };
 
