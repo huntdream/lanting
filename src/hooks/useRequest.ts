@@ -30,7 +30,7 @@ const useRequest = () => {
       (error) => {
         console.log(error.response);
         if (error?.response?.status === 401) {
-          navigate('/signin');
+          navigate('/login');
         }
 
         return Promise.reject(error?.response?.data);
