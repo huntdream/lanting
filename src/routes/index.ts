@@ -12,9 +12,9 @@ const routes = [
     element: lazy(() => import('../containers/Article')),
   },
   {
-    name: 'Sign In',
-    path: '/signin',
-    element: lazy(() => import('../containers/SignIn')),
+    name: 'Login',
+    path: '/login',
+    element: lazy(() => import('../containers/Login')),
   },
   {
     name: 'Sign Up',

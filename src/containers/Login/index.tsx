@@ -11,7 +11,7 @@ import { useUser } from 'context/App';
 import { IUser } from 'typing/user';
 import useToast from 'components/Toast/useToast';
 
-interface SignInProps {}
+interface LoginProps {}
 
 interface FormValues {
   username: string;
@@ -29,7 +29,7 @@ const Schema: Yup.SchemaOf<FormValues> = Yup.object({
     .required(),
 });
 
-const SignIn: React.FC<SignInProps> = () => {
+const Login: React.FC<LoginProps> = () => {
   const [, setUser] = useUser();
   const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
@@ -125,4 +125,4 @@ const SignIn: React.FC<SignInProps> = () => {
   );
 };
 
-export default SignIn;
+export default Login;

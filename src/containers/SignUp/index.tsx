@@ -105,7 +105,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             </div>
             <Text.Error>{errorMsg}</Text.Error>
             <div className='lanting-signup-submit'>
-              <Link to='/signin' style={{ textDecoration: 'none' }}>
+              <Link to='/login' style={{ textDecoration: 'none' }}>
                 Already have an account？
               </Link>
               <Button type='submit' disabled={isSubmitting}>
