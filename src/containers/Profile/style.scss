@@ -1,0 +1,14 @@
+.lanting-profile {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+
+  &-header {
+    height: 250px;
+    position: relative;
+  }
+
+  &-avatar {
+    position: absolute;
+  }
+}

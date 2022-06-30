@@ -37,6 +37,11 @@ const routes: IRoute[] = [
     path: '/edit/:id',
     element: lazy(() => import('../containers/Edit')),
   },
+  {
+    name: 'Profile',
+    path: '/profile/:id',
+    element: lazy(() => import('../containers/Profile')),
+  },
 ];
 
 export default routes;

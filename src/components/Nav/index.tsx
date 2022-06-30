@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from 'components/Icon';
 import ThemeToggle from 'components/ThemeToggle';
 import useToast from 'components/Toast/useToast';
+import { useUser } from 'context/App';
 
 import './style.scss';
 
@@ -13,13 +14,18 @@ const Nav: React.FC<NavProps> = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [toast] = useToast();
+  const [user] = useUser();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
   }, [pathname]);
 
   const handleAccountClick = () => {
-    navigate('/signin');
+    if (user) {
+      navigate(`/profile/${user?.id}`);
+    } else {
+      navigate(`/login`);
+    }
   };
 
   const handleNotify = () => {
