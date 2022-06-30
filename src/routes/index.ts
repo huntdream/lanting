@@ -1,6 +1,12 @@
-import { lazy } from 'react';
+import { lazy, LazyExoticComponent } from 'react';
 
-const routes = [
+interface IRoute {
+  name: string;
+  path: string;
+  element: LazyExoticComponent<any>;
+}
+
+const routes: IRoute[] = [
   {
     name: 'Lanting',
     path: '/',
