@@ -157,7 +157,6 @@ export class ImageNode extends DecoratorNode<ReactNode> {
   }
 
   decorate(): ReactNode {
-    console.log(this);
     return (
       <Image
         src={this.__src}

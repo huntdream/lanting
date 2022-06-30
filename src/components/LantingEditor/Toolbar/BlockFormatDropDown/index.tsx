@@ -15,8 +15,8 @@ import {
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
 import { createPortal } from 'react-dom';
-import DropDownItem from './Item';
 import { ReactComponent as Arrow } from 'assets/icons/chevron-down.svg';
+import DropDownItem from './Item';
 import './style.scss';
 
 interface Props {

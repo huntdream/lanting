@@ -23,13 +23,13 @@ import { IS_APPLE } from 'utils/platform';
 import Button from 'components/Button';
 import Divider from 'components/Divider';
 
-import BlockFormatDropDown from './BlockFormatDropDown';
 import Select from 'components/Select';
-import { CODE_LANGUAGE_MAP, CODE_LANGUAGE_OPTIONS } from './constants';
 
 import './style.scss';
 import useModal from 'hooks/useModal';
 import InsertImage from '../component/InsertImage';
+import BlockFormatDropDown from './BlockFormatDropDown';
+import { CODE_LANGUAGE_MAP, CODE_LANGUAGE_OPTIONS } from './constants';
 import Align from './Align';
 
 interface Props {}
@@ -80,14 +80,15 @@ const Toolbar: FC<Props> = () => {
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType(anchorNode, ListNode);
 
-          //@ts-ignore
           const type = parentList ? parentList.getTag() : element.getTag();
           setBlockType(type);
         } else {
           const type = $isHeadingNode(element)
             ? element.getTag()
             : element.getType();
+
           setBlockType(type);
+
           if ($isCodeNode(element)) {
             const language = element.getLanguage();
             setCodeLanguage(
