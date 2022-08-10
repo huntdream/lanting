@@ -32,7 +32,7 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
 
   const onMouseEnter = (event: MouseEvent) => {
     if (!visible) {
-      const target = event.target as HTMLElement;
+      const target = event.currentTarget as HTMLElement;
       const { top, left, height, width } = target.getBoundingClientRect();
 
       const x = left + window.scrollX + width / 2;
@@ -49,7 +49,7 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
     }
   };
 
-  const onMouseLeave = () => {
+  const onMouseLeave = (event: MouseEvent) => {
     setVisible(false);
 
     if (timer.current) {
@@ -70,15 +70,16 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
     </div>
   );
 
+  const child = React.cloneElement(children, {
+    onMouseEnter,
+    onMouseLeave,
+  });
+
   return (
-    <div
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      className='lanting-tooltip'
-    >
-      {children}
+    <>
+      {child}
       {visible && createPortal(tooltip, document.body)}
-    </div>
+    </>
   );
 };
 export default Tooltip;
