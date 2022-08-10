@@ -14,11 +14,14 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
   const [image, setImage] = useState<IFile>();
 
   const handleInsert = () => {
-    activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-      src: image?.url,
-      height: image?.height,
-      width: image?.width,
-    });
+    if (image) {
+      activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, {
+        src: image.url,
+        height: image.height,
+        width: image.width,
+        altText: '',
+      });
+    }
 
     if (onClose) {
       onClose();
