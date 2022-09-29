@@ -6,7 +6,7 @@ import {
   $isRangeSelection,
   LexicalEditor,
 } from 'lexical';
-import { $wrapLeafNodesInElements } from '@lexical/selection';
+import { $wrapNodes } from '@lexical/selection';
 import { $createCodeNode } from '@lexical/code';
 import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
 import {
@@ -84,7 +84,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
-          $wrapLeafNodesInElements(selection, () => $createParagraphNode());
+          $wrapNodes(selection, () => $createParagraphNode());
         }
       });
     }
@@ -96,9 +96,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
-          $wrapLeafNodesInElements(selection, () =>
-            $createHeadingNode(headingSize)
-          );
+          $wrapNodes(selection, () => $createHeadingNode(headingSize));
         }
       });
     }
@@ -127,7 +125,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
-          $wrapLeafNodesInElements(selection, () => $createQuoteNode());
+          $wrapNodes(selection, () => $createQuoteNode());
         }
       });
     }
@@ -140,7 +138,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
 
         if ($isRangeSelection(selection)) {
           if (selection.isCollapsed()) {
-            $wrapLeafNodesInElements(selection, () => $createCodeNode());
+            $wrapNodes(selection, () => $createCodeNode());
           } else {
             const textContent = selection.getTextContent();
             const codeNode = $createCodeNode();
