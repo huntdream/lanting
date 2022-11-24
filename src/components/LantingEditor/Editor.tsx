@@ -7,6 +7,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import Toolbar from './Toolbar';
 import InitializePlugin from './plugins/InitializePlugin';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
@@ -43,6 +44,7 @@ const Editor: React.FC<Props> = ({
           <RichTextPlugin
             contentEditable={<ContentEditable className='editor-input' />}
             placeholder={<Placeholder />}
+            ErrorBoundary={LexicalErrorBoundary}
           />
           <InitializePlugin initialEditorState={initialEditorState} />
           <OnChangePlugin onChange={handleChange} />
