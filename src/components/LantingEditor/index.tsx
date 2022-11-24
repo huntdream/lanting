@@ -14,20 +14,21 @@ import Editor from './Editor';
 import './style.scss';
 
 interface Props {
-  readOnly?: boolean;
+  editable?: boolean;
   initialEditorState?: string;
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void;
 }
 
 const LantingEditor: FC<Props> = ({
-  readOnly,
+  editable = true,
   initialEditorState,
   onChange,
 }) => {
   const editorConfig = {
     namespace: 'lanting',
-    readOnly,
+    editable,
     theme: lanting,
+    editorState: initialEditorState,
     onError(error: Error) {
       throw error;
     },
@@ -50,15 +51,11 @@ const LantingEditor: FC<Props> = ({
   return (
     <div
       className={cls('lanting-editor', {
-        'lanting-editor--readonly': readOnly,
+        'lanting-editor--readonly': !editable,
       })}
     >
       <LexicalComposer initialConfig={editorConfig}>
-        <Editor
-          readOnly={readOnly}
-          initialEditorState={initialEditorState}
-          onChange={onChange}
-        />
+        <Editor editable={editable} onChange={onChange} />
       </LexicalComposer>
     </div>
   );

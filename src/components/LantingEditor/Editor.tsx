@@ -9,14 +9,13 @@ import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import Toolbar from './Toolbar';
-import InitializePlugin from './plugins/InitializePlugin';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ImagesPlugin from './plugins/ImagesPlugin';
 
 import './style.scss';
 
 interface Props {
-  readOnly?: boolean;
+  editable?: boolean;
   initialEditorState?: string;
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void;
 }
@@ -25,11 +24,7 @@ const Placeholder = () => {
   return <div className='editor-placeholder'>Your story...</div>;
 };
 
-const Editor: React.FC<Props> = ({
-  readOnly,
-  initialEditorState,
-  onChange,
-}) => {
+const Editor: React.FC<Props> = ({ editable, onChange }) => {
   const handleChange = (editorState: EditorState, editor: LexicalEditor) => {
     if (onChange) {
       onChange(editorState, editor);
@@ -38,7 +33,7 @@ const Editor: React.FC<Props> = ({
 
   return (
     <>
-      <div>{!readOnly && <Toolbar />}</div>
+      <div>{editable && <Toolbar />}</div>
       <div className='editor-container'>
         <div className='editor-inner'>
           <RichTextPlugin
@@ -46,7 +41,6 @@ const Editor: React.FC<Props> = ({
             placeholder={<Placeholder />}
             ErrorBoundary={LexicalErrorBoundary}
           />
-          <InitializePlugin initialEditorState={initialEditorState} />
           <OnChangePlugin onChange={handleChange} />
           <CodeHighlightPlugin />
           <HistoryPlugin />
