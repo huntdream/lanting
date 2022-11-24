@@ -116,13 +116,13 @@ const Image: FC<Props> = ({ src, alt, width, height, nodeKey }) => {
       <img
         style={{
           aspectRatio,
+          height,
+          width,
         }}
         ref={imageRef}
         className={cls('lanting-editor-image', {
           'lanting-editor-image--focused': isFocused,
         })}
-        height={height}
-        width={width}
         src={`${src}?imageView2/2/w/1000`}
         alt={alt}
       />
