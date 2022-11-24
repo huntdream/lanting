@@ -19,8 +19,8 @@ import {
 export type InsertImagePayload = {
   altText: string;
   src: string;
-  height: number;
-  width: number;
+  height: number | 'inherit';
+  width: number | 'inherit';
 };
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =

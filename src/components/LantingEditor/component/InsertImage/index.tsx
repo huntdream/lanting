@@ -17,8 +17,8 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
     if (image) {
       activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, {
         src: image.url,
-        height: image.height,
-        width: image.width,
+        height: 'inherit',
+        width: 'inherit',
         altText: '',
       });
     }

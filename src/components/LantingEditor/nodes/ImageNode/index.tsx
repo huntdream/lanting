@@ -28,7 +28,7 @@ export type SerializedImageNode = Spread<
     altText: string;
     caption: SerializedEditor;
     height?: number;
-    maxWidth: number;
+    maxWidth?: number;
     showCaption: boolean;
     src: string;
     width?: number;
@@ -43,7 +43,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
   __altText: string;
   __width: 'inherit' | number;
   __height: 'inherit' | number;
-  __maxWidth: number;
+  __maxWidth?: number;
   __showCaption: boolean;
   __caption: LexicalEditor;
 
@@ -103,7 +103,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
   constructor(
     src: string,
     altText: string,
-    maxWidth: number,
+    maxWidth?: number,
     width?: 'inherit' | number,
     height?: 'inherit' | number,
     showCaption?: boolean,
@@ -163,6 +163,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
         alt={this.__altText}
         height={this.__height}
         width={this.__width}
+        maxWidth={this.__maxWidth}
         nodeKey={this.__key}
       />
     );
@@ -172,7 +173,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
 export function $createImageNode({
   altText,
   height,
-  maxWidth = 500,
+  maxWidth,
   src,
   width,
   showCaption,

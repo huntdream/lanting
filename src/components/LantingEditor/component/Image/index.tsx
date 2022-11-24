@@ -24,10 +24,11 @@ interface Props {
   alt?: string;
   width?: number | string;
   height?: number | string;
+  maxWidth?: number;
   nodeKey: string;
 }
 
-const Image: FC<Props> = ({ src, alt, width, height, nodeKey }) => {
+const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
   const imageRef = useRef<HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);
@@ -109,7 +110,7 @@ const Image: FC<Props> = ({ src, alt, width, height, nodeKey }) => {
 
   const isFocused = isSelected || isResizing;
 
-  console.log(isSelected, '???');
+  console.log(height, width, '???');
 
   return (
     <div draggable>
@@ -118,6 +119,7 @@ const Image: FC<Props> = ({ src, alt, width, height, nodeKey }) => {
           aspectRatio,
           height,
           width,
+          maxWidth,
         }}
         ref={imageRef}
         className={cls('lanting-editor-image', {
