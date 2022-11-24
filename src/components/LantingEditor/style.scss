@@ -77,6 +77,13 @@
     text-decoration: none;
   }
 
+  .editor-image {
+    display: inline-block;
+    cursor: default;
+    position: relative;
+    user-select: none;
+  }
+
   .editor-code {
     background-color: var(--code-bg-color);
     font-family: Menlo, Consolas, Monaco, monospace;

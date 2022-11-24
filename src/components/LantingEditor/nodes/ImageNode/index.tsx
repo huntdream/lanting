@@ -163,6 +163,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
         alt={this.__altText}
         height={this.__height}
         width={this.__width}
+        nodeKey={this.__key}
       />
     );
   }
@@ -190,6 +191,8 @@ export function $createImageNode({
   );
 }
 
-export function $isImageNode(node?: LexicalNode): boolean {
+export function $isImageNode(
+  node: LexicalNode | null | undefined
+): node is ImageNode {
   return node instanceof ImageNode;
 }

@@ -55,7 +55,11 @@ const LantingEditor: FC<Props> = ({
       })}
     >
       <LexicalComposer initialConfig={editorConfig}>
-        <Editor editable={editable} onChange={onChange} />
+        <Editor
+          editable={editable}
+          initialEditorState={initialEditorState}
+          onChange={onChange}
+        />
       </LexicalComposer>
     </div>
   );

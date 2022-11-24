@@ -1,3 +1,66 @@
 .lanting-editor-image {
-  width: 100%;
+  max-width: 100%;
+
+  &--focused {
+    outline: 2px solid rgb(60, 132, 244);
+    user-select: none;
+  }
+
+  &-resizer {
+    display: block;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    background-color: #3c84f4;
+    border: 1px solid #fff;
+    padding: 0;
+
+    &-n {
+      top: -6px;
+      left: 48%;
+      cursor: n-resize;
+    }
+
+    &-ne {
+      top: -6px;
+      right: -6px;
+      cursor: ne-resize;
+    }
+
+    &-e {
+      bottom: 48%;
+      right: -6px;
+      cursor: e-resize;
+    }
+
+    &-se {
+      bottom: -2px;
+      right: -6px;
+      cursor: nwse-resize;
+    }
+
+    &-s {
+      bottom: -2px;
+      left: 48%;
+      cursor: s-resize;
+    }
+
+    &-sw {
+      bottom: -2px;
+      left: -6px;
+      cursor: sw-resize;
+    }
+
+    &-w {
+      bottom: 48%;
+      left: -6px;
+      cursor: w-resize;
+    }
+
+    &-nw {
+      top: -6px;
+      left: -6px;
+      cursor: nw-resize;
+    }
+  }
 }

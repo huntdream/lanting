@@ -13,6 +13,7 @@ import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ImagesPlugin from './plugins/ImagesPlugin';
 
 import './style.scss';
+import InitializePlugin from './plugins/InitializePlugin';
 
 interface Props {
   editable?: boolean;
@@ -24,7 +25,11 @@ const Placeholder = () => {
   return <div className='editor-placeholder'>Your story...</div>;
 };
 
-const Editor: React.FC<Props> = ({ editable, onChange }) => {
+const Editor: React.FC<Props> = ({
+  editable,
+  initialEditorState,
+  onChange,
+}) => {
   const handleChange = (editorState: EditorState, editor: LexicalEditor) => {
     if (onChange) {
       onChange(editorState, editor);
@@ -41,6 +46,7 @@ const Editor: React.FC<Props> = ({ editable, onChange }) => {
             placeholder={<Placeholder />}
             ErrorBoundary={LexicalErrorBoundary}
           />
+          <InitializePlugin initialEditorState={initialEditorState} />
           <OnChangePlugin onChange={handleChange} />
           <CodeHighlightPlugin />
           <HistoryPlugin />
