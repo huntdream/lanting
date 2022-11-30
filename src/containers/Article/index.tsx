@@ -35,7 +35,10 @@ const Article: React.FC<ArticleProps> = () => {
       </div>
       <div className='lanting-article-content'>
         {article?.content && (
-          <LantingEditor initialEditorState={article?.content} readOnly />
+          <LantingEditor
+            initialEditorState={article?.content}
+            editable={false}
+          />
         )}
       </div>
     </div>
