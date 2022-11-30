@@ -16,6 +16,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import { useLexicalNodeSelection } from '@lexical/react/useLexicalNodeSelection';
 import Resizer from './Resizer';
 import { mergeRegister } from '@lexical/utils';
+import { OPEN_GALLERY_COMMAND } from 'components/LantingEditor/plugins/GalleryPlugin';
 
 import './style.scss';
 
@@ -108,9 +109,11 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
     setIsResizing(true);
   };
 
-  const isFocused = isSelected || isResizing;
+  const handleImageClick = () => {
+    editor.dispatchCommand(OPEN_GALLERY_COMMAND, { nodeKey, src });
+  };
 
-  console.log(height, width, '???');
+  const isFocused = isSelected || isResizing;
 
   return (
     <div draggable>
@@ -127,6 +130,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
         })}
         src={`${src}?imageView2/2/w/1000`}
         alt={alt}
+        onClick={handleImageClick}
       />
       {isFocused && (
         <Resizer

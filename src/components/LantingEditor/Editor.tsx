@@ -14,6 +14,7 @@ import ImagesPlugin from './plugins/ImagesPlugin';
 
 import './style.scss';
 import InitializePlugin from './plugins/InitializePlugin';
+import GalleryPlugin from './plugins/GalleryPlugin';
 
 interface Props {
   editable?: boolean;
@@ -54,6 +55,7 @@ const Editor: React.FC<Props> = ({
           <ListPlugin />
           <LinkPlugin />
           <ImagesPlugin />
+          <GalleryPlugin />
         </div>
       </div>
     </>
