@@ -54,7 +54,7 @@ const useUpload = () => {
           const { key, ...info } = res;
 
           return {
-            url: `http://storage.maoyu.info/${key}`,
+            url: `https://storage.maoyu.info/${key}`,
             ...info,
           };
         });
