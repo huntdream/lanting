@@ -33,7 +33,6 @@
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/lodash": "^4.14.181",
-    "@types/prismjs": "^1.16.1",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
     "@types/react-router-dom": "^5.1.5",
