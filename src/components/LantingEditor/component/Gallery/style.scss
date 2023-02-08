@@ -66,6 +66,11 @@
     &-box {
       width: 120px;
       height: 80px;
+
+      &:not(&--active) {
+        cursor: pointer;
+      }
+
       &--active {
         border: 2px solid #fff;
       }
