@@ -34,7 +34,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
 
   return (
     <div className='lanting-editor-insert-image'>
-      <Upload onChange={handleImageChange} />
+      <Upload onChange={handleImageChange} accept='image/*' />
 
       <div className='lanting-editor-insert-image-footer'>
         <Button onClick={handleInsert} disabled={!image?.url}>
