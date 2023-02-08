@@ -63,9 +63,17 @@
     justify-content: center;
     padding-bottom: 20px;
 
-    &-img {
+    &-box {
       width: 120px;
       height: 80px;
+      &--active {
+        border: 2px solid #fff;
+      }
+    }
+
+    &-img {
+      width: 100%;
+      height: 100%;
     }
   }
 }

@@ -1,15 +1,17 @@
-import React, { MouseEvent, useState, useEffect } from 'react';
+import React, { MouseEvent, useState, useEffect, useMemo } from 'react';
 import './style.scss';
 import { createPortal } from 'react-dom';
 import useScrollLock from 'hooks/useScrollLock';
+import cls from 'classnames';
 import Button from 'components/Button';
 import Icon from 'components/Icon';
+import { ImagePayload } from 'components/LantingEditor/plugins/GalleryPlugin';
 
 interface GalleryProps {
   visible?: boolean;
   onClose?: () => void;
   defaultActive?: string;
-  images: string[];
+  images: ImagePayload[];
 }
 
 const Gallery: React.FC<GalleryProps> = ({
@@ -19,15 +21,20 @@ const Gallery: React.FC<GalleryProps> = ({
   images,
 }) => {
   useScrollLock(visible);
-  const [active, setActive] = useState('');
+  const [activeKey, setActiveKey] = useState<string>();
 
   useEffect(() => {
-    setActive(defaultActive || images?.[0]);
+    setActiveKey(defaultActive || images?.[0]?.nodeKey);
   }, [images, defaultActive]);
 
   const stopPropagation = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
+
+  const acitveImage = useMemo(
+    () => images.find((i) => i.nodeKey === activeKey)?.src,
+    [activeKey, images]
+  );
 
   return visible
     ? createPortal(
@@ -44,19 +51,27 @@ const Gallery: React.FC<GalleryProps> = ({
               </Button>
               <div className='lanting-gallery-preview'>
                 <img
-                  src={active}
+                  src={acitveImage}
                   alt=''
                   className='lanting-gallery-preview-image'
                 />
               </div>
               <div className='lanting-gallery-thumbnails'>
-                {images.map((src) => (
-                  <img
-                    src={src}
-                    alt=''
-                    onClick={() => setActive(src)}
-                    className='lanting-gallery-thumbnails-img'
-                  />
+                {images.map(({ src, nodeKey }) => (
+                  <div
+                    className={cls('lanting-gallery-thumbnails-box', {
+                      'lanting-gallery-thumbnails-box--active':
+                        nodeKey === activeKey,
+                    })}
+                    key={nodeKey}
+                  >
+                    <img
+                      src={src}
+                      alt=''
+                      onClick={() => setActiveKey(nodeKey)}
+                      className='lanting-gallery-thumbnails-img'
+                    />
+                  </div>
                 ))}
               </div>
             </div>

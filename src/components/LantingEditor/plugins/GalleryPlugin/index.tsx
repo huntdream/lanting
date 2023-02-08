@@ -4,7 +4,6 @@ import {
   $isImageNode,
   ImageNode,
 } from 'components/LantingEditor/nodes/ImageNode';
-import Modal from 'components/Modal';
 import {
   $getRoot,
   $isParagraphNode,
@@ -16,7 +15,7 @@ import React, { useEffect, useState } from 'react';
 
 interface Props {}
 
-type ImagePayload = {
+export type ImagePayload = {
   nodeKey: string;
   src?: string;
 };
@@ -28,7 +27,7 @@ const GalleryPlugin: React.FC<Props> = () => {
   const [editor] = useLexicalComposerContext();
   const [visible, setVisible] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>();
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImagePayload[]>([]);
 
   useEffect(() => {
     if (!editor.hasNodes([ImageNode])) {
@@ -54,8 +53,10 @@ const GalleryPlugin: React.FC<Props> = () => {
             }
           });
 
-          setImages(images.map((it) => it.getSrc()));
-          setCurrentImage(payload.src);
+          setImages(
+            images.map((it) => ({ src: it.getSrc(), nodeKey: it.getKey() }))
+          );
+          setCurrentImage(payload.nodeKey);
         });
         return true;
       },
