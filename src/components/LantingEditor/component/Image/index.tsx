@@ -89,10 +89,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
     );
   }, [clearSelection, editor, isResizing, isSelected, nodeKey, setSelected]);
 
-  const onResizeEnd = (
-    nextWidth: 'inherit' | number,
-    nextHeight: 'inherit' | number
-  ) => {
+  const onResizeEnd = (nextWidth: 'inherit' | number) => {
     setTimeout(() => {
       setIsResizing(false);
     }, 200);
@@ -100,7 +97,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
     editor.update(() => {
       const node = $getNodeByKey(nodeKey);
       if ($isImageNode(node)) {
-        node.setWidthAndHeight(nextWidth, nextHeight);
+        node.setWidthAndHeight(nextWidth);
       }
     });
   };

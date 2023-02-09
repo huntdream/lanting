@@ -10,7 +10,7 @@ interface Props {
   buttonRef: { current: null | HTMLButtonElement };
   imageRef: { current: null | HTMLElement };
   maxWidth?: number;
-  onResizeEnd: (width: 'inherit' | number, height: 'inherit' | number) => void;
+  onResizeEnd: (width: 'inherit' | number) => void;
   onResizeStart: () => void;
 }
 
@@ -35,22 +35,18 @@ const Resizer: FC<Props> = ({
     value: 'default',
   });
   const positioningRef = useRef<{
-    currentHeight: 'inherit' | number;
     currentWidth: 'inherit' | number;
     direction: number;
     isResizing: boolean;
     ratio: number;
-    startHeight: number;
     startWidth: number;
     startX: number;
     startY: number;
   }>({
-    currentHeight: 0,
     currentWidth: 0,
     direction: 0,
     isResizing: false,
     ratio: 0,
-    startHeight: 0,
     startWidth: 0,
     startX: 0,
     startY: 0,
@@ -62,13 +58,8 @@ const Resizer: FC<Props> = ({
     : editorRootElement !== null
     ? editorRootElement.getBoundingClientRect().width - 20
     : 100;
-  const maxHeightContainer =
-    editorRootElement !== null
-      ? editorRootElement.getBoundingClientRect().height - 20
-      : 100;
 
   const minWidth = 100;
-  const minHeight = 100;
 
   const setStartCursor = (direction: number) => {
     const ew = direction === Direction.east || direction === Direction.west;
@@ -131,10 +122,8 @@ const Resizer: FC<Props> = ({
       const { width, height } = image.getBoundingClientRect();
       const positioning = positioningRef.current;
       positioning.startWidth = width;
-      positioning.startHeight = height;
       positioning.ratio = width / height;
       positioning.currentWidth = width;
-      positioning.currentHeight = height;
       positioning.startX = event.clientX;
       positioning.startY = event.clientY;
       positioning.isResizing = true;
@@ -144,7 +133,6 @@ const Resizer: FC<Props> = ({
       onResizeStart();
 
       controlWrapper.classList.add('image-control-wrapper--resizing');
-      image.style.height = `${height}px`;
       image.style.width = `${width}px`;
 
       document.addEventListener('pointermove', handlePointerMove);
@@ -172,23 +160,8 @@ const Resizer: FC<Props> = ({
           maxWidthContainer
         );
 
-        const height = width / positioning.ratio;
         image.style.width = `${width}px`;
-        image.style.height = `${height}px`;
-        positioning.currentHeight = height;
         positioning.currentWidth = width;
-      } else if (isVertical) {
-        let diff = Math.floor(positioning.startY - event.clientY);
-        diff = positioning.direction & Direction.south ? -diff : diff;
-
-        const height = clamp(
-          positioning.startHeight + diff,
-          minHeight,
-          maxHeightContainer
-        );
-
-        image.style.height = `${height}px`;
-        positioning.currentHeight = height;
       } else {
         let diff = Math.floor(positioning.startX - event.clientX);
         diff = positioning.direction & Direction.east ? -diff : diff;
@@ -210,20 +183,17 @@ const Resizer: FC<Props> = ({
     const controlWrapper = controlWrapperRef.current;
     if (image !== null && controlWrapper !== null && positioning.isResizing) {
       const width = positioning.currentWidth;
-      const height = positioning.currentHeight;
       positioning.startWidth = 0;
-      positioning.startHeight = 0;
       positioning.ratio = 0;
       positioning.startX = 0;
       positioning.startY = 0;
       positioning.currentWidth = 0;
-      positioning.currentHeight = 0;
       positioning.isResizing = false;
 
       controlWrapper.classList.remove('image-control-wrapper--resizing');
 
       setEndCursor();
-      onResizeEnd(width, height);
+      onResizeEnd(width);
 
       document.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerup', handlePointerUp);
@@ -232,21 +202,9 @@ const Resizer: FC<Props> = ({
   return (
     <div ref={controlWrapperRef}>
       <div
-        className='lanting-editor-image-resizer lanting-editor-image-resizer-n'
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.north);
-        }}
-      />
-      <div
         className='lanting-editor-image-resizer lanting-editor-image-resizer-ne'
         onPointerDown={(event) => {
           handlePointerDown(event, Direction.north | Direction.east);
-        }}
-      />
-      <div
-        className='lanting-editor-image-resizer lanting-editor-image-resizer-e'
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.east);
         }}
       />
       <div
@@ -256,21 +214,9 @@ const Resizer: FC<Props> = ({
         }}
       />
       <div
-        className='lanting-editor-image-resizer lanting-editor-image-resizer-s'
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.south);
-        }}
-      />
-      <div
         className='lanting-editor-image-resizer lanting-editor-image-resizer-sw'
         onPointerDown={(event) => {
           handlePointerDown(event, Direction.south | Direction.west);
-        }}
-      />
-      <div
-        className='lanting-editor-image-resizer lanting-editor-image-resizer-w'
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.west);
         }}
       />
       <div

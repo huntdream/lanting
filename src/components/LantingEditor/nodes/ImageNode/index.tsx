@@ -163,7 +163,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
 
   setWidthAndHeight(
     width: 'inherit' | number,
-    height: 'inherit' | number
+    height: 'inherit' | number = 'inherit'
   ): void {
     const writable: ImageNode = this.getWritable();
     writable.__width = width;
@@ -218,7 +218,7 @@ export function $createImageNode({
       src,
       altText,
       maxWidth,
-      width,
+      width || 500,
       height,
       showCaption,
       caption,
