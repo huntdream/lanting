@@ -34,7 +34,8 @@ const useUpload = () => {
 
         const name = file.name;
         const uid = createUID();
-        const key = `${Date.now().toString().slice(-6)}_${uid}`;
+        const ext = file.name.split('.').pop();
+        const key = `${Date.now().toString().slice(-6)}_${uid}.${ext}`;
 
         formData.append('token', token);
         formData.append('file', file);
