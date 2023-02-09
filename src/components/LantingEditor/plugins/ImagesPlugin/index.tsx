@@ -1,13 +1,13 @@
-import type { LexicalCommand } from 'lexical';
+import {
+  $createParagraphNode,
+  $insertNodes,
+  $isRootOrShadowRoot,
+  LexicalCommand,
+} from 'lexical';
 
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import {
-  $getSelection,
-  $isRangeSelection,
-  $isRootNode,
-  COMMAND_PRIORITY_EDITOR,
-  createCommand,
-} from 'lexical';
+import { COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical';
+import { $wrapNodeInElement } from '@lexical/utils';
 import { FC, useEffect } from 'react';
 
 import {
@@ -37,15 +37,12 @@ const ImagesPlugin: FC = () => {
     return editor.registerCommand(
       INSERT_IMAGE_COMMAND,
       (payload: ImagePayload) => {
-        const selection = $getSelection();
-        if ($isRangeSelection(selection)) {
-          if ($isRootNode(selection.anchor.getNode())) {
-            selection.insertParagraph();
-          }
-
-          const imageNode = $createImageNode(payload);
-          selection.insertNodes([imageNode]);
+        const imageNode = $createImageNode(payload);
+        $insertNodes([imageNode]);
+        if ($isRootOrShadowRoot(imageNode.getParentOrThrow())) {
+          $wrapNodeInElement(imageNode, $createParagraphNode).selectEnd();
         }
+
         return true;
       },
       COMMAND_PRIORITY_EDITOR

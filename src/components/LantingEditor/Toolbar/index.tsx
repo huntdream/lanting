@@ -31,6 +31,7 @@ import InsertImage from '../component/InsertImage';
 import BlockFormatDropDown from './BlockFormatDropDown';
 import { CODE_LANGUAGE_MAP, CODE_LANGUAGE_OPTIONS } from './constants';
 import Align from './Align';
+import AudioPlugin from '../component/InsertAudio';
 
 interface Props {}
 
@@ -260,6 +261,17 @@ const Toolbar: FC<Props> = () => {
             onClick={() => {
               showModal('Insert Image', (onClose) => (
                 <InsertImage activeEditor={activeEditor} onClose={onClose} />
+              ));
+            }}
+            title='Insert code block'
+            aria-label='Insert code block'
+          />
+          <Button
+            icon='music_note'
+            variant='text'
+            onClick={() => {
+              showModal('Insert Audio', (onClose) => (
+                <AudioPlugin activeEditor={activeEditor} onClose={onClose} />
               ));
             }}
             title='Insert code block'

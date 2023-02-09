@@ -12,24 +12,19 @@ export interface IFile {
   height: number;
 }
 
-const getDate = () => {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-
-  return `${year}-${month}-${day}`;
-};
-
 const useUpload = () => {
   const [token, setToken] = useState<string>('');
 
-  useEffect(() => {
+  const getToken = () => {
     request('/tools/uploadToken', {
       method: 'post',
     }).then((res: any) => {
       setToken(res.token);
     });
+  };
+
+  useEffect(() => {
+    getToken();
   }, []);
 
   const upload = useCallback(
@@ -38,9 +33,8 @@ const useUpload = () => {
         const formData = new FormData();
 
         const name = file.name;
-
         const uid = createUID();
-        const key = getDate() + '-' + uid;
+        const key = `${Date.now().toString().slice(-6)}_${uid}`;
 
         formData.append('token', token);
         formData.append('file', file);
@@ -50,14 +44,18 @@ const useUpload = () => {
         return request('https://upload.qiniup.com/', {
           method: 'post',
           data: formData,
-        }).then((res: any) => {
-          const { key, ...info } = res;
+        })
+          .then((res: any) => {
+            const { key, ...info } = res;
 
-          return {
-            url: `https://storage.maoyu.info/${key}`,
-            ...info,
-          };
-        });
+            return {
+              url: `https://storage.maoyu.info/${key}`,
+              ...info,
+            };
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
 
       return Promise.reject();

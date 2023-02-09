@@ -19,7 +19,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
         src: image.url,
         height: 'inherit',
         width: 'inherit',
-        altText: '',
+        altText: image.name,
       });
     }
 

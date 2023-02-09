@@ -110,13 +110,15 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
   };
 
   const handleImageClick = () => {
+    if (editor.isEditable()) return;
+
     editor.dispatchCommand(OPEN_GALLERY_COMMAND, { nodeKey, src });
   };
 
   const isFocused = isSelected || isResizing;
 
   return (
-    <div draggable>
+    <div draggable={!isFocused}>
       <img
         style={{
           aspectRatio,

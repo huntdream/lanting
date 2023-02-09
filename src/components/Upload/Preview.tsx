@@ -1,6 +1,7 @@
 import Button from 'components/Button';
 import React, { useEffect, useMemo, useState } from 'react';
 import { IFile } from '.';
+import Audio from './Audio';
 import './style.scss';
 
 interface PreviewProps {
@@ -8,7 +9,7 @@ interface PreviewProps {
   onRemove: () => void;
 }
 
-export type FileType = 'image' | 'audio' | 'video';
+export type FileType = 'image' | 'audio' | 'video' | string;
 
 const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
   const [url, setUrl] = useState<string | undefined>();
@@ -26,13 +27,10 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
         };
       }
     } else {
-      if (file.type.startsWith('image/')) {
-        setUrl(`${file.url}?imageView2/2/w/100`);
-        setType('image');
-      } else if (file.type.startsWith('video/')) {
-        setUrl(file.url);
-        setType('video');
-      }
+      let fileType = file.type.split('/').shift() as FileType;
+
+      setUrl(file.url);
+      setType(fileType);
     }
   }, [file]);
 
@@ -40,7 +38,7 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
     if (type === 'image') {
       return (
         <img
-          src={url}
+          src={`${url}?imageView2/2/w/100`}
           alt={file.name}
           className='lanting-upload-preview-image'
         />
@@ -52,17 +50,23 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
         <video src={url} className='lanting-upload-preview-video' controls />
       );
     }
+
+    if (type === 'audio') {
+      return <Audio src={url} />;
+    }
   }, [file.name, type, url]);
 
   return url ? (
     <div className='lanting-upload-preview' key={url}>
       {preview}
-      <Button
-        color='secondary'
-        icon='close'
-        className='lanting-upload-preview-remove'
-        onClick={onRemove}
-      />
+      {onRemove && (
+        <Button
+          color='secondary'
+          icon='close'
+          className='lanting-upload-preview-remove'
+          onClick={onRemove}
+        />
+      )}
     </div>
   ) : null;
 };

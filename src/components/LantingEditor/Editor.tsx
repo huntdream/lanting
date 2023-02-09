@@ -15,6 +15,8 @@ import ImagesPlugin from './plugins/ImagesPlugin';
 import './style.scss';
 import InitializePlugin from './plugins/InitializePlugin';
 import GalleryPlugin from './plugins/GalleryPlugin';
+import DragDropPaste from './plugins/DragDropPastePlugin';
+import AudioPlugin from './plugins/AudioPlugin';
 
 interface Props {
   editable?: boolean;
@@ -56,6 +58,8 @@ const Editor: React.FC<Props> = ({
           <LinkPlugin />
           <ImagesPlugin />
           <GalleryPlugin />
+          <DragDropPaste />
+          <AudioPlugin />
         </div>
       </div>
     </>

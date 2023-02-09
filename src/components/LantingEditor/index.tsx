@@ -10,6 +10,7 @@ import { AutoLinkNode, LinkNode } from '@lexical/link';
 import lanting from './themes/lanting';
 import { ImageNode } from './nodes/ImageNode';
 import Editor from './Editor';
+import { AudioNode } from './nodes/AudioNode';
 
 import './style.scss';
 
@@ -45,6 +46,7 @@ const LantingEditor: FC<Props> = ({
       AutoLinkNode,
       LinkNode,
       ImageNode,
+      AudioNode,
     ],
   };
 

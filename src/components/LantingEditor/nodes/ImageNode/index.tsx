@@ -9,8 +9,12 @@ import {
   SerializedEditor,
   SerializedLexicalNode,
   Spread,
+  DOMConversionMap,
+  DOMConversionOutput,
+  DOMExportOutput,
+  $applyNodeReplacement,
 } from 'lexical';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 export interface ImagePayload {
   altText: string;
@@ -22,6 +26,16 @@ export interface ImagePayload {
   src: string;
   width?: number;
 }
+
+const convertImageElement = (domNode: Node): null | DOMConversionOutput => {
+  if (domNode instanceof HTMLImageElement) {
+    const { alt: altText, src, width, height } = domNode;
+    const node = $createImageNode({ altText, height, src, width });
+    return { node };
+  }
+
+  return null;
+};
 
 export type SerializedImageNode = Spread<
   {
@@ -38,7 +52,7 @@ export type SerializedImageNode = Spread<
   SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<ReactNode> {
+export class ImageNode extends DecoratorNode<JSX.Element> {
   __src: string;
   __altText: string;
   __width: 'inherit' | number;
@@ -67,6 +81,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
     const { altText, height, width, maxWidth, caption, src, showCaption } =
       serializedNode;
+
     const node = $createImageNode({
       altText,
       height,
@@ -75,7 +90,6 @@ export class ImageNode extends DecoratorNode<ReactNode> {
       src,
       width,
     });
-
     const nestedEditor = node.__caption;
     const editorState = nestedEditor.parseEditorState(caption.editorState);
 
@@ -84,6 +98,25 @@ export class ImageNode extends DecoratorNode<ReactNode> {
     }
 
     return node;
+  }
+
+  exportDOM(): DOMExportOutput {
+    const element = document.createElement('img');
+    element.setAttribute('src', this.__src);
+    element.setAttribute('alt', this.__altText);
+    element.setAttribute('width', this.__width.toString());
+    element.setAttribute('height', this.__height.toString());
+
+    return { element };
+  }
+
+  static importDOM(): DOMConversionMap | null {
+    return {
+      img: (node: Node) => ({
+        conversion: convertImageElement,
+        priority: 0,
+      }),
+    };
   }
 
   exportJSON(): SerializedImageNode {
@@ -156,7 +189,7 @@ export class ImageNode extends DecoratorNode<ReactNode> {
     return false;
   }
 
-  decorate(): ReactNode {
+  decorate(): JSX.Element {
     return (
       <Image
         src={this.__src}
@@ -180,15 +213,17 @@ export function $createImageNode({
   caption,
   key,
 }: ImagePayload): ImageNode {
-  return new ImageNode(
-    src,
-    altText,
-    maxWidth,
-    width,
-    height,
-    showCaption,
-    caption,
-    key
+  return $applyNodeReplacement(
+    new ImageNode(
+      src,
+      altText,
+      maxWidth,
+      width,
+      height,
+      showCaption,
+      caption,
+      key
+    )
   );
 }
 
