@@ -32,7 +32,7 @@ const DragDropPaste = () => {
             if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
               upload(file).then((result: IFile) => {
                 editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-                  height: 'inherit',
+                  height: 500,
                   width: 'inherit',
                   altText: file.name,
                   src: result.url,
