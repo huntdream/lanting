@@ -2,16 +2,26 @@
   display: flex;
   flex-wrap: wrap;
 
+  &-trigger {
+    padding: 4px;
+  }
+
   &-placeholder {
-    width: 100px;
-    height: 100px;
+    width: 92px;
+    height: 92px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    color: var(--secondary-text);
     border: 1px dashed var(--border-color);
     border-radius: 4px;
     cursor: pointer;
     flex-direction: column;
+
+    &--over {
+      background-color: var(--active-color);
+      border-style: solid;
+    }
 
     &:hover {
       background-color: var(--active-color);
@@ -20,6 +30,25 @@
 
   &-input {
     display: none;
+  }
+
+  &-file {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-progress {
+      color: var(--secondary-text);
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      translate: -50% 0;
+      z-index: 99;
+      font-size: 14px;
+    }
   }
 
   &-preview-list {
@@ -33,9 +62,8 @@
     overflow: hidden;
     align-self: center;
     justify-content: center;
-    width: 100px;
-    height: 100px;
-    margin: 0 4px 4px 0;
+    width: 92px;
+    height: 92px;
     position: relative;
     border: 1px solid var(--border-color);
     border-radius: 4px;

@@ -1,7 +1,17 @@
+import cls from 'classnames';
 import Icon from 'components/Icon';
+import Loading from 'components/Loading';
 import useUpload from 'hooks/useUpload';
-import React, { ChangeEvent, ReactNode, useRef, useState } from 'react';
-import Preview from './Preview';
+import React, {
+  ChangeEvent,
+  DragEvent,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import FileUpload from './FileUpload';
 import './style.scss';
 
 export interface IFile {
@@ -29,47 +39,107 @@ const Upload: React.FC<UploadProps> = ({
   children,
   onChange,
 }) => {
-  const [fileList, setFileList] = useState<IFile[]>([]);
-  const ref = useRef<HTMLInputElement>(null);
   const [upload] = useUpload();
+  const ref = useRef<HTMLInputElement>(null);
 
-  const handleUpload = (files: File[]) => {
-    const tasks = files.map(upload);
+  const [fileList, setFileList] = useState<File[]>([]);
+  const [fileInfoList, setFileInfoList] = useState<IFile[]>([]);
+  const [isDragOver, setIsDragOver] = useState(false);
 
-    Promise.all(tasks).then((uploaded) => {
-      const newFiles = fileList.concat(uploaded);
+  const updateFileList = (files: FileList) => {
+    const newFiles = Array.from(files);
+    setFileList(fileList.concat(newFiles));
+  };
 
-      setFileList(newFiles);
+  const clearValue = () => {
+    if (ref.current) {
+      ref.current.value = '';
+    }
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      updateFileList(files);
+    }
+  };
+
+  const handleFileChange = (file: IFile, index: number) => {
+    setFileInfoList((list) => {
+      const newFiles = [...list];
+
+      newFiles[index] = file;
+
+      setFileInfoList(newFiles);
 
       if (onChange) {
         onChange(newFiles);
       }
+
+      return newFiles;
     });
   };
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { files: newFiles } = event.target;
+  const removeFile = (index: number) => {
+    const newFiles = [...fileList];
+    newFiles.splice(index, 1);
 
-    if (newFiles) {
-      handleUpload(Array.from(newFiles));
+    const newFileInfoList = [...fileInfoList];
+    newFiles.splice(index, 1);
+
+    setFileList(newFiles);
+    setFileInfoList(newFileInfoList);
+
+    if (onChange) {
+      onChange(newFileInfoList);
     }
   };
 
-  const removeFile = (file: IFile) => {
-    const newFiles = fileList.filter((item) => item.key !== file.key);
-    setFileList(newFiles);
-  };
-
   const openFilePicker = () => {
-    if (ref.current) {
+    if (ref.current && (multiple || !fileList.length)) {
+      clearValue();
+
       ref.current.click();
     }
   };
 
-  const renderPreviewImages = () => {
+  const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (event.dataTransfer) {
+      const files = event.dataTransfer.files;
+
+      if (files.length) {
+        updateFileList(files);
+      }
+    }
+  };
+
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    setIsDragOver(false);
+  };
+
+  const renderFileList = () => {
     if (fileList?.length) {
       return fileList.map((file, index) => (
-        <Preview file={file} key={index} onRemove={() => removeFile(file)} />
+        <FileUpload
+          file={file}
+          key={index}
+          upload={upload}
+          onRemove={() => removeFile(index)}
+          onChange={(fileInfo) => handleFileChange(fileInfo, index)}
+        />
       ));
     }
   };
@@ -86,11 +156,21 @@ const Upload: React.FC<UploadProps> = ({
         ref={ref}
         multiple={multiple}
       />
-      <div className='lanting-upload-preview-list'>{renderPreviewImages()}</div>
+      <div className='lanting-upload-preview-list'>{renderFileList()}</div>
       {showPlaceholder && (
-        <div onClick={openFilePicker}>
+        <div
+          onClick={openFilePicker}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          className='lanting-upload-trigger'
+        >
           {children || (
-            <div className='lanting-upload-placeholder'>
+            <div
+              className={cls('lanting-upload-placeholder', {
+                'lanting-upload-placeholder--over': isDragOver,
+              })}
+            >
               <Icon>file_upload</Icon>
               <span>Upload</span>
             </div>
