@@ -259,7 +259,7 @@ const Toolbar: FC<Props> = () => {
             icon='image'
             variant='text'
             onClick={() => {
-              showModal('Insert Image', (onClose) => (
+              showModal('Image', (onClose) => (
                 <InsertImage activeEditor={activeEditor} onClose={onClose} />
               ));
             }}
@@ -270,7 +270,7 @@ const Toolbar: FC<Props> = () => {
             icon='music_note'
             variant='text'
             onClick={() => {
-              showModal('Insert Audio', (onClose) => (
+              showModal('Audio', (onClose) => (
                 <AudioPlugin activeEditor={activeEditor} onClose={onClose} />
               ));
             }}
