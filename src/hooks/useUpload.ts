@@ -1,3 +1,4 @@
+import { AxiosProgressEvent } from 'axios';
 import { useState, useEffect, useCallback } from 'react';
 import createUID from 'utils/createUID';
 import request from 'utils/request';
@@ -28,7 +29,7 @@ const useUpload = () => {
   }, []);
 
   const upload = useCallback(
-    (file: File) => {
+    (file: File, onUploadProgress?: (progress: AxiosProgressEvent) => void) => {
       if (file && token) {
         const formData = new FormData();
 
@@ -45,6 +46,7 @@ const useUpload = () => {
         return request('https://upload.qiniup.com/', {
           method: 'post',
           data: formData,
+          onUploadProgress,
         })
           .then((res: any) => {
             const { key, ...info } = res;
