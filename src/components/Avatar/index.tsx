@@ -7,15 +7,18 @@ interface Props {
   src?: string;
   size?: 'small' | 'large' | 'normal';
   round?: boolean;
+  onClick?: () => void;
 }
 
-const Avatar: React.FC<Props> = ({ src, size = 'normal', round }) => {
+const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
   return (
     <div
       className={cls('lanting-avatar', {
         [`lanting-avatar-${size}`]: size !== 'normal',
         'lanting-avatar-round': round,
+        'lanting-avatar-clickable': !!onClick,
       })}
+      onClick={onClick}
     >
       {src ? (
         <img

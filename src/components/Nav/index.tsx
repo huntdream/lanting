@@ -7,6 +7,7 @@ import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
 
 import './style.scss';
+import Avatar from 'components/Avatar';
 
 interface NavProps {}
 
@@ -50,7 +51,12 @@ const Nav: React.FC<NavProps> = () => {
           )}
           <ThemeToggle />
           <Icon onClick={handleNotify}>notifications</Icon>
-          <Icon onClick={handleAccountClick}>account_circle</Icon>
+          <Avatar
+            onClick={handleAccountClick}
+            size='small'
+            src={user?.avatar}
+            round
+          />
         </div>
       </div>
     </nav>

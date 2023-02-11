@@ -8,10 +8,14 @@
   align-items: center;
   justify-content: center;
 
+  &-clickable {
+    cursor: pointer;
+  }
+
   &-small {
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
   }
 
   &-large {
