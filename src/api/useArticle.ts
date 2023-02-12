@@ -1,16 +1,7 @@
 import useToast from 'components/Toast/useToast';
 import useRequest from 'hooks/useRequest';
 import useSWR, { SWRConfiguration } from 'swr';
-
-export interface IArticle {
-  id: number;
-  title: string;
-  authorId: string;
-  content: string;
-  excerpt: string;
-  createdAt?: string;
-  canEdit: boolean;
-}
+import { IArticle } from 'typing/article';
 
 const useArticle = (id: string, config?: SWRConfiguration<IArticle>) => {
   const [request] = useRequest();

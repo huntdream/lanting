@@ -6,9 +6,10 @@ import { IArticle } from 'typing/article';
 import { useNavigate, useParams } from 'react-router-dom';
 import useArticle from 'api/useArticle';
 import { $getRoot, EditorState } from 'lexical';
+import useRequest from 'hooks/useRequest';
+import Visibility from './Visibility';
 
 import './style.scss';
-import useRequest from 'hooks/useRequest';
 
 interface EditProps {}
 
@@ -17,20 +18,27 @@ const Edit: React.FC<EditProps> = () => {
   const ref = useRef<EditorState>();
   const [request] = useRequest();
 
-  const { article } = useArticle(id, {
+  const { article: articleData } = useArticle(id, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
 
-  const [title, setTitle] = useState('');
+  const [article, setArticle] = useState<IArticle>({
+    visibility: 1,
+    title: '',
+  } as IArticle);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (article) {
-      setTitle(article.title);
+    if (articleData) {
+      setArticle(articleData);
     }
-  }, [article]);
+  }, [articleData]);
+
+  const handleChange = (key: keyof IArticle, value: any) => {
+    setArticle({ ...article, [key]: value });
+  };
 
   const publish = () => {
     if (!ref.current) return;
@@ -45,8 +53,8 @@ const Edit: React.FC<EditProps> = () => {
 
     request
       .post<any, IArticle>(`article/${id}`, {
+        ...article,
         id: article?.id,
-        title,
         excerpt,
         content,
       })
@@ -72,12 +80,18 @@ const Edit: React.FC<EditProps> = () => {
         <Input
           borderless
           placeholder='Title'
-          value={title}
-          onChange={({ target: { value } }) => setTitle(value)}
+          value={article?.title}
+          onChange={({ target: { value } }) => handleChange('title', value)}
         />
-        <Button onClick={publish} disabled={!title}>
-          {id ? 'Save' : 'Publish'}
-        </Button>
+        <div className='lanting-edit-header-actions'>
+          <Visibility
+            value={article?.visibility !== 2}
+            onChange={(value) => handleChange('visibility', value ? 1 : 2)}
+          />
+          <Button onClick={publish} disabled={!article?.title}>
+            {id ? 'Save' : 'Publish'}
+          </Button>
+        </div>
       </div>
       <LantingEditor
         onChange={handleEditorChange}

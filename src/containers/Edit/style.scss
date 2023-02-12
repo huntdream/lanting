@@ -9,6 +9,17 @@
     align-items: center;
     margin-bottom: 1rem;
 
+    &-actions,
+    &-visibility {
+      display: flex;
+      align-items: center;
+    }
+
+    &-visibility {
+      width: 90px;
+      cursor: pointer;
+    }
+
     .lanting-input {
       width: 80%;
       font-size: 1.5rem;
