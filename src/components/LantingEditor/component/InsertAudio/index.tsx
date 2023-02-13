@@ -34,7 +34,7 @@ const InsertAudio: React.FC<Props> = ({ activeEditor, onClose }) => {
 
       <div className='lanting-editor-insert-image-footer'>
         <Button onClick={handleInsert} disabled={!audio?.url}>
-          Confirm
+          Done
         </Button>
       </div>
     </div>

@@ -40,7 +40,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
 
       <div className='lanting-editor-insert-image-footer'>
         <Button onClick={handleInsert} disabled={!images?.length}>
-          Confirm
+          Done
         </Button>
       </div>
     </div>
