@@ -1,13 +1,10 @@
 import cls from 'classnames';
 import Icon from 'components/Icon';
-import Loading from 'components/Loading';
 import useUpload from 'hooks/useUpload';
 import React, {
   ChangeEvent,
   DragEvent,
   ReactNode,
-  useCallback,
-  useEffect,
   useRef,
   useState,
 } from 'react';
