@@ -1,0 +1,15 @@
+.lanting-user {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  &-name {
+    margin-left: 6px;
+  }
+
+  &:hover & {
+    &-name {
+      color: var(--anchor-color);
+    }
+  }
+}

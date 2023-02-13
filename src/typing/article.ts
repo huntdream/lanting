@@ -1,3 +1,5 @@
+import { IUser } from './user';
+
 export interface IArticle {
   id: number;
   title: string;
@@ -7,6 +9,7 @@ export interface IArticle {
   createdAt?: string;
   canEdit: boolean;
   visibility: number;
+  author: IUser;
 }
 
 export type IFeed = Data<IArticle>;
