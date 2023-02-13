@@ -1,0 +1,83 @@
+.lanting-audio {
+  display: flex;
+  height: 64px;
+  box-shadow: 0 2px 4px var(--shadow-1);
+  width: 328px;
+
+  &-left {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-middle {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 8px 10px 0;
+    justify-content: space-between;
+    width: 264px;
+  }
+
+  &-namevol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .lanting-icon {
+      cursor: pointer;
+    }
+  }
+
+  &-name {
+    color: var(--secondary-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  &-timeinfo {
+    display: flex;
+    align-items: center;
+  }
+
+  &-progress {
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background-color: #eee;
+    cursor: pointer;
+  }
+
+  &-passed {
+    height: 4px;
+    width: 0;
+    background-color: #666;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: width 200ms;
+
+    &::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #666;
+      display: block;
+      right: 0;
+      position: absolute;
+    }
+  }
+
+  &-duration {
+    font-size: 14px;
+    color: var(--secondary-text);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+}

@@ -16,6 +16,7 @@ const InsertAudio: React.FC<Props> = ({ activeEditor, onClose }) => {
     if (audio) {
       activeEditor.dispatchCommand(INSERT_AUDIO_COMMAND, {
         src: audio.url,
+        name: audio.name.replace(/\.[^/.]+$/, ''),
       });
     }
 

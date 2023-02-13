@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import {
   DecoratorNode,
+  DOMConversionOutput,
   EditorConfig,
   LexicalNode,
   NodeKey,
@@ -11,31 +12,42 @@ import AudioPlayer from 'components/Audio';
 
 export interface AudioPayload {
   src: string;
-  key: NodeKey;
+  key?: NodeKey;
+  name?: string;
 }
 
 export type SerializedAudioNode = Spread<
   {
     src: string;
-    duration: string;
+    name?: string;
   },
   SerializedLexicalNode
 >;
 
 export class AudioNode extends DecoratorNode<ReactNode> {
   __src: string;
+  __name?: string;
 
   static getType(): string {
-    return 'voice';
+    return 'audio';
   }
 
   static clone(node: AudioNode): AudioNode {
-    return new AudioNode(node.__src, node.__key);
+    return new AudioNode(node.__src, node.__name, node.__key);
   }
 
-  constructor(src: string, key?: NodeKey) {
+  constructor(src: string, name?: string, key?: NodeKey) {
     super(key);
     this.__src = src;
+    this.__name = name;
+  }
+
+  getName() {
+    return this.__name;
+  }
+
+  getSrc() {
+    return this.__src;
   }
 
   createDOM(config: EditorConfig): HTMLElement {
@@ -53,13 +65,33 @@ export class AudioNode extends DecoratorNode<ReactNode> {
     return false;
   }
 
+  static importJSON(serializedNode: SerializedAudioNode): AudioNode {
+    const { src, name } = serializedNode;
+
+    const node = $createAudioNode({
+      src,
+      name,
+    });
+
+    return node;
+  }
+
+  exportJSON(): SerializedAudioNode {
+    return {
+      name: this.getName(),
+      src: this.getSrc(),
+      type: 'audio',
+      version: 1,
+    };
+  }
+
   decorate(): ReactNode {
-    return <AudioPlayer src={this.__src} />;
+    return <AudioPlayer src={this.__src} name={this.__name} />;
   }
 }
 
-export function $createAudioNode({ src, key }: AudioPayload): AudioNode {
-  return new AudioNode(src, key);
+export function $createAudioNode({ src, name, key }: AudioPayload): AudioNode {
+  return new AudioNode(src, name, key);
 }
 
 export function $isAudioNode(node?: LexicalNode): boolean {
