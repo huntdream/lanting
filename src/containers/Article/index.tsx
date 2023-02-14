@@ -5,7 +5,6 @@ import LantingEditor from 'components/LantingEditor';
 import useArticle from 'api/useArticle';
 import Date from 'components/Date';
 import Icon from 'components/Icon';
-import Avatar from 'components/Avatar';
 import User from 'components/User';
 
 interface ArticleProps {}

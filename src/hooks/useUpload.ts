@@ -1,5 +1,5 @@
 import { AxiosProgressEvent } from 'axios';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
 import request from 'utils/request';
 

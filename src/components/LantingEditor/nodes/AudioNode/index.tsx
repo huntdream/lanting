@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import {
   DecoratorNode,
-  DOMConversionOutput,
   EditorConfig,
   LexicalNode,
   NodeKey,
