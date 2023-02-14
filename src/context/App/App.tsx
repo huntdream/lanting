@@ -1,9 +1,11 @@
 import React, {
   createContext,
   ReactNode,
+  useEffect,
   useLayoutEffect,
   useState,
 } from 'react';
+import useSWR from 'swr';
 import { IUser } from 'typing/user';
 
 interface IAppContext {
@@ -19,6 +21,7 @@ interface Props {
 
 const AppProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser>();
+  const { data } = useSWR('/user/me');
 
   useLayoutEffect(() => {
     const userString = localStorage.getItem('user');
@@ -29,6 +32,10 @@ const AppProvider: React.FC<Props> = ({ children }) => {
       setUser(userData);
     }
   }, []);
+
+  useEffect(() => {
+    handleSetUser(data);
+  }, [data]);
 
   const handleSetUser = (user?: IUser) => {
     setUser(user);
