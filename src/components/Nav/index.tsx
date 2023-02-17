@@ -22,7 +22,7 @@ const Nav: React.FC<NavProps> = () => {
   }, [pathname]);
 
   const handleAccountClick = () => {
-    if (user) {
+    if (user?.id) {
       navigate(`/profile/${user?.id}`);
     } else {
       navigate(`/login`);
