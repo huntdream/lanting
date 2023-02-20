@@ -5,7 +5,7 @@ const request = axios.create({
   baseURL: config.baseurl,
 });
 
-const TOKEN_WHITELIST = ['/auth/signin', '/auth/signup'];
+const TOKEN_WHITELIST = ['/auth/login', '/auth/signup'];
 
 request.interceptors.request.use((config) => {
   const token = localStorage.getItem('lanting-token');

@@ -44,14 +44,14 @@ const Login: React.FC<LoginProps> = () => {
   );
 
   return (
-    <div className='lanting-signin'>
+    <div className='lanting-login'>
       <Formik
         validationSchema={Schema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
 
           return request
-            .post<any, IUser>('/auth/signin', {
+            .post<any, IUser>('/auth/login', {
               ...values,
             })
             .then(({ token, ...user }) => {
@@ -77,8 +77,8 @@ const Login: React.FC<LoginProps> = () => {
           handleChange,
           handleSubmit,
         }) => (
-          <Form onSubmit={handleSubmit} className='lanting-signin-form'>
-            <div className='lanting-signin-username'>
+          <Form onSubmit={handleSubmit} className='lanting-login-form'>
+            <div className='lanting-login-username'>
               <label htmlFor='username'>Username</label>
 
               <Input
@@ -93,7 +93,7 @@ const Login: React.FC<LoginProps> = () => {
                 {errors.username && touched.username ? errors.username : null}
               </Text.Error>
             </div>
-            <div className='lanting-signin-password'>
+            <div className='lanting-login-password'>
               <label htmlFor='password'>Password</label>
 
               <Input
@@ -110,12 +110,12 @@ const Login: React.FC<LoginProps> = () => {
               </Text.Error>
             </div>
             <Text.Error>{errorMsg}</Text.Error>
-            <div className='lanting-signin-submit'>
+            <div className='lanting-login-submit'>
               <Link to='/signup' style={{ textDecoration: 'none' }}>
                 Create account
               </Link>
               <Button type='submit' disabled={isSubmitting}>
-                Sign In
+                Login
               </Button>
             </div>
           </Form>

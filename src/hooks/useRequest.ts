@@ -3,7 +3,7 @@ import config from 'config';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const TOKEN_WHITELIST = ['/auth/signin', '/auth/signup'];
+const TOKEN_WHITELIST = ['/auth/login', '/auth/signup'];
 
 const useRequest = () => {
   const navigate = useNavigate();
