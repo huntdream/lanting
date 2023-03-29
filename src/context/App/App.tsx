@@ -23,23 +23,12 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser>();
   const { data } = useSWR('/user/me');
 
-  useLayoutEffect(() => {
-    const userString = localStorage.getItem('user');
-
-    if (userString) {
-      const userData = JSON.parse(userString);
-
-      setUser(userData);
-    }
-  }, []);
-
   useEffect(() => {
     handleSetUser(data);
   }, [data]);
 
   const handleSetUser = (user?: IUser) => {
     setUser(user);
-    localStorage.setItem('user', JSON.stringify(user));
   };
 
   const context: IAppContext = {
