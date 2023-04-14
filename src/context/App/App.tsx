@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { createContext, ReactNode, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { IUser } from 'typing/user';
 
@@ -24,16 +18,12 @@ const AppProvider: React.FC<Props> = ({ children }) => {
   const { data } = useSWR('/user/me');
 
   useEffect(() => {
-    handleSetUser(data);
+    setUser(data);
   }, [data]);
-
-  const handleSetUser = (user?: IUser) => {
-    setUser(user);
-  };
 
   const context: IAppContext = {
     user,
-    setUser: handleSetUser,
+    setUser,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
