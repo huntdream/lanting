@@ -18,7 +18,7 @@ interface FormValues {
   password: string;
 }
 
-const Schema: Yup.SchemaOf<FormValues> = Yup.object({
+const Schema: Yup.Schema<FormValues> = Yup.object({
   username: Yup.string()
     .min(5, 'Username must be between 5 and 16 characters long.')
     .max(16, 'Username must be between 6 and 16 characters long.')
