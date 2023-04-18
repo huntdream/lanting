@@ -35,12 +35,12 @@ const Date: React.FC<DateProps> = ({
   }, [date, format, fromNow]);
 
   return (
-    <Tooltip title={datetime} timeout={1000}>
-      <div className='lanting-date' {...props}>
-        {dateStr && <Icon className='lanting-date-icon'>date_range</Icon>}
+    <div className='lanting-date' {...props}>
+      {dateStr && <Icon className='lanting-date-icon'>date_range</Icon>}
+      <Tooltip title={datetime} timeout={1000}>
         <span>{dateStr}</span>
-      </div>
-    </Tooltip>
+      </Tooltip>
+    </div>
   );
 };
 
