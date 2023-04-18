@@ -27,7 +27,7 @@ const Article: React.FC<ArticleProps> = () => {
     <div className='lanting-article'>
       <h2 className='lanting-article-title'>{article?.title}</h2>
       <div className='lanting-article-meta'>
-        <User user={article?.author} />
+        {article?.author && <User user={article?.author} />}
         <Date date={article?.createdAt} />
 
         {article?.canEdit && (
