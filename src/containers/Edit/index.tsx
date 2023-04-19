@@ -57,6 +57,7 @@ const Edit: React.FC<EditProps> = () => {
         id: article?.id,
         excerpt,
         content,
+        text,
       })
       .then((res) => {
         if (res.id) {
