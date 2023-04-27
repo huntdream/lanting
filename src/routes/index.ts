@@ -25,7 +25,7 @@ const routes: IRoute[] = [
   {
     name: 'Sign Up',
     path: '/signup',
-    element: lazy(() => import('../containers/SignUp')),
+    element: lazy(() => import('../containers/Login')),
   },
   {
     name: 'New Story',

@@ -1,15 +1,14 @@
-import React, { useMemo, useState } from 'react';
-import { Formik, Form } from 'formik';
+import React, { useState } from 'react';
 import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import Button from 'components/Button';
-import * as Yup from 'yup';
 import Text from 'components/Text';
 import { useUser } from 'context/App';
 import { IUser } from 'typing/user';
 import useToast from 'components/Toast/useToast';
+import { useForm } from 'react-hook-form';
 
 interface LoginProps {}
 
@@ -18,109 +17,113 @@ interface FormValues {
   password: string;
 }
 
-const Schema: Yup.Schema<FormValues> = Yup.object({
-  username: Yup.string()
-    .min(5, 'Username must be between 5 and 16 characters long.')
-    .max(16, 'Username must be between 6 and 16 characters long.')
-    .required(),
-  password: Yup.string()
-    .min(6, 'Password must be between 6 and 16 characters long.')
-    .max(16, 'Password must be between 6 and 16 characters long.')
-    .required(),
-});
-
 const Login: React.FC<LoginProps> = () => {
   const [, setUser] = useUser();
-  const [errorMsg, setErrorMsg] = useState('');
   const navigate = useNavigate();
   const [toast] = useToast();
+  const { pathname } = useLocation();
 
-  const initialValues: FormValues = useMemo(
-    () => ({
-      username: '',
-      password: '',
-    }),
-    []
-  );
+  const isLogin = pathname.slice(1) === 'login';
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const handleLogin = (values: FormValues) => {
+    console.log(values);
+
+    setIsSubmitting(true);
+
+    if (isLogin) {
+      return request
+        .post<any, IUser>('/auth/login', {
+          ...values,
+        })
+        .then(({ token, ...user }) => {
+          setIsSubmitting(false);
+
+          toast('Welcome back!');
+          setUser(user);
+          localStorage.setItem('lanting-token', token!);
+          navigate('/');
+        })
+        .catch((err) => {
+          setErrorMsg(err.message);
+          toast(err.message);
+          setIsSubmitting(false);
+        });
+    } else {
+      return request
+        .post<any, IUser>('/auth/signup', {
+          ...values,
+        })
+        .then(({ token, ...user }) => {
+          setIsSubmitting(false);
+
+          setUser(user);
+          localStorage.setItem('lanting-token', token!);
+          navigate('/');
+        })
+        .catch((err) => {
+          setErrorMsg(err.message);
+          setIsSubmitting(false);
+        });
+    }
+  };
 
   return (
     <div className='lanting-login'>
-      <Formik
-        validationSchema={Schema}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-
-          return request
-            .post<any, IUser>('/auth/login', {
-              ...values,
-            })
-            .then(({ token, ...user }) => {
-              toast('Welcome back!');
-              setUser(user);
-              localStorage.setItem('lanting-token', token!);
-              navigate('/');
-            })
-            .catch((err) => {
-              setErrorMsg(err.message);
-              setSubmitting(false);
-              toast(err.message);
-            });
-        }}
-        initialValues={initialValues}
+      <form
+        onSubmit={handleSubmit((data) => handleLogin(data))}
+        className='lanting-login-form'
       >
-        {({
-          values,
-          errors,
-          isSubmitting,
-          isValid,
-          touched,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <Form onSubmit={handleSubmit} className='lanting-login-form'>
-            <div className='lanting-login-username'>
-              <label htmlFor='username'>Username</label>
+        <div className='lanting-login-username'>
+          <label htmlFor='username'>Username</label>
 
-              <Input
-                autoComplete='off'
-                name='username'
-                id='username'
-                value={values.username}
-                onChange={handleChange}
-              />
+          <Input
+            autoComplete='off'
+            placeholder='Username'
+            {...register('username', { required: 'Username is required' })}
+          />
 
-              <Text.Error>
-                {errors.username && touched.username ? errors.username : null}
-              </Text.Error>
-            </div>
-            <div className='lanting-login-password'>
-              <label htmlFor='password'>Password</label>
+          <Text.Error>{errors.username && errors.username.message}</Text.Error>
+        </div>
+        <div className='lanting-login-password'>
+          <label htmlFor='password'>Password</label>
 
-              <Input
-                type='password'
-                autoComplete='off'
-                name='password'
-                id='password'
-                value={values.password}
-                onChange={handleChange}
-              />
+          <Input
+            type='password'
+            autoComplete='off'
+            placeholder='Password'
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 8,
+                message: 'Use 8 characters or more for your password',
+              },
+            })}
+          />
 
-              <Text.Error>
-                {errors.password && touched.password ? errors.password : null}
-              </Text.Error>
-            </div>
-            <Text.Error>{errorMsg}</Text.Error>
-            <div className='lanting-login-submit'>
-              <Link to='/signup' style={{ textDecoration: 'none' }}>
-                Create account
-              </Link>
-              <Button type='submit' disabled={isSubmitting}>
-                Login
-              </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+          <Text.Error>{errors.password && errors.password.message}</Text.Error>
+        </div>
+        <Text.Error>{errorMsg}</Text.Error>
+        <div className='lanting-login-submit'>
+          <Link
+            to={isLogin ? '/signup' : '/login'}
+            style={{ textDecoration: 'none' }}
+          >
+            {isLogin ? 'Create account' : 'Already have an account？'}
+          </Link>
+          <Button type='submit' disabled={isSubmitting}>
+            {isLogin ? 'Login' : 'Create Account'}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
