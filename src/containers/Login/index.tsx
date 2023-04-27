@@ -23,7 +23,7 @@ const Login: React.FC<LoginProps> = () => {
   const [toast] = useToast();
   const { pathname } = useLocation();
 
-  const isLogin = pathname.slice(1) === 'login';
+  const isLogin = pathname === '/login';
 
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
