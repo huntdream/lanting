@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Button from 'components/Button';
 import Text from 'components/Text';
 import { useUser } from 'context/App';
@@ -49,7 +49,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
           toast('Welcome back!');
           setUser(user);
           localStorage.setItem('lanting-token', token!);
-          navigate('/');
+          navigate('/', { replace: true });
         })
         .catch((err) => {
           setErrorMsg(err.message);
@@ -66,7 +66,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
 
           setUser(user);
           localStorage.setItem('lanting-token', token!);
-          navigate('/');
+          navigate('/', { replace: true });
         })
         .catch((err) => {
           setErrorMsg(err.message);
@@ -114,6 +114,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         <div className='lanting-login-submit'>
           <Link
             to={isLogin ? '/signup' : '/login'}
+            replace
             style={{ textDecoration: 'none' }}
           >
             {isLogin ? 'Create account' : 'Already have an account？'}
