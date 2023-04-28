@@ -10,20 +10,19 @@ import { IUser } from 'typing/user';
 import useToast from 'components/Toast/useToast';
 import { useForm } from 'react-hook-form';
 
-interface LoginProps {}
+interface LoginProps {
+  isLogin?: boolean;
+}
 
 interface FormValues {
   username: string;
   password: string;
 }
 
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC<LoginProps> = ({ isLogin }) => {
   const [, setUser] = useUser();
   const navigate = useNavigate();
   const [toast] = useToast();
-  const { pathname } = useLocation();
-
-  const isLogin = pathname === '/login';
 
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
