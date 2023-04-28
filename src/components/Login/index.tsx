@@ -31,6 +31,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormValues>();
 
   const handleLogin = (values: FormValues) => {
@@ -116,6 +117,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
             to={isLogin ? '/signup' : '/login'}
             replace
             style={{ textDecoration: 'none' }}
+            onClick={() => reset()}
           >
             {isLogin ? 'Create account' : 'Already have an account？'}
           </Link>
