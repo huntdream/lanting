@@ -1,4 +1,10 @@
 .lanting-feed {
   max-width: 48rem;
   margin: 0 auto;
+
+  &-empty {
+    color: var(--secondary-text);
+    text-align: center;
+    padding: 16px;
+  }
 }
