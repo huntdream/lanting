@@ -11,9 +11,9 @@ interface FeedProps {
 
 const Feed: React.FC<FeedProps> = ({ id = '' }) => {
   const { data: feed, isLoading } = useSWR<IFeed>(`articles/${id}`);
-  console.log(isLoading, '????');
+
   if (isLoading) {
-    return <Loading />;
+    return <Loading loading />;
   }
 
   if (feed?.data?.length === 0) {

@@ -45,7 +45,7 @@ const Profile: React.FC<Props> = () => {
         </div>
         <div className='lanting-profile-name'>{data?.name}</div>
       </div>
-      <Tabs tabs={tabs} activeTab='feed' />
+      <Tabs tabs={tabs} activeTab='posts' />
     </div>
   );
 };
