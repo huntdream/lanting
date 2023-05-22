@@ -35,7 +35,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
   const activeEditorRef = useRef<LexicalEditor | null>(null);
 
   const [isResizing, setIsResizing] = useState(false);
-  const [selection, setSelection] = useState<
+  const [, setSelection] = useState<
     RangeSelection | NodeSelection | GridSelection | null
   >(null);
   const [editor] = useLexicalComposerContext();
