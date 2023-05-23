@@ -1,6 +1,6 @@
 import Avatar from 'components/Avatar';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useMatch, useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { IUser } from 'typing/user';
 import './style.scss';
@@ -10,14 +10,15 @@ import Feed from 'containers/Feed';
 interface Props {}
 
 const Profile: React.FC<Props> = () => {
-  const { id } = useParams();
+  const navigate = useNavigate();
+  const { id, type } = useParams();
+  const [activeTab, setActiveTab] = useState(type || 'posts');
+
   const { data } = useSWR<IUser>(`/user/${id}`, {
     refreshInterval: 0,
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   });
-
-  console.log(data);
 
   const tabs: Tab[] = [
     {
@@ -37,6 +38,11 @@ const Profile: React.FC<Props> = () => {
     },
   ];
 
+  const handleTabChange = (tab: string) => {
+    navigate(`/profile/${id}/${tab}`, { replace: true });
+    setActiveTab(tab);
+  };
+
   return (
     <div className='lanting-profile'>
       <div className='lanting-profile-header'>
@@ -45,7 +51,7 @@ const Profile: React.FC<Props> = () => {
         </div>
         <div className='lanting-profile-name'>{data?.name}</div>
       </div>
-      <Tabs tabs={tabs} activeTab='posts' />
+      <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   );
 };
