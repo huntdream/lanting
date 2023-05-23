@@ -34,13 +34,8 @@ const routes: RouteObject[] = [
     element: <Edit />,
   },
   {
-    path: '/profile/:id',
+    path: '/profile/:id/:type?',
     element: <Profile />,
-    children: [
-      {
-        path: '/profile/:id/:type',
-      },
-    ],
   },
 ];
 
