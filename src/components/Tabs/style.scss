@@ -1,6 +1,15 @@
 .tabs {
+  &--sticky & {
+    &-header {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+  }
+
   &-header {
     box-shadow: inset 0 -1px var(--tabs-hl-bg);
+    background-color: var(--bg-color);
   }
 
   &-list {

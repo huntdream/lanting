@@ -51,7 +51,12 @@ const Profile: React.FC<Props> = () => {
         </div>
         <div className='lanting-profile-name'>{data?.name}</div>
       </div>
-      <Tabs tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
+      <Tabs
+        sticky
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+      />
     </div>
   );
 };

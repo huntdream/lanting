@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, MouseEvent, useMemo } from 'react';
+import cls from 'classnames';
 import './style.scss';
 
 export interface Tab {
@@ -9,11 +10,17 @@ export interface Tab {
 
 interface TabProps {
   tabs: Tab[];
+  sticky?: boolean;
   activeTab?: string;
   onTabChange?: (tabId: string) => void;
 }
 
-const Tabs: React.FC<TabProps> = ({ tabs = [], activeTab, onTabChange }) => {
+const Tabs: React.FC<TabProps> = ({
+  tabs = [],
+  sticky,
+  activeTab,
+  onTabChange,
+}) => {
   const [hlStyles, setHLStyles] = useState<React.CSSProperties>({});
   const hlRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState<string>(tabs[0]?.id);
@@ -53,7 +60,11 @@ const Tabs: React.FC<TabProps> = ({ tabs = [], activeTab, onTabChange }) => {
   );
 
   return (
-    <div className='tabs'>
+    <div
+      className={cls('tabs', {
+        'tabs--sticky': sticky,
+      })}
+    >
       <div className='tabs-header'>
         <div className='tabs-list' onMouseLeave={handleMouseLeave}>
           {tabs.map((tab) => (
