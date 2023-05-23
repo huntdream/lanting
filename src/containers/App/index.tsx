@@ -11,16 +11,7 @@ import Toast from 'components/Toast';
 import './style.scss';
 
 function App() {
-  const pages = useRoutes(
-    routes.map(({ path, element: Component }) => ({
-      path,
-      element: (
-        <Suspense fallback={<Loading />}>
-          <Component />
-        </Suspense>
-      ),
-    }))
-  );
+  const pages = useRoutes(routes);
 
   return (
     <AppProvider>
@@ -29,7 +20,9 @@ function App() {
           <Toast>
             <div className='lanting-app'>
               <Nav />
-              <main className='lanting-app-main'>{pages}</main>
+              <main className='lanting-app-main'>
+                <Suspense fallback={<Loading />}>{pages}</Suspense>
+              </main>
             </div>
           </Toast>
         </ErrorBoundary>
