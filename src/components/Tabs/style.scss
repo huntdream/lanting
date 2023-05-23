@@ -42,7 +42,7 @@
   &-highlight {
     opacity: 0;
     contain: strict;
-    background: #eaeaea;
+    background: var(--tabs-hl-bg);
     position: absolute;
     left: 0;
     border-radius: 4px;
