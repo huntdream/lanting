@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, MouseEvent } from 'react';
+import React, { useState, useEffect, useRef, MouseEvent, useMemo } from 'react';
 import './style.scss';
 
 export interface Tab {
@@ -47,6 +47,11 @@ const Tabs: React.FC<TabProps> = ({ tabs = [], activeTab, onTabChange }) => {
     setHLStyles({ ...hlStyles, opacity: 0 });
   };
 
+  const content = useMemo(
+    () => tabs.find((tab) => tab.id === active)?.content,
+    [active, tabs]
+  );
+
   return (
     <div className='tabs'>
       <div className='tabs-header'>
@@ -64,9 +69,7 @@ const Tabs: React.FC<TabProps> = ({ tabs = [], activeTab, onTabChange }) => {
           <div className='tabs-highlight' style={hlStyles} ref={hlRef} />
         </div>
       </div>
-      <div className='tabs-content'>
-        {tabs.find((tab) => tab.id === active)?.content}
-      </div>
+      {content ? <div className='tabs-content'>{content}</div> : null}
     </div>
   );
 };
