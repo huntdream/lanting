@@ -1,6 +1,6 @@
 import Avatar from 'components/Avatar';
 import React, { useState } from 'react';
-import { useMatch, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { IUser } from 'typing/user';
 import './style.scss';
