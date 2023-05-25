@@ -1,5 +1,5 @@
 import Avatar from 'components/Avatar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import { IUser } from 'typing/user';
@@ -19,6 +19,10 @@ const Profile: React.FC<Props> = () => {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   });
+
+  useEffect(() => {
+    setActiveTab(type || 'posts');
+  }, [type]);
 
   const tabs: Tab[] = [
     {
