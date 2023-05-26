@@ -16,20 +16,24 @@
     position: relative;
     margin: 18px 0;
 
-    > * {
-      margin: 0 4px;
+    .lanting-date {
+      margin-left: 12px;
     }
 
-    &-edit {
-      font-size: 1.2rem;
+    &-actions {
       position: absolute;
       right: 0;
       opacity: 0;
       transition: opacity 0.3s;
+      font-size: 1.2rem;
+
+      .lanting-icon {
+        margin: 0 4px;
+      }
     }
 
     &:hover & {
-      &-edit {
+      &-actions {
         opacity: 1;
       }
     }

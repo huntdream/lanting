@@ -6,6 +6,8 @@ import useArticle from 'api/useArticle';
 import Date from 'components/Date';
 import Icon from 'components/Icon';
 import User from 'components/User';
+import useRequest from 'hooks/useRequest';
+import useToast from 'components/Toast/useToast';
 
 interface ArticleProps {}
 
@@ -16,11 +18,25 @@ interface ArticleParams {
 const Article: React.FC<ArticleProps> = () => {
   const { id = '' } = useParams<keyof ArticleParams>();
   const navigate = useNavigate();
+  const [fetcher] = useRequest();
+  const [toast] = useToast();
 
   const { article } = useArticle(id);
 
   const navigateToEdit = () => {
     navigate(`/edit/${id}`);
+  };
+
+  const handleDelete = () => {
+    fetcher('/articles', {
+      method: 'delete',
+      data: {
+        ids: [parseInt(id, 10)],
+      },
+    }).then((res) => {
+      navigate('/');
+      toast('Article deleted');
+    });
   };
 
   return (
@@ -31,9 +47,10 @@ const Article: React.FC<ArticleProps> = () => {
         <Date date={article?.createdAt} />
 
         {article?.canEdit && (
-          <Icon onClick={navigateToEdit} className='lanting-article-meta-edit'>
-            edit
-          </Icon>
+          <div className='lanting-article-meta-actions'>
+            <Icon onClick={navigateToEdit}>edit</Icon>
+            <Icon onClick={handleDelete}>delete</Icon>
+          </div>
         )}
       </div>
       <div className='lanting-article-content'>
