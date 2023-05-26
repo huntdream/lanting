@@ -53,7 +53,9 @@ const Profile: React.FC<Props> = () => {
         <div className='lanting-profile-user'>
           <Avatar src={data?.avatar} round size='large' />
         </div>
-        <div className='lanting-profile-name'>{data?.name}</div>
+        <div className='lanting-profile-name'>
+          {data?.name || data?.username}
+        </div>
       </div>
       <Tabs
         sticky
