@@ -1,0 +1,30 @@
+.lanting-formitem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+
+  &--error {
+    input {
+      border-color: var(--warning-color);
+    }
+  }
+
+  &-label {
+    color: var(--primary-text);
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
+  &-child {
+    input {
+      min-width: 180px;
+    }
+  }
+
+  .lanting-text--error {
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+  }
+}
