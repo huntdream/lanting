@@ -6,6 +6,7 @@ import { IUser } from 'typing/user';
 import './style.scss';
 import Tabs, { Tab } from 'components/Tabs';
 import Feed from 'containers/Feed';
+import Icon from 'components/Icon';
 
 interface Props {}
 
@@ -17,7 +18,6 @@ const Profile: React.FC<Props> = () => {
   const { data } = useSWR<IUser>(`/user/${id}`, {
     refreshInterval: 0,
     shouldRetryOnError: false,
-    revalidateOnFocus: false,
   });
 
   useEffect(() => {
@@ -56,6 +56,12 @@ const Profile: React.FC<Props> = () => {
         <div className='lanting-profile-name'>
           {data?.name || data?.username}
         </div>
+        <Icon
+          className='lanting-profile-header-edit'
+          onClick={() => navigate('/profile/edit')}
+        >
+          edit
+        </Icon>
       </div>
       <Tabs
         sticky
