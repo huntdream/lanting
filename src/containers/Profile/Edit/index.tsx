@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUser } from 'context/App';
+import useSWR from 'swr';
 import Input from 'components/Input';
 import { useForm } from 'react-hook-form';
 import { IUser } from 'typing/user';
@@ -13,7 +13,7 @@ import FormItem from 'components/FormItem';
 interface Props {}
 
 const Edit: React.FC<Props> = () => {
-  const [user] = useUser();
+  const { data: user } = useSWR('/user/me');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fetcher] = useRequest();
   const [toast] = useToast();
