@@ -1,12 +1,12 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import Login from 'components/Login';
 
-interface LoginProps {}
+interface LoginProps {
+  isLogin?: boolean;
+}
 
-const Auth: React.FC<LoginProps> = () => {
-  const { pathname } = useLocation();
-  return <Login isLogin={pathname === '/login'} />;
+const Auth: React.FC<LoginProps> = ({ isLogin }) => {
+  return <Login isLogin={isLogin} />;
 };
 
 export default Auth;

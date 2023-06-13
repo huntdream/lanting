@@ -20,7 +20,7 @@ const routes: RouteObject[] = [
   },
   {
     path: '/login',
-    element: <Auth />,
+    element: <Auth isLogin />,
   },
   {
     path: '/signup',
