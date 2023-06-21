@@ -11,19 +11,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Check for changes in package.json
-      id: check_changes
-      run: echo ::set-output name=CHANGES::$(git diff --name-only ${{ github.base_ref }}...${{ github.sha }} | grep -E '^(package-lock.json|yarn.lock|package.json)$')
-
-    - name: Set up Node.js
+    - name: Setup node
       uses: actions/setup-node@v3
       with:
-        node-version: latest
-        cache: npm
-
-    - name: Install dependencies
-      if: steps.check_changes.outputs.CHANGES
-      run: npm install
+        node-version: 16
+        cache: 'npm'
+    - run: npm ci
 
     - name: Build
       run: npm run build
