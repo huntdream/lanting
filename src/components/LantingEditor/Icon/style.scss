@@ -9,34 +9,34 @@
   color: var(--primary-text);
 
   &.h1 {
-    background-image: url(/assets/icons/type-h1.svg);
+    background-image: url(/src/assets/icons/type-h1.svg);
   }
 
   &.h2 {
-    background-image: url(/assets/icons/type-h2.svg);
+    background-image: url(/src/assets/icons/type-h2.svg);
   }
 
   &.h3 {
-    background-image: url(/assets/icons/type-h3.svg);
+    background-image: url(/src/assets/icons/type-h3.svg);
   }
 
   &.quote {
-    background-image: url(/assets/icons/chat-square-quote.svg);
+    background-image: url(/src/assets/icons/chat-square-quote.svg);
   }
 
   &.ul {
-    background-image: url(/assets/icons/list-ul.svg);
+    background-image: url(/src/assets/icons/list-ul.svg);
   }
 
   &.ol {
-    background-image: url(/assets/icons/list-ol.svg);
+    background-image: url(/src/assets/icons/list-ol.svg);
   }
 
   &.code {
-    background-image: url(/assets/icons/code.svg);
+    background-image: url(/src/assets/icons/code.svg);
   }
 
   &.paragraph {
-    background-image: url(/assets/icons/text-paragraph.svg);
+    background-image: url(/src/assets/icons/text-paragraph.svg);
   }
 }
