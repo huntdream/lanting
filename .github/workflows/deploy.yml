@@ -23,7 +23,7 @@ jobs:
       run: npm run build
 
     - name: Archive artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
-        name: built-app
+        name: lanting-app
         path: build/
