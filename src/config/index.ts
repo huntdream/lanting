@@ -6,7 +6,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const config: Config = {
   baseurl: isProd
-    ? 'https://api.maoyu.info/api/v1'
+    ? 'https://api.maoyu.dev/api/v1'
     : 'http://localhost:4000/api/v1',
 };
 
