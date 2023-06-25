@@ -16,7 +16,7 @@ const Feed: React.FC<FeedProps> = ({ id = '' }) => {
     return <Loading loading />;
   }
 
-  if (feed?.data?.length === 0) {
+  if (!feed?.data?.length) {
     return (
       <div className='lanting-feed-empty'>Guess what? Nothing here 😢</div>
     );
