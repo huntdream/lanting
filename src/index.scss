@@ -4,9 +4,7 @@
 :root {
   --warning-color: #ff4d4f;
 
-  &.light {
-    @extend %light;
-  }
+  @extend %light;
 
   &.dark {
     @extend %dark;
