@@ -4,12 +4,20 @@ import { createPortal } from 'react-dom';
 import './style.scss';
 
 interface Props {
-  label: string;
-  icon: string;
+  label?: string;
+  icon?: string;
   children: ReactNode;
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
 }
 
-const DropDown: React.FC<Props> = ({ label, icon, children }) => {
+const DropDown: React.FC<Props> = ({
+  label,
+  icon,
+  children,
+  visible = false,
+  onVisibleChange,
+}) => {
   const buttonRef = useRef<HTMLDivElement>(null);
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -30,14 +38,19 @@ const DropDown: React.FC<Props> = ({ label, icon, children }) => {
   }, [showDropDown, dropDownRef, buttonRef]);
 
   useEffect(() => {
+    setShowDropDown(visible);
+  }, [visible]);
+
+  useEffect(() => {
     const button = buttonRef.current;
+    const dropdown = dropDownRef.current;
 
     if (button !== null && showDropDown) {
       const handle = (event: MouseEvent) => {
         const target = event.target as HTMLElement;
 
-        if (!button.contains(target)) {
-          setShowDropDown(false);
+        if (!button.contains(target) && !dropdown?.contains(target)) {
+          handleVisibleChange(false);
         }
       };
       document.addEventListener('click', handle);
@@ -48,8 +61,15 @@ const DropDown: React.FC<Props> = ({ label, icon, children }) => {
     }
   }, [dropDownRef, buttonRef, showDropDown]);
 
+  const handleVisibleChange = (v: boolean) => {
+    setShowDropDown(v);
+    if (onVisibleChange) {
+      onVisibleChange(v);
+    }
+  };
+
   const handleClick = () => {
-    setShowDropDown(true);
+    handleVisibleChange(true);
   };
 
   return (
@@ -59,8 +79,8 @@ const DropDown: React.FC<Props> = ({ label, icon, children }) => {
         onClick={handleClick}
         className='lanting-dropdown-label'
       >
-        <Icon>{icon}</Icon>
-        <span className='lanting-dropdown-label-text'>{label}</span>
+        {icon && <Icon>{icon}</Icon>}
+        {label && <span className='lanting-dropdown-label-text'>{label}</span>}
         <Icon>expand_more</Icon>
       </div>
 
