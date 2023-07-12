@@ -52,15 +52,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "r",
-      "e",
-      "a",
-      "c",
-      "t",
-      "-",
-      "a",
-      "p",
-      "p",
+      "react-app",
       "plugin:storybook/recommended"
     ]
   },
