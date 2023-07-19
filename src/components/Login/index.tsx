@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import request from 'utils/request';
 import Input from 'components/Input';
 import './style.scss';
@@ -27,12 +27,26 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    reset();
+    setErrorMsg('');
+  }, [isLogin]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<FormValues>();
+
+  useEffect(() => {
+    const subscribe = watch((data, { name, type }) => {
+      setErrorMsg('');
+    });
+
+    return () => subscribe.unsubscribe();
+  }, [watch]);
 
   const handleLogin = (values: FormValues) => {
     console.log(values);
@@ -117,7 +131,6 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
             to={isLogin ? '/signup' : '/login'}
             replace
             style={{ textDecoration: 'none' }}
-            onClick={() => reset()}
           >
             {isLogin ? 'Create account' : 'Already have an account？'}
           </Link>
