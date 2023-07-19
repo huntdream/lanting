@@ -1,4 +1,5 @@
 import { AxiosProgressEvent } from 'axios';
+import useToast from 'components/Toast/useToast';
 import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
 import request from 'utils/request';
@@ -15,6 +16,7 @@ export interface IFile {
 
 const useUpload = () => {
   const token = useRef<string>('');
+  const [toast] = useToast()
 
   const getToken = () => {
     if (token.current) {
@@ -25,6 +27,8 @@ const useUpload = () => {
       method: 'post',
     }).then((res: any) => {
       token.current = res.token;
+    }).catch(e => {
+      toast(e.message)
     });
   };
 
