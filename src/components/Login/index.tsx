@@ -125,7 +125,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
 
           <Text.Error>{errors.password && errors.password.message}</Text.Error>
         </div>
-        <Text.Error>{errorMsg}</Text.Error>
+
         <div className='lanting-login-submit'>
           <Link
             to={isLogin ? '/signup' : '/login'}
@@ -138,6 +138,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
             {isLogin ? 'Login' : 'Create Account'}
           </Button>
         </div>
+        <Text.Error>{errorMsg}</Text.Error>
       </form>
     </div>
   );
