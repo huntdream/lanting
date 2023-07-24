@@ -6,7 +6,7 @@
     "label": "密码",
     "min": "请输入至少8位字符"
   },
-  "createAccount": "创建账户",
-  "alreadyHave": "已注册账户？",
+  "createAccount": "创建帐号",
+  "alreadyHave": "已注册帐号？",
   "textRequired": "请输入{{type}}"
 }
