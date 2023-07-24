@@ -47,6 +47,13 @@
     color: var(--secondary-icon);
   }
 
+  &-lang {
+    padding: 5px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+  }
+
   &-theme {
     font-size: 1.25rem;
     cursor: pointer;

@@ -6,10 +6,10 @@ import commonEN from './en/common.json';
 
 export const resources = {
   en: {
-    translation: commonZH,
+    translation: commonEN,
   },
   zh: {
-    translation: commonEN,
+    translation: commonZH,
   }
 };
 

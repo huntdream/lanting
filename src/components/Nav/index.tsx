@@ -6,6 +6,8 @@ import ThemeToggle from 'components/ThemeToggle';
 import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
 import { useTranslation } from 'react-i18next';
+import { ReactComponent as LangZH } from 'assets/icons/lang-zh.svg';
+import { ReactComponent as LangEN } from 'assets/icons/lang-en.svg';
 
 import './style.scss';
 import Avatar from 'components/Avatar';
@@ -55,7 +57,17 @@ const Nav: React.FC<NavProps> = () => {
               <Icon clickable>edit</Icon>
             </Link>
           )}
-          <Icon onClick={handleLanguageChange}>translate</Icon>
+          {i18n.language === 'zh' ? (
+            <LangZH
+              className='lanting-nav-lang'
+              onClick={handleLanguageChange}
+            />
+          ) : (
+            <LangEN
+              className='lanting-nav-lang'
+              onClick={handleLanguageChange}
+            />
+          )}
           <ThemeToggle />
           <Icon onClick={handleNotify}>notifications</Icon>
           <Avatar
