@@ -1,0 +1,12 @@
+{
+  "login": "Login",
+  "register": "Sign Up",
+  "username": "Username",
+  "password": {
+    "label": "Password",
+    "min": "Use 8 characters or more for your password"
+  },
+  "createAccount": "Create account",
+  "alreadyHave": "Already have an account？",
+  "textRequired": "{{type}} is required"
+}

@@ -4,6 +4,7 @@ import App from './containers/App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { SWRConfig } from 'swr';
 import request from 'utils/request';
+import './i18n';
 import '@material-design-icons/font/filled.css';
 import './index.scss';
 

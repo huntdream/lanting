@@ -5,6 +5,7 @@ import Icon from 'components/Icon';
 import ThemeToggle from 'components/ThemeToggle';
 import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
+import { useTranslation } from 'react-i18next';
 
 import './style.scss';
 import Avatar from 'components/Avatar';
@@ -16,6 +17,7 @@ const Nav: React.FC<NavProps> = () => {
   const navigate = useNavigate();
   const [toast] = useToast();
   const [user] = useUser();
+  const { i18n } = useTranslation();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
@@ -31,6 +33,10 @@ const Nav: React.FC<NavProps> = () => {
 
   const handleNotify = () => {
     toast('This feature is still work in progress');
+  };
+
+  const handleLanguageChange = () => {
+    i18n.changeLanguage(i18n.language === 'zh' ? 'en' : 'zh');
   };
 
   return (
@@ -49,6 +55,7 @@ const Nav: React.FC<NavProps> = () => {
               <Icon clickable>edit</Icon>
             </Link>
           )}
+          <Icon onClick={handleLanguageChange}>translate</Icon>
           <ThemeToggle />
           <Icon onClick={handleNotify}>notifications</Icon>
           <Avatar

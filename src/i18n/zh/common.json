@@ -1,0 +1,12 @@
+{
+  "login": "登录",
+  "register": "注册",
+  "username": "用户名",
+  "password": {
+    "label": "密码",
+    "min": "请输入至少8位字符"
+  },
+  "createAccount": "创建账户",
+  "alreadyHave": "已注册账户？",
+  "textRequired": "请输入{{type}}"
+}
