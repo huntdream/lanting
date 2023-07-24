@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import request from 'utils/request';
 import Input from 'components/Input';
+import { useTranslation } from 'react-i18next';
 import './style.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import Button from 'components/Button';
@@ -23,6 +24,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
   const [, setUser] = useUser();
   const navigate = useNavigate();
   const [toast] = useToast();
+  const { t } = useTranslation();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,7 +57,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
 
     if (isLogin) {
       return request
-        .post<any, IUser>('/auth/login', {
+        .post<any, IUser>('/user/login', {
           ...values,
         })
         .then(({ token, ...user }) => {
@@ -73,7 +75,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         });
     } else {
       return request
-        .post<any, IUser>('/auth/signup', {
+        .post<any, IUser>('/user/register', {
           ...values,
         })
         .then(({ token, ...user }) => {
@@ -97,28 +99,30 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         className='lanting-login-form'
       >
         <div className='lanting-login-username'>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='username'>{t('username')}</label>
 
           <Input
             autoComplete='off'
-            placeholder='Username'
-            {...register('username', { required: 'Username is required' })}
+            placeholder={t('username')}
+            {...register('username', {
+              required: t('textRequired', { type: t('username') }),
+            })}
           />
 
           <Text.Error>{errors.username && errors.username.message}</Text.Error>
         </div>
         <div className='lanting-login-password'>
-          <label htmlFor='password'>Password</label>
+          <label htmlFor='password'>{t('password.label')}</label>
 
           <Input
             type='password'
             autoComplete='off'
-            placeholder='Password'
+            placeholder={t('password.label')}
             {...register('password', {
-              required: 'Password is required',
+              required: t('textRequired', { type: t('password.label') }),
               minLength: {
                 value: 8,
-                message: 'Use 8 characters or more for your password',
+                message: t('password.min'),
               },
             })}
           />
@@ -132,10 +136,10 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
             replace
             style={{ textDecoration: 'none' }}
           >
-            {isLogin ? 'Create account' : 'Already have an account？'}
+            {isLogin ? t('createAccount') : t('alreadyHave')}
           </Link>
           <Button type='submit' disabled={isSubmitting}>
-            {isLogin ? 'Login' : 'Create Account'}
+            {isLogin ? t('login') : t('register')}
           </Button>
         </div>
         <Text.Error>{errorMsg}</Text.Error>
