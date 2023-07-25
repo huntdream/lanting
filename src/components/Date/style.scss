@@ -1,4 +1,9 @@
 .lanting-date {
   display: inline-flex;
   align-items: center;
+  height: 32px;
+
+  .lanting-icon {
+    padding-left: 0;
+  }
 }
