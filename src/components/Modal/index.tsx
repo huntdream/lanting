@@ -45,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({
                       color='secondary'
                       onClick={onClose}
                     >
-                      <Icon className='lanting-modal-close-icon'>close</Icon>
+                      <Icon className='lanting-modal-close-icon' name='close' />
                     </Button>
                   </div>
                   <div className='lanting-modal-content'>{children}</div>

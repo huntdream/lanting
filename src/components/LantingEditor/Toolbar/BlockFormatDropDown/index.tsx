@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import Icon from 'components/LantingEditor/Icon';
 import {
   $createParagraphNode,
   $getSelection,
@@ -18,6 +17,7 @@ import { createPortal } from 'react-dom';
 import { ReactComponent as Arrow } from 'assets/icons/chevron-down.svg';
 import DropDownItem from './Item';
 import './style.scss';
+import Icon from 'components/Icon';
 
 interface Props {
   blockType: string;
@@ -189,7 +189,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
         onClick={handleClick}
         className='lanting-editor-dropdown-item'
       >
-        <Icon type={blockType} /> {blockTypeToBlockName[blockType]}
+        <Icon name={blockType} /> {blockTypeToBlockName[blockType]}
         <Arrow style={{ margin: ' 3px 0 0 6px' }} />
       </div>
 

@@ -54,22 +54,16 @@ const Nav: React.FC<NavProps> = () => {
         <div className='lanting-nav-icons'>
           {!isEditPage && (
             <Link className='lanting-nav-edit' to='/edit'>
-              <Icon clickable>edit</Icon>
+              <Icon clickable name='edit' />
             </Link>
           )}
           {i18n.language === 'zh' ? (
-            <LangZH
-              className='lanting-nav-lang'
-              onClick={handleLanguageChange}
-            />
+            <Icon onClick={handleLanguageChange} name='lang-zh' />
           ) : (
-            <LangEN
-              className='lanting-nav-lang'
-              onClick={handleLanguageChange}
-            />
+            <Icon onClick={handleLanguageChange} name='lang-en' />
           )}
           <ThemeToggle />
-          <Icon onClick={handleNotify}>notifications</Icon>
+          <Icon onClick={handleNotify} name='notifications' />
           <Avatar
             onClick={handleAccountClick}
             size='small'

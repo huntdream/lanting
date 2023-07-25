@@ -61,7 +61,7 @@ const ToastItem: React.FC<Props> = ({
       onMouseLeave={handleSetTimeout}
     >
       <div className='lanting-toast-item-content'>{text}</div>
-      {close && <Icon onClick={handleClose}>close</Icon>}
+      {close && <Icon onClick={handleClose} name='close' />}
       {showProgress && (
         <div
           className='lanting-toast-item-progress'

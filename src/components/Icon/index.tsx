@@ -1,6 +1,8 @@
-import React, { CSSProperties, HTMLAttributes } from 'react';
+import React, { CSSProperties, HTMLAttributes, useEffect, useRef } from 'react';
 import cls from 'classnames';
 import './style.scss';
+import useHover from 'hooks/useHover';
+import useDynamicSVGImport from 'hooks/useDynamicSVGImport';
 
 interface IconProps extends HTMLAttributes<HTMLElement> {
   className?: string;
@@ -8,21 +10,25 @@ interface IconProps extends HTMLAttributes<HTMLElement> {
   style?: CSSProperties;
   clickable?: boolean;
   round?: boolean;
-  children: string;
+  name: string;
 }
 
 const Icon: React.FC<IconProps> = ({
   className,
-  children,
   style,
   size,
   round,
+  name,
   clickable,
   onClick,
   ...props
 }) => {
+  const [ref, overlay] = useHover();
+  const [SVGIcon] = useDynamicSVGImport(name);
+
   return (
     <i
+      ref={ref}
       className={cls(
         'lanting-icon',
         'material-icons',
@@ -36,7 +42,8 @@ const Icon: React.FC<IconProps> = ({
       style={{ fontSize: size, ...style }}
       {...props}
     >
-      {children}
+      {SVGIcon && <SVGIcon width={24} height={24} fill='currentColor' />}
+      {overlay}
     </i>
   );
 };

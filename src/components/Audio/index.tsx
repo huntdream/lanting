@@ -81,7 +81,7 @@ const AudioPlayer: React.FC<Props> = ({ src, name }) => {
         onTimeUpdate={handleTimeUpdate}
       />
       <div className='lanting-audio-left'>
-        <Icon onClick={handlePlay}>{playing ? 'pause' : 'play_arrow'}</Icon>
+        <Icon onClick={handlePlay} name={playing ? 'pause' : 'play_arrow'} />
       </div>
       <div className='lanting-audio-middle'>
         <div className='lanting-audio-namevol'>
@@ -93,9 +93,8 @@ const AudioPlayer: React.FC<Props> = ({ src, name }) => {
               onClick={() => {
                 notify('还没做好🤣');
               }}
-            >
-              volume_up
-            </Icon>
+              name='volume_up'
+            />
           </div>
         </div>
 

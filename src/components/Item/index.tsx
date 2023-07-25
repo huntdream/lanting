@@ -12,7 +12,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 const Item: React.FC<Props> = ({ icon, children, className, ...props }) => {
   return (
     <div className={cls('lanting-item', className)} {...props}>
-      {icon && <Icon>{icon}</Icon>}
+      {icon && <Icon name={icon} />}
       {children}
     </div>
   );

@@ -25,7 +25,7 @@ const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
 
   return (
     <div className='lanting-edit-header-visibility' onClick={handleChange}>
-      <Icon>{isPublic ? 'public' : 'lock'}</Icon>
+      <Icon name={isPublic ? 'public' : 'lock'} />
       <span>{isPublic ? 'Public' : 'Private'}</span>
     </div>
   );

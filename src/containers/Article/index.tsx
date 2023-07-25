@@ -48,8 +48,8 @@ const Article: React.FC<ArticleProps> = () => {
 
         {article?.canEdit && (
           <div className='lanting-article-meta-actions'>
-            <Icon onClick={navigateToEdit}>edit</Icon>
-            <Icon onClick={handleDelete}>delete</Icon>
+            <Icon onClick={navigateToEdit} name='edit' />
+            <Icon onClick={handleDelete} name='delete' />
           </div>
         )}
       </div>

@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@lexical/react": "^0.11.3",
-    "@material-design-icons/font": "^0.14.10",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",

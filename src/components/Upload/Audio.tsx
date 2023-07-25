@@ -28,7 +28,7 @@ const Audio: React.FC<Props> = ({ src }) => {
   return (
     <div className='lanting-upload-preview-audio'>
       <audio src={src} ref={audioRef} onPlay={onPlay} onPause={onPause} />
-      <Icon onClick={handlePlay}>{playing ? 'pause' : 'play_arrow'}</Icon>
+      <Icon onClick={handlePlay} name={playing ? 'pause' : 'play_arrow'} />
     </div>
   );
 };

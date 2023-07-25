@@ -75,10 +75,13 @@ const VoiceRecorder: React.FC<Props> = ({ onStop }) => {
 
   return (
     <div className='lanting-voice-recorder'>
-      <Icon onClick={handleRecord}>{recording ? 'settings_voice' : 'mic'}</Icon>
+      <Icon
+        onClick={handleRecord}
+        name={recording ? 'settings_voice' : 'mic'}
+      />
       {audioUrl && (
         <>
-          <Icon onClick={handlePlay}>graphic_eq</Icon>
+          <Icon onClick={handlePlay} name='graphic_eq' />
           <audio src={audioUrl} controls hidden ref={audioRef} />
         </>
       )}

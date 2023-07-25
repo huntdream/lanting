@@ -14,3 +14,5 @@ export const IS_SAFARI: boolean =
 
 export const IS_IOS: boolean =
   CAN_USE_DOM && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+export const IS_TOUCH_DEVICE: boolean = CAN_USE_DOM && 'ontouchstart' in window

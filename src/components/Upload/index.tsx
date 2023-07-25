@@ -168,7 +168,7 @@ const Upload: React.FC<UploadProps> = ({
                 'lanting-upload-placeholder--over': isDragOver,
               })}
             >
-              <Icon>file_upload</Icon>
+              <Icon name='file_upload' />
               <span>Upload</span>
             </div>
           )}

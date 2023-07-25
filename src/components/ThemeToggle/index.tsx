@@ -17,9 +17,11 @@ const ThemeToggle: React.FC<ThemeToggleProps> = () => {
   };
 
   return (
-    <Icon onClick={toggleTheme} className='lanting-themetoggle'>
-      {theme === 'dark' ? 'dark_mode' : 'light_mode'}
-    </Icon>
+    <Icon
+      onClick={toggleTheme}
+      name={theme === 'dark' ? 'dark_mode' : 'light_mode'}
+      className='lanting-themetoggle'
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-import Icon from 'components/LantingEditor/Icon';
+import Icon from 'components/Icon';
 import React, { FC, ReactNode } from 'react';
 
 interface Props {
@@ -10,11 +10,7 @@ interface Props {
 const DropDownItem: FC<Props> = ({ children, icon, onClick }) => {
   return (
     <div className='lanting-editor-dropdown-item' onClick={onClick}>
-      {icon && (
-        <span>
-          <Icon type={icon} />
-        </span>
-      )}
+      {icon && <Icon name={icon} />}
       {children}
     </div>
   );

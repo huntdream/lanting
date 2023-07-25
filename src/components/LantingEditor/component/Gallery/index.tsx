@@ -47,7 +47,7 @@ const Gallery: React.FC<GalleryProps> = ({
                 color='secondary'
                 onClick={onClose}
               >
-                <Icon className='lanting-gallery-close-icon'>close</Icon>
+                <Icon className='lanting-gallery-close-icon' name='close' />
               </Button>
               <div className='lanting-gallery-preview'>
                 <img

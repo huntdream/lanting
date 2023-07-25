@@ -79,9 +79,9 @@ const DropDown: React.FC<Props> = ({
         onClick={handleClick}
         className='lanting-dropdown-label'
       >
-        {icon && <Icon>{icon}</Icon>}
+        {icon && <Icon name={icon} />}
         {label && <span className='lanting-dropdown-label-text'>{label}</span>}
-        <Icon>expand_more</Icon>
+        <Icon name='expand_more' />
       </div>
 
       {showDropDown &&

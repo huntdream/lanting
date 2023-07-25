@@ -59,9 +59,8 @@ const Profile: React.FC<Props> = () => {
         <Icon
           className='lanting-profile-header-edit'
           onClick={() => navigate('/profile/edit')}
-        >
-          edit
-        </Icon>
+          name='edit'
+        />
       </div>
       <Tabs
         sticky

@@ -50,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={style}
         disabled={disabled}
       >
-        {icon && <Icon>{icon}</Icon>}
+        {icon && <Icon name={icon} />}
         {children}
       </button>
     );

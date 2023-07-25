@@ -10,7 +10,7 @@ const Exception: React.FC<ExceptionProps> = ({ children }) => {
   return (
     <div className='lanting-exception'>
       <div className='lanting-exception-icon'>
-        <Icon>error_outline</Icon>
+        <Icon name='error_outline' />
       </div>
       <div className='lanting-exception-text'>Something went wrong</div>
       {children}
