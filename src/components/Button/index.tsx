@@ -13,6 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ButtonColor;
   icon?: string;
   variant?: 'contained' | 'text';
+  wide?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -26,6 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       style,
       variant = 'contained',
       color = 'primary',
+      wide,
       ...props
     },
     ref
@@ -44,6 +46,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'lanting-button--disabled': disabled,
             'lanting-button-icon': iconOnly,
             'lanting-button--active': active,
+            'lanting-button--wide': wide,
           },
           className
         )}

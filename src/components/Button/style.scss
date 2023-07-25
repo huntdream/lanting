@@ -12,6 +12,7 @@
   line-height: 32px;
   border-radius: 6px;
   font-weight: 600;
+  font-size: inherit;
 
   transition: background 200ms;
 
@@ -55,6 +56,10 @@
 
   &--active {
     background-color: var(--active-color);
+  }
+
+  &--wide {
+    width: 100%;
   }
 
   &:active {
