@@ -33,7 +33,6 @@ const Icon: React.FC<IconProps> = ({
       ref={showOverlay ? ref : undefined}
       className={cls(
         'lanting-icon',
-        'material-icons',
         showOverlay ? 'lanting-icon--clickable' : undefined,
         className,
         {
