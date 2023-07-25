@@ -19,12 +19,10 @@ const useHover = <T extends HTMLElement>(): [RefObject<T>, ReactNode] => {
     const container = ref.current;
 
     const handleEnter: EventHandle = (e) => {
-      e.preventDefault();
       setShow(true);
     };
 
     const handleLeave: EventHandle = (e) => {
-      e.preventDefault();
       setShow(false);
     };
 
