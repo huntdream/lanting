@@ -38,7 +38,7 @@ const Nav: React.FC<NavProps> = () => {
   };
 
   const handleLanguageChange = () => {
-    i18n.changeLanguage(i18n.language === 'zh' ? 'en' : 'zh');
+    i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh');
   };
 
   return (
@@ -57,11 +57,8 @@ const Nav: React.FC<NavProps> = () => {
               <Icon clickable name='edit' />
             </Link>
           )}
-          {i18n.language === 'zh' ? (
-            <Icon onClick={handleLanguageChange} name='lang-zh' />
-          ) : (
-            <Icon onClick={handleLanguageChange} name='lang-en' />
-          )}
+
+          <Icon onClick={handleLanguageChange} name={`lang-${i18n.language}`} />
           <ThemeToggle />
           <Icon onClick={handleNotify} name='notifications' />
           <Avatar
