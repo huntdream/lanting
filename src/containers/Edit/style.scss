@@ -31,5 +31,7 @@
     user-select: none;
     cursor: pointer;
     color: var(--secondary-text);
+    position: relative;
+    padding-right: 6px;
   }
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'components/Tooltip';
+import useHover from 'hooks/useHover';
 
 interface Props {
   value?: boolean;
@@ -12,6 +13,7 @@ interface Props {
 const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const { t } = useTranslation();
+  const [ref, overlay] = useHover<HTMLDivElement>();
 
   useEffect(() => {
     setIsPublic(value);
@@ -27,14 +29,15 @@ const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
   };
 
   return (
-    <div className='lanting-edit-visibility' onClick={handleChange}>
-      <Icon name={isPublic ? 'public' : 'lock'} />
-      <Tooltip
-        title={isPublic ? t('article.publicDesc') : t('article.privateDesc')}
-      >
+    <Tooltip
+      title={isPublic ? t('article.publicDesc') : t('article.privateDesc')}
+    >
+      <div ref={ref} className='lanting-edit-visibility' onClick={handleChange}>
+        <Icon name={isPublic ? 'public' : 'lock'} />
         <span>{isPublic ? t('article.public') : t('article.private')}</span>
-      </Tooltip>
-    </div>
+        {overlay}
+      </div>
+    </Tooltip>
   );
 };
 
