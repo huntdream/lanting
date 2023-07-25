@@ -26,13 +26,15 @@ const Icon: React.FC<IconProps> = ({
   const [ref, overlay] = useHover();
   const [SVGIcon] = useDynamicSVGImport(name);
 
+  const showOverlay = onClick || clickable;
+
   return (
     <i
-      ref={ref}
+      ref={showOverlay ? ref : undefined}
       className={cls(
         'lanting-icon',
         'material-icons',
-        onClick || clickable ? 'lanting-icon--clickable' : undefined,
+        showOverlay ? 'lanting-icon--clickable' : undefined,
         className,
         {
           'lanting-icon-round': round,
@@ -43,7 +45,7 @@ const Icon: React.FC<IconProps> = ({
       {...props}
     >
       {SVGIcon && <SVGIcon width={24} height={24} fill='currentColor' />}
-      {overlay}
+      {showOverlay && overlay}
     </i>
   );
 };
