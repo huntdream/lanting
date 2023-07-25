@@ -6,6 +6,7 @@
   color: var(--primary-text);
   transition: border-color 200ms;
   background: none;
+  font-size: inherit;
 
   &:hover,
   &:focus {
