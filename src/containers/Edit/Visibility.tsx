@@ -1,6 +1,8 @@
 import Icon from 'components/Icon';
 import React, { useEffect, useState } from 'react';
 import './style.scss';
+import { useTranslation } from 'react-i18next';
+import Tooltip from 'components/Tooltip';
 
 interface Props {
   value?: boolean;
@@ -9,6 +11,7 @@ interface Props {
 
 const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsPublic(value);
@@ -24,9 +27,13 @@ const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
   };
 
   return (
-    <div className='lanting-edit-header-visibility' onClick={handleChange}>
+    <div className='lanting-edit-visibility' onClick={handleChange}>
       <Icon name={isPublic ? 'public' : 'lock'} />
-      <span>{isPublic ? 'Public' : 'Private'}</span>
+      <Tooltip
+        title={isPublic ? t('article.publicDesc') : t('article.privateDesc')}
+      >
+        <span>{isPublic ? t('article.public') : t('article.private')}</span>
+      </Tooltip>
     </div>
   );
 };

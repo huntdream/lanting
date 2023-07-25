@@ -13,5 +13,14 @@
     "required": "Field is required",
     "minLength": "The length should at least {{count}} characters",
     "maxLength": "The length should not exceed {{count}} characters"
+  },
+  "article": {
+    "title": "Title",
+    "publish": "Publish",
+    "public": "Public",
+    "private": "Private",
+    "save": "Save",
+    "publicDesc": "Everyone can view",
+    "privateDesc": "Only you can view"
   }
 }

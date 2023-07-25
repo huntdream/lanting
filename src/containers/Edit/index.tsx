@@ -10,6 +10,7 @@ import useRequest from 'hooks/useRequest';
 import Visibility from './Visibility';
 
 import './style.scss';
+import { useTranslation } from 'react-i18next';
 
 interface EditProps {}
 
@@ -17,6 +18,7 @@ const Edit: React.FC<EditProps> = () => {
   const { id = '' } = useParams<{ id: string }>();
   const ref = useRef<EditorState>();
   const [request] = useRequest();
+  const { t } = useTranslation();
 
   const { article: articleData } = useArticle(id, {
     revalidateOnFocus: false,
@@ -80,19 +82,19 @@ const Edit: React.FC<EditProps> = () => {
       <div className='lanting-edit-header'>
         <Input
           borderless
-          placeholder='Title'
+          placeholder={t('article.title')}
           value={article?.title}
           onChange={({ target: { value } }) => handleChange('title', value)}
         />
-        <div className='lanting-edit-header-actions'>
-          <Visibility
-            value={article?.visibility !== 2}
-            onChange={(value) => handleChange('visibility', value ? 1 : 2)}
-          />
-          <Button onClick={publish} disabled={!article?.title}>
-            {id ? 'Save' : 'Publish'}
-          </Button>
-        </div>
+      </div>
+      <div className='lanting-edit-actions'>
+        <Visibility
+          value={article?.visibility !== 2}
+          onChange={(value) => handleChange('visibility', value ? 1 : 2)}
+        />
+        <Button onClick={publish} disabled={!article?.title}>
+          {id ? t('article.save') : t('article.publish')}
+        </Button>
       </div>
       <LantingEditor
         onChange={handleEditorChange}
