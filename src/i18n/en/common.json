@@ -1,12 +1,17 @@
 {
-  "login": "Login",
-  "register": "Sign Up",
+  "login": "Sign in",
+  "register": "Sign up",
   "username": "Username",
   "password": {
     "label": "Password",
     "min": "Use 8 characters or more for your password"
   },
-  "createAccount": "Create account",
-  "alreadyHave": "Already have an account？",
-  "textRequired": "{{type}} is required"
+  "createAccount": "Don't have an account?",
+  "alreadyHave": "Already have an account?",
+  "textRequired": "{{type}} is required",
+  "form": {
+    "required": "Field is required",
+    "minLength": "The length should at least {{count}} characters",
+    "maxLength": "The length should not exceed {{count}} characters"
+  }
 }

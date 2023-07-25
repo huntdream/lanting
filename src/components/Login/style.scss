@@ -4,7 +4,7 @@
   padding: 1rem;
 
   &-form {
-    max-width: 20rem;
+    max-width: 300px;
     margin: 0 auto;
   }
 
@@ -28,9 +28,18 @@
   }
 
   &-submit {
-    margin-top: 1rem;
+    margin: 1rem 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  &-footer {
+    margin-top: 40px;
+  }
+
+  &-link {
+    text-decoration: none;
+    margin-left: 4px;
   }
 }

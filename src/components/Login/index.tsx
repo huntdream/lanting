@@ -57,7 +57,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
 
     if (isLogin) {
       return request
-        .post<any, IUser>('/user/login', {
+        .post<any, IUser>('/auth/login', {
           ...values,
         })
         .then(({ token, ...user }) => {
@@ -75,7 +75,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         });
     } else {
       return request
-        .post<any, IUser>('/user/register', {
+        .post<any, IUser>('/auth/signup', {
           ...values,
         })
         .then(({ token, ...user }) => {
@@ -131,18 +131,22 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         </div>
 
         <div className='lanting-login-submit'>
-          <Link
-            to={isLogin ? '/signup' : '/login'}
-            replace
-            style={{ textDecoration: 'none' }}
-          >
-            {isLogin ? t('createAccount') : t('alreadyHave')}
-          </Link>
-          <Button type='submit' disabled={isSubmitting}>
+          <Button type='submit' disabled={isSubmitting} wide>
             {isLogin ? t('login') : t('register')}
           </Button>
         </div>
         <Text.Error>{errorMsg}</Text.Error>
+        <div className='lanting-login-footer'>
+          {isLogin ? t('createAccount') : t('alreadyHave')}
+          <Link
+            to={isLogin ? '/signup' : '/login'}
+            replace
+            style={{ textDecoration: 'none' }}
+            className='lanting-login-link'
+          >
+            {isLogin ? t('register') : t('login')}
+          </Link>
+        </div>
       </form>
     </div>
   );

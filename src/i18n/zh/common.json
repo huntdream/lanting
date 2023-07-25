@@ -6,7 +6,12 @@
     "label": "密码",
     "min": "请输入至少8位字符"
   },
-  "createAccount": "创建帐号",
+  "createAccount": "未注册帐号？",
   "alreadyHave": "已注册帐号？",
-  "textRequired": "请输入{{type}}"
+  "textRequired": "请输入{{type}}",
+  "form": {
+    "required": "此项为必填项",
+    "minLength": "长度不得不能小于{{count}}个字符",
+    "maxLength": "长度不能超过个{{count}}字符"
+  }
 }
