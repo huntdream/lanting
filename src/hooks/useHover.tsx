@@ -10,8 +10,8 @@ type EventType =
 
 type EventHandle = (e: EventType) => void;
 
-const useHover = (): [RefObject<HTMLElement>, ReactNode] => {
-  const ref = useRef<HTMLElement>(null);
+const useHover = <T extends HTMLElement>(): [RefObject<T>, ReactNode] => {
+  const ref = useRef<T>(null);
   const [show, setShow] = useState(false);
   const isTouch = IS_TOUCH_DEVICE;
 
