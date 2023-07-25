@@ -20,6 +20,10 @@
   height: 32px;
   width: 32px;
 
+  &--clickable {
+    cursor: pointer;
+  }
+
   &-round {
     border-radius: 50%;
   }
