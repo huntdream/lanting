@@ -13,6 +13,7 @@
   border-radius: 6px;
   font-weight: 600;
   font-size: inherit;
+  min-width: 78px;
 
   transition: background 200ms;
 
@@ -47,6 +48,7 @@
 
   &-icon {
     padding: 0;
+    min-width: auto;
   }
 
   &--disabled {
