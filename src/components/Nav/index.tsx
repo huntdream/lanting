@@ -6,11 +6,10 @@ import ThemeToggle from 'components/ThemeToggle';
 import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
 import { useTranslation } from 'react-i18next';
-import { ReactComponent as LangZH } from 'assets/icons/lang-zh.svg';
-import { ReactComponent as LangEN } from 'assets/icons/lang-en.svg';
 
 import './style.scss';
 import Avatar from 'components/Avatar';
+import Language from 'components/Language';
 
 interface NavProps {}
 
@@ -37,10 +36,6 @@ const Nav: React.FC<NavProps> = () => {
     toast('This feature is still work in progress');
   };
 
-  const handleLanguageChange = () => {
-    i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh');
-  };
-
   return (
     <nav className={classNames(`lanting-nav`)}>
       <div className='lanting-nav-inner'>
@@ -58,7 +53,7 @@ const Nav: React.FC<NavProps> = () => {
             </Link>
           )}
 
-          <Icon onClick={handleLanguageChange} name={`lang-${i18n.language}`} />
+          <Language />
           <ThemeToggle />
           <Icon onClick={handleNotify} name='notifications' />
           <Avatar
