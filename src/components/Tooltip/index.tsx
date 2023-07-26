@@ -30,7 +30,7 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
     }
   };
 
-  const onMouseEnter = (event: MouseEvent) => {
+  const handleEnter = (event: MouseEvent) => {
     if (!visible) {
       const target = event.currentTarget as HTMLElement;
       const { top, left, height, width } = target.getBoundingClientRect();
@@ -49,7 +49,7 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
     }
   };
 
-  const onMouseLeave = (event: MouseEvent) => {
+  const handleLeave = (event: MouseEvent) => {
     setVisible(false);
 
     if (timer.current) {
@@ -71,8 +71,10 @@ const Tooltip: React.FC<Props> = ({ children, title, timeout = 0 }) => {
   );
 
   const child = React.cloneElement(children, {
-    onMouseEnter,
-    onMouseLeave,
+    onMouseEnter: handleEnter,
+    onMouseLeave: handleLeave,
+    onTouchStart: handleEnter,
+    onTouchEnd: handleLeave,
   });
 
   return (
