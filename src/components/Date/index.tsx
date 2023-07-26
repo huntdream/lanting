@@ -1,8 +1,11 @@
 import React, { useMemo } from 'react';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import Icon from 'components/Icon';
 import './style.scss';
 import Tooltip from 'components/Tooltip';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { useTranslation } from 'react-i18next';
+import 'dayjs/locale/zh';
 
 interface DateProps {
   date?: string;
@@ -16,23 +19,28 @@ const Date: React.FC<DateProps> = ({
   fromNow,
   ...props
 }) => {
+  const { i18n } = useTranslation();
+
   const [dateStr, datetime] = useMemo(() => {
     if (!date) {
       return ['', ''];
     }
 
-    const momented = moment(date);
+    dayjs.locale(i18n.language);
+
+    const momented = dayjs(date);
 
     let theDate = '';
 
-    if (fromNow && momented.diff(moment(), 'day') >= -1) {
+    if (fromNow && momented.diff(dayjs(), 'day') >= -1) {
+      dayjs.extend(relativeTime);
       theDate = momented.fromNow();
     } else {
       theDate = momented.format(format);
     }
 
-    return [theDate, momented.format('YYYY-MM-DD HH:mm')];
-  }, [date, format, fromNow]);
+    return [theDate, momented.format('YYYY-MM-DD dddd HH:mm')];
+  }, [date, format, fromNow, i18n.language]);
 
   return (
     <div className='lanting-date' {...props}>
