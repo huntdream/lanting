@@ -5,7 +5,6 @@ import Icon from 'components/Icon';
 import ThemeToggle from 'components/ThemeToggle';
 import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
-import { useTranslation } from 'react-i18next';
 
 import './style.scss';
 import Avatar from 'components/Avatar';
@@ -18,7 +17,6 @@ const Nav: React.FC<NavProps> = () => {
   const navigate = useNavigate();
   const [toast] = useToast();
   const [user] = useUser();
-  const { i18n } = useTranslation();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
