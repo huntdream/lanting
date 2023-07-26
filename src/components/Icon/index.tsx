@@ -18,7 +18,7 @@ interface IconProps extends HTMLAttributes<HTMLElement> {
 const Icon: React.FC<IconProps> = ({
   className,
   style,
-  size,
+  size = 24,
   round,
   name,
   clickable,
