@@ -2,7 +2,9 @@ import React, { CSSProperties, HTMLAttributes, useEffect, useRef } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import useHover from 'hooks/useHover';
-import useDynamicSVGImport from 'hooks/useDynamicSVGImport';
+import icons from './icons';
+
+export type IconNames = keyof typeof icons;
 
 interface IconProps extends HTMLAttributes<HTMLElement> {
   className?: string;
@@ -10,7 +12,7 @@ interface IconProps extends HTMLAttributes<HTMLElement> {
   style?: CSSProperties;
   clickable?: boolean;
   round?: boolean;
-  name: string;
+  name: IconNames;
 }
 
 const Icon: React.FC<IconProps> = ({
@@ -24,7 +26,7 @@ const Icon: React.FC<IconProps> = ({
   ...props
 }) => {
   const [ref, overlay] = useHover();
-  const [SVGIcon] = useDynamicSVGImport(name);
+  const SVGIcon = icons[name];
 
   const showOverlay = onClick || clickable;
 

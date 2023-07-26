@@ -1,7 +1,7 @@
 import React, { CSSProperties, ButtonHTMLAttributes, forwardRef } from 'react';
 import cls from 'classnames';
 import './style.scss';
-import Icon from 'components/Icon';
+import Icon, { IconNames } from 'components/Icon';
 
 type ButtonColor = 'primary' | 'secondary';
 
@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   style?: CSSProperties;
   disabled?: boolean;
   color?: ButtonColor;
-  icon?: string;
+  icon?: IconNames;
   variant?: 'contained' | 'text';
   wide?: boolean;
 }

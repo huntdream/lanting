@@ -1,11 +1,11 @@
-import Icon from 'components/Icon';
+import Icon, { IconNames } from 'components/Icon';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './style.scss';
 
 interface Props {
   label?: string;
-  icon?: string;
+  icon?: IconNames;
   children: ReactNode;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;

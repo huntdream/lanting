@@ -1,12 +1,12 @@
 import React, { HTMLAttributes, ReactNode } from 'react';
 import cls from 'classnames';
 import './style.scss';
-import Icon from 'components/Icon';
+import Icon, { IconNames } from 'components/Icon';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
   className?: string;
-  icon?: string;
+  icon?: IconNames;
 }
 
 const Item: React.FC<Props> = ({ icon, children, className, ...props }) => {
