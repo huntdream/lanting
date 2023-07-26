@@ -45,7 +45,7 @@ const Icon: React.FC<IconProps> = ({
       style={{ fontSize: size, ...style }}
       {...props}
     >
-      {SVGIcon && <SVGIcon width={24} height={24} fill='currentColor' />}
+      {SVGIcon && <SVGIcon width={size} height={size} fill='currentColor' />}
       {showOverlay && overlay}
     </i>
   );

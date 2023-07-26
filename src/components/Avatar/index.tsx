@@ -27,7 +27,7 @@ const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
           className='lanting-avatar-img'
         />
       ) : (
-        <Icon name='account_circle' clickable />
+        <Icon name='account_circle' clickable={!!onClick} />
       )}
     </div>
   );

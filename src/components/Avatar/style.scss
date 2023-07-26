@@ -1,7 +1,6 @@
 .lanting-avatar {
   width: 40px;
   height: 40px;
-  font-size: 40px;
   border-radius: 4px;
   overflow: hidden;
   display: inline-flex;
@@ -12,16 +11,29 @@
     cursor: pointer;
   }
 
+  .lanting-icon {
+    width: 40px;
+    height: 40px;
+  }
+
   &-small {
     width: 32px;
     height: 32px;
-    font-size: 24px;
+
+    .lanting-icon {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   &-large {
     width: 60px;
     height: 60px;
-    font-size: 60px;
+
+    .lanting-icon {
+      width: 60px;
+      height: 60px;
+    }
   }
 
   &-round {
