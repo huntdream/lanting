@@ -1,5 +1,4 @@
 import type { Preview } from '@storybook/react';
-import '@material-design-icons/font/filled.css';
 import '../src/index.scss'
 
 const preview: Preview = {
