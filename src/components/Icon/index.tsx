@@ -42,7 +42,6 @@ const Icon: React.FC<IconProps> = ({
         }
       )}
       onClick={onClick}
-      style={{ fontSize: size, ...style }}
       {...props}
     >
       {SVGIcon && <SVGIcon width={size} height={size} fill='currentColor' />}
