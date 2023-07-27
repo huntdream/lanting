@@ -20,6 +20,7 @@ jobs:
 
     - run: yarn install --frozen-lockfile
     - run: npm run build-storybook
+    - run: touch .nojekyll
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@3.6.2
