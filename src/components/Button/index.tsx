@@ -47,6 +47,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'lanting-button-icon': iconOnly,
             'lanting-button--active': active,
             'lanting-button--wide': wide,
+            'lanting-button-hasicon': icon && children,
           },
           className
         )}

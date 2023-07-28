@@ -22,6 +22,10 @@
       background-color: var(--primary-button-background);
       color: var(--primary-button-text);
 
+      .lanting-icon {
+        color: var(--primary-button-text);
+      }
+
       &:hover {
         background-color: #1771e6;
       }
@@ -30,6 +34,10 @@
     &--secondary {
       background-color: var(--secondary-button-background);
       color: var(--primary-text);
+
+      .lanting-icon {
+        color: var(--primary-text);
+      }
 
       &:hover {
         background-color: var(--hover-overlay);
@@ -62,6 +70,12 @@
 
   &--wide {
     width: 100%;
+  }
+
+  &-hasicon {
+    .lanting-icon {
+      padding-left: 0;
+    }
   }
 
   &:active {
