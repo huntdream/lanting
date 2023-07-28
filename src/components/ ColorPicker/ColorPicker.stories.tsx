@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ColorPicker from '../components/ ColorPicker';
-import React from 'react';
+import ColorPicker from '.';
 
 const meta: Meta<typeof ColorPicker> = {
   component: ColorPicker,
@@ -9,6 +8,4 @@ const meta: Meta<typeof ColorPicker> = {
 export default meta;
 type Story = StoryObj<typeof ColorPicker>;
 
-export const Primary: Story = {
-  render: () => <ColorPicker />,
-};
+export const Primary: Story = {};
