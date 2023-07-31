@@ -7,11 +7,11 @@ import React, {
   useState,
 } from 'react';
 
-export type Theme = 'light' | 'dark';
+export type ThemeType = 'light' | 'dark';
 
 interface IThemeContext {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  theme: ThemeType;
+  setTheme: (theme: ThemeType) => void;
 }
 
 export const ThemeContext = createContext<IThemeContext>({
@@ -29,8 +29,8 @@ const MetaThemeColor = {
 };
 
 const ThemeProvider: FC<Props> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(
-    (localStorage.getItem('theme') || 'light') as Theme
+  const [theme, setTheme] = useState<ThemeType>(
+    (localStorage.getItem('theme') || 'light') as ThemeType
   );
 
   useLayoutEffect(() => {
