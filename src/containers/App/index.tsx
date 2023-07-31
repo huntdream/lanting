@@ -21,7 +21,7 @@ function App() {
             <div className='lanting-app'>
               <Nav />
               <main className='lanting-app-main'>
-                <Suspense fallback={<Loading />}>{pages}</Suspense>
+                <Suspense fallback={<Loading loading />}>{pages}</Suspense>
               </main>
             </div>
           </Toast>
