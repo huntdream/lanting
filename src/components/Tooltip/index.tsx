@@ -15,7 +15,6 @@ interface Props {
   timeout?: number;
   children: ReactElement;
   placement?: Placement;
-  offset?: number;
 }
 
 const Tooltip: React.FC<Props> = ({
@@ -23,15 +22,17 @@ const Tooltip: React.FC<Props> = ({
   title,
   timeout = 0,
   placement,
-  offset,
 }) => {
   const timer = useRef<number>(0);
   const [visible, setVisible] = useState(false);
   const [rect, setRect] = useState<DOMRect>();
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {}, []);
 
   const handleEnter = (event: MouseEvent) => {
+    setIsClosing(false);
+
     if (!visible) {
       const target = event.currentTarget as HTMLElement;
 
@@ -47,9 +48,13 @@ const Tooltip: React.FC<Props> = ({
     }
   };
 
-  const handleLeave = (event: MouseEvent) => {
+  const handleClose = () => {
     setVisible(false);
     setRect(undefined);
+  };
+
+  const handleLeave = (event: MouseEvent) => {
+    setIsClosing(true);
 
     if (timer.current) {
       clearTimeout(timer.current);
@@ -72,8 +77,9 @@ const Tooltip: React.FC<Props> = ({
           <Tip
             title={title}
             rect={rect}
+            isClosing={isClosing}
             placement={placement}
-            offset={offset}
+            onClose={handleClose}
           />,
           document.body
         )}
