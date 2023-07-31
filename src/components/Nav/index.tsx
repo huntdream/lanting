@@ -9,6 +9,8 @@ import { useUser } from 'context/App';
 import './style.scss';
 import Avatar from 'components/Avatar';
 import Language from 'components/Language';
+import DropDown from 'components/DropDown';
+import Item from 'components/Item';
 
 interface NavProps {}
 
@@ -54,12 +56,16 @@ const Nav: React.FC<NavProps> = () => {
           <Language />
           <ThemeToggle />
           <Icon onClick={handleNotify} name='notifications' />
-          <Avatar
-            onClick={handleAccountClick}
-            size='small'
-            src={user?.avatar}
-            round
-          />
+          {user?.id ? (
+            <Avatar
+              onClick={handleAccountClick}
+              size='small'
+              src={user?.avatar}
+              round
+            />
+          ) : (
+            <Icon name='login' onClick={handleAccountClick} />
+          )}
         </div>
       </div>
     </nav>
