@@ -1,5 +1,5 @@
 ## Lanting
 
-[maoyu.dev](maoyu.dev)
+[maoyu.dev](https://maoyu.dev)
 
 [Storybook](https://storybook.maoyu.dev/)
