@@ -3563,7 +3563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.14.167, @types/lodash@npm:^4.14.195":
+"@types/lodash@npm:^4.14.167":
   version: 4.14.196
   resolution: "@types/lodash@npm:4.14.196"
   checksum: 201d17c3e62ae02a93c99ec78e024b2be9bd75564dd8fd8c26f6ac51a985ab280d28ce2688c3bcdfe785b0991cd9814edff19ee000234c7b45d9a697f09feb6a
@@ -7105,7 +7105,6 @@ __metadata:
     "@testing-library/user-event": ^14.4.3
     "@types/classnames": ^2.2.10
     "@types/jest": ^29.5.3
-    "@types/lodash": ^4.14.195
     "@types/node": ^20.4.4
     "@types/react": ^18.2.16
     "@types/react-dom": ^18.2.7
