@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { IFile } from '.';
 import Preview from './Preview';
 import './style.scss';
+import Icon from 'components/Icon';
+import Text from 'components/Text';
 
 interface Props {
   file: File;
@@ -19,35 +21,53 @@ const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
   const [fileInfo, setFileInfo] = useState<IFile>();
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<AxiosProgressEvent>();
+  const [error, setError] = useState<string>('');
   const isUploaded = useRef(false);
 
   const handleProgress = (progress: AxiosProgressEvent) => {
     setProgress(progress);
   };
 
+  const handleUpload = () => {
+    upload(file, handleProgress)
+      .then((uploadedFile) => {
+        if (uploadedFile) {
+          isUploaded.current = true;
+          setFileInfo(uploadedFile);
+
+          if (onChange) {
+            onChange(uploadedFile);
+          }
+        }
+
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(err.message);
+      });
+  };
+
   useEffect(() => {
     if (isUploaded.current) return;
     setLoading(true);
+    setError('');
 
-    upload(file, handleProgress).then((uploadedFile) => {
-      if (uploadedFile) {
-        isUploaded.current = true;
-        setFileInfo(uploadedFile);
-
-        if (onChange) {
-          onChange(uploadedFile);
-        }
-      }
-
-      setLoading(false);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    handleUpload();
   }, [file, upload]);
 
   return (
     <Loading loading={loading}>
       <div className='lanting-upload-file'>
         {fileInfo && <Preview file={fileInfo} onRemove={onRemove} />}
+        {error && (
+          <div className='lanting-upload-error'>
+            <Icon name='refresh' onClick={handleUpload} />
+            <Text.Error className='lanting-upload-error-text'>
+              {error}
+            </Text.Error>
+          </div>
+        )}
         {loading && (
           <div className='lanting-upload-file-progress'>
             {Math.floor((progress?.progress || 0) * 100)}%

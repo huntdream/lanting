@@ -13,12 +13,12 @@ import './style.scss';
 
 export interface IFile {
   type: string;
-  size: string;
-  key: string;
+  size: number;
+  key?: string;
   name: string;
-  url: string;
-  width: number;
-  height: number;
+  url?: string;
+  width?: number;
+  height?: number;
 }
 
 interface UploadProps {

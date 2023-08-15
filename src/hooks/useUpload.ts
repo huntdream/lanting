@@ -29,13 +29,14 @@ const useUpload = () => {
       token.current = res.token;
     }).catch(e => {
       toast(e.message)
+      throw new Error(e.message)
     });
   };
 
   const upload = useCallback(
     (file: File, onUploadProgress?: (progress: AxiosProgressEvent) => void) => {
       return getToken().then(() => {
-        if (file) {
+        if (file && token.current) {
           const formData = new FormData();
 
           const name = file.name;
@@ -67,7 +68,7 @@ const useUpload = () => {
         }
 
         return Promise.reject();
-      });
+      })
     },
     [token]
   );

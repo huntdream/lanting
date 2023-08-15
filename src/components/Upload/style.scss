@@ -51,6 +51,17 @@
     }
   }
 
+  &-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 92px;
+    height: 92px;
+    flex-direction: column;
+    border: 1px dashed var(--warning-color);
+    border-radius: 4px;
+  }
+
   &-preview-list {
     display: flex;
     flex-wrap: wrap;
