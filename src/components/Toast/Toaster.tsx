@@ -2,25 +2,31 @@ import Icon from 'components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
 import './style.scss';
+import ToastBar from './ToastBar';
 
 export interface IToastConfig {
   id: string;
   close?: boolean;
   timeout?: number;
+  height?: number;
   showProgress?: boolean;
 }
 
 interface Props extends IToastConfig {
   text: string;
+  offset: number;
   onClose: (id: string) => void;
+  updateHeight: (id: string, height: number) => void;
 }
 
-const ToastItem: React.FC<Props> = ({
+const Toaster: React.FC<Props> = ({
   id,
   text,
   close,
+  offset,
   timeout = 3000,
   showProgress,
+  updateHeight,
   onClose,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -35,6 +41,24 @@ const ToastItem: React.FC<Props> = ({
       handleClose();
     }, timeout);
   }, [id, onClose, timeout]);
+
+  useEffect(() => {
+    if (ref.current) {
+      const el = ref.current;
+
+      updateHeight(id, el.getBoundingClientRect().height);
+
+      const observer = new MutationObserver(console.log);
+      console.log(el, '??');
+      observer.observe(el, {
+        subtree: true,
+        childList: true,
+        characterData: true,
+      });
+
+      return () => observer.disconnect();
+    }
+  }, []);
 
   const handleClearTimeout = () => {
     setClosing(false);
@@ -67,23 +91,22 @@ const ToastItem: React.FC<Props> = ({
 
   return (
     <div
-      className={cls('lanting-toast-item', {
-        'lanting-toast-item--slideout': closing,
-      })}
+      className='lanting-toast-item'
       onMouseEnter={handleClearTimeout}
       onMouseLeave={handleSetTimeout}
       ref={ref}
+      style={{ transform: `translateY(${offset}px)` }}
     >
-      <div className='lanting-toast-item-content'>{text}</div>
-      {close && <Icon onClick={handleClose} name='close' />}
-      {showProgress && (
-        <div
-          className='lanting-toast-item-progress'
-          style={{ animationPlayState: playState }}
-        ></div>
-      )}
+      <ToastBar
+        onClose={handleClose}
+        close={close}
+        playState={playState}
+        showProgress={showProgress}
+        text={text}
+        closing={closing}
+      />
     </div>
   );
 };
 
-export default ToastItem;
+export default Toaster;

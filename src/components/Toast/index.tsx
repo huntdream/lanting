@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import createUID from 'utils/createUID';
 import './style.scss';
-import ToastItem, { IToastConfig } from './ToastItem';
+import ToastItem, { IToastConfig } from './Toaster';
 
 interface IContext {
   toast: (text: string) => void;
@@ -54,15 +54,53 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
     toast,
   };
 
+  const updateHeight = (id: string, height: number) => {
+    setList((state) =>
+      state.map((item) => {
+        if (item.id === id) {
+          const offset = state.reduce((a, b) => a + (b.height || 0), 0);
+
+          return { ...item, height, offset };
+        }
+
+        return item;
+      })
+    );
+  };
+
+  const calcOffset = (id: string) => {
+    const toastIndex = list.findIndex((it) => it.id === id);
+
+    const offset = list
+      .slice(toastIndex + 1)
+      .reverse()
+      .reduce((a, b) => a + (b.height || 0) + 16, 0);
+
+    return offset;
+  };
+
+  console.log(list);
+
   return (
     <ToastContext.Provider value={context}>
       {children}
       {show
         ? createPortal(
             <div className='lanting-toast'>
-              {list.map(({ id, ...config }) => (
-                <ToastItem key={id} id={id} {...config} onClose={handleClose} />
-              ))}
+              {list.map(({ id, ...config }) => {
+                const offset = calcOffset(id);
+
+                return (
+                  <ToastItem
+                    key={id}
+                    id={id}
+                    {...config}
+                    offset={offset}
+                    onClose={handleClose}
+                    updateHeight={updateHeight}
+                  />
+                );
+              })}
             </div>,
             document.body
           )
