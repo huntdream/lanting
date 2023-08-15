@@ -10,6 +10,12 @@ interface Props {
   onClick?: () => void;
 }
 
+const Size = {
+  small: 32,
+  normal: 40,
+  large: 60,
+};
+
 const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
   return (
     <div
@@ -27,7 +33,7 @@ const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
           className='lanting-avatar-img'
         />
       ) : (
-        <Icon name='account_circle' clickable={!!onClick} />
+        <Icon name='account_circle' clickable={!!onClick} size='100%' />
       )}
     </div>
   );

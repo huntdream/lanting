@@ -8,7 +8,7 @@ export type IconNames = keyof typeof icons;
 
 interface IconProps extends HTMLAttributes<HTMLElement> {
   className?: string;
-  size?: number;
+  size?: number | string;
   style?: CSSProperties;
   clickable?: boolean;
   round?: boolean;
