@@ -8,6 +8,7 @@ const Auth = lazy(() => import('../containers/Auth'));
 const Edit = lazy(() => import('../containers/Edit'));
 const Profile = lazy(() => import('../containers/Profile'));
 const ProfileEdit = lazy(() => import('../containers/Profile/Edit'));
+const Draw = lazy(() => import('../containers/Draw'));
 
 const routes: RouteObject[] = [
   {
@@ -46,6 +47,10 @@ const routes: RouteObject[] = [
         element: <Profile />,
       },
     ],
+  },
+  {
+    path: '/draw',
+    element: <Draw />,
   },
 ];
 

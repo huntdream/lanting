@@ -10,6 +10,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.15.2",
     "@lexical/react": "^0.11.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",

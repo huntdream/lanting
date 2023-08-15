@@ -1703,6 +1703,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@excalidraw/excalidraw@npm:^0.15.2":
+  version: 0.15.2
+  resolution: "@excalidraw/excalidraw@npm:0.15.2"
+  peerDependencies:
+    react: ^17.0.2 || ^18.2.0
+    react-dom: ^17.0.2 || ^18.2.0
+  checksum: f35ea7cd40c6a19745f0b0c1ddbaf7a6a8580e917120b41851ded508cc1489267c406b7bd70cdec208cc0663cd154516a2dd53bdd510da5375943cf5a1da86b6
+  languageName: node
+  linkType: hard
+
 "@fal-works/esbuild-plugin-global-externals@npm:^2.1.2":
   version: 2.1.2
   resolution: "@fal-works/esbuild-plugin-global-externals@npm:2.1.2"
@@ -7092,6 +7102,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "lanting@workspace:."
   dependencies:
+    "@excalidraw/excalidraw": ^0.15.2
     "@lexical/react": ^0.11.3
     "@storybook/addon-essentials": ^7.1.1
     "@storybook/addon-interactions": ^7.1.1
