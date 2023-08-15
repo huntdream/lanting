@@ -1,6 +1,4 @@
-import Icon from 'components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
-import cls from 'classnames';
 import './style.scss';
 import ToastBar from './ToastBar';
 
@@ -47,16 +45,6 @@ const Toaster: React.FC<Props> = ({
       const el = ref.current;
 
       updateHeight(id, el.getBoundingClientRect().height);
-
-      const observer = new MutationObserver(console.log);
-      console.log(el, '??');
-      observer.observe(el, {
-        subtree: true,
-        childList: true,
-        characterData: true,
-      });
-
-      return () => observer.disconnect();
     }
   }, []);
 
