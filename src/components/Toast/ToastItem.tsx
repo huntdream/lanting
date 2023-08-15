@@ -1,5 +1,6 @@
 import Icon from 'components/Icon';
 import React, { useEffect, useRef, useState } from 'react';
+import cls from 'classnames';
 import './style.scss';
 
 export interface IToastConfig {
@@ -22,18 +23,22 @@ const ToastItem: React.FC<Props> = ({
   showProgress,
   onClose,
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const now = useRef(Date.now());
   const timer = useRef<number>(0);
   const [wait, setWait] = useState(timeout);
+  const [closing, setClosing] = useState(false);
   const [playState, setPlayState] = useState<AnimationPlayState>('running');
 
   useEffect(() => {
     timer.current = window.setTimeout(() => {
-      onClose(id);
+      handleClose();
     }, timeout);
   }, [id, onClose, timeout]);
 
   const handleClearTimeout = () => {
+    setClosing(false);
+
     clearTimeout(timer.current);
     const remainingTime = wait - (Date.now() - now.current);
 
@@ -43,7 +48,7 @@ const ToastItem: React.FC<Props> = ({
 
   const handleSetTimeout = () => {
     timer.current = window.setTimeout(() => {
-      onClose(id);
+      handleClose();
     }, wait);
 
     now.current = Date.now();
@@ -51,14 +56,23 @@ const ToastItem: React.FC<Props> = ({
   };
 
   const handleClose = () => {
-    onClose(id);
+    setClosing(true);
+
+    if (ref.current) {
+      ref.current.addEventListener('animationend', () => {
+        onClose(id);
+      });
+    }
   };
 
   return (
     <div
-      className='lanting-toast-item'
+      className={cls('lanting-toast-item', {
+        'lanting-toast-item--slideout': closing,
+      })}
       onMouseEnter={handleClearTimeout}
       onMouseLeave={handleSetTimeout}
+      ref={ref}
     >
       <div className='lanting-toast-item-content'>{text}</div>
       {close && <Icon onClick={handleClose} name='close' />}

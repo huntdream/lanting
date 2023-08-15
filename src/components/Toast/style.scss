@@ -19,6 +19,7 @@
     justify-content: space-between;
     min-height: 48px;
     width: 344px;
+    z-index: 999;
 
     .lanting-icon {
       margin: 0 -8px 0 8px;
@@ -33,6 +34,10 @@
       height: 2px;
       animation: shrink 3000ms linear forwards;
     }
+
+    &--slideout {
+      animation: slideOut 300ms ease-in-out forwards;
+    }
   }
 }
 
@@ -44,6 +49,17 @@
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
   }
 }
 
