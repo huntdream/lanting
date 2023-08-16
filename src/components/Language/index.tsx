@@ -4,13 +4,13 @@ import Icon from 'components/Icon';
 
 interface Props {}
 
-type Lang = 'en-US' | 'zh';
+type Lang = 'en-US' | 'zh-CN';
 
 const Language: React.FC<Props> = () => {
   const { i18n } = useTranslation();
 
   const handleLanguageChange = () => {
-    i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh');
+    i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh-CN');
   };
 
   return <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />;

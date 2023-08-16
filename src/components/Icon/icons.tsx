@@ -82,7 +82,7 @@ const icons = {
   h3: H3,
   image: Image,
   'en-US': EnUS,
-  zh: Zh,
+  'zh-CN': Zh,
   light_mode: LightMode,
   lock: Lock,
   login: Login,
