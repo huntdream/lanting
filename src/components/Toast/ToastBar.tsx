@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { AnimationEvent } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import Icon from 'components/Icon';
@@ -10,8 +10,8 @@ interface Props {
   playState?: string;
   close?: boolean;
   closing: boolean;
-  onClose: () => void;
-  onAnimationEnd: () => void;
+  onClose: (id: string) => void;
+  onStartClose: () => void;
 }
 
 const ToastBar: React.FC<Props> = ({
@@ -22,23 +22,25 @@ const ToastBar: React.FC<Props> = ({
   closing,
   playState,
   onClose,
-  onAnimationEnd,
+  onStartClose,
 }) => {
+  const handleAnimationEnd = (e: AnimationEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || !closing) {
+      return;
+    }
+
+    onClose(id);
+  };
+
   return (
     <div
       className={cls('lanting-toast-bar', {
         'lanting-toast-bar--slideout': closing,
       })}
-      onAnimationEnd={(e) => {
-        if (e.target !== e.currentTarget) {
-          return;
-        }
-
-        onAnimationEnd();
-      }}
+      onAnimationEnd={handleAnimationEnd}
     >
       <div className='lanting-toast-bar-content'>{text}</div>
-      {close && <Icon onClick={onClose} name='close' />}
+      {close && <Icon onClick={onStartClose} name='close' />}
       {showProgress && (
         <div
           className='lanting-toast-progress'

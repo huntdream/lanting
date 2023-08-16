@@ -36,7 +36,7 @@ const Toaster: React.FC<Props> = ({
 
   useEffect(() => {
     timer.current = window.setTimeout(() => {
-      handleClose();
+      handleStartClose();
     }, timeout);
   }, [id, onClose, timeout]);
 
@@ -60,21 +60,15 @@ const Toaster: React.FC<Props> = ({
 
   const handleSetTimeout = () => {
     timer.current = window.setTimeout(() => {
-      handleClose();
+      handleStartClose();
     }, wait);
 
     now.current = Date.now();
     setPlayState('running');
   };
 
-  const handleClose = () => {
+  const handleStartClose = () => {
     setClosing(true);
-  };
-
-  const handleAnimationEnd = () => {
-    if (closing) {
-      onClose(id);
-    }
   };
 
   return (
@@ -84,17 +78,16 @@ const Toaster: React.FC<Props> = ({
       onMouseLeave={handleSetTimeout}
       ref={ref}
       style={{ transform: `translateY(${offset}px)` }}
-      onAnimationEnd={() => console.log('ended')}
     >
       <ToastBar
         id={id}
-        onClose={handleClose}
+        onStartClose={handleStartClose}
+        onClose={onClose}
         close={close}
         playState={playState}
         showProgress={showProgress}
         text={text}
         closing={closing}
-        onAnimationEnd={handleAnimationEnd}
       />
     </div>
   );
