@@ -71,22 +71,16 @@ const Toaster: React.FC<Props> = ({
     setClosing(true);
   };
 
-  const handleAnimationEnd = () => {
-    if (closing) {
-      onClose(id);
-    }
-  };
-
   return (
     <div
       className='lanting-toast-item'
       onMouseEnter={handleClearTimeout}
       onMouseLeave={handleSetTimeout}
-      onAnimationEnd={handleAnimationEnd}
       ref={ref}
       style={{ transform: `translateY(${offset}px)` }}
     >
       <ToastBar
+        id={id}
         onClose={handleClose}
         close={close}
         playState={playState}

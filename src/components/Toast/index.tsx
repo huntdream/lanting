@@ -79,8 +79,6 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
     return offset;
   };
 
-  console.log(list);
-
   return (
     <ToastContext.Provider value={context}>
       {children}
