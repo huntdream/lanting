@@ -1,4 +1,5 @@
 import axios from 'axios';
+import useToast from 'components/Toast/useToast';
 import config from 'config';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ const TOKEN_WHITELIST = ['/auth/login', '/auth/signup'];
 
 const useRequest = () => {
   const navigate = useNavigate();
+  const [toast] = useToast()
 
   const request = useMemo(() => {
     const instance = axios.create({
@@ -30,6 +32,7 @@ const useRequest = () => {
       (error) => {
         console.log(error.response);
         if (error?.response?.status === 401) {
+          toast(error?.response?.data?.message)
           localStorage.setItem('lanting-token', '')
           navigate('/login');
         }
