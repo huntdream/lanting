@@ -71,6 +71,12 @@ const Toaster: React.FC<Props> = ({
     setClosing(true);
   };
 
+  const handleAnimationEnd = () => {
+    if (closing) {
+      onClose(id);
+    }
+  };
+
   return (
     <div
       className='lanting-toast-item'
@@ -78,6 +84,7 @@ const Toaster: React.FC<Props> = ({
       onMouseLeave={handleSetTimeout}
       ref={ref}
       style={{ transform: `translateY(${offset}px)` }}
+      onAnimationEnd={() => console.log('ended')}
     >
       <ToastBar
         id={id}
@@ -87,6 +94,7 @@ const Toaster: React.FC<Props> = ({
         showProgress={showProgress}
         text={text}
         closing={closing}
+        onAnimationEnd={handleAnimationEnd}
       />
     </div>
   );

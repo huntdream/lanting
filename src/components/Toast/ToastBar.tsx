@@ -10,7 +10,8 @@ interface Props {
   playState?: string;
   close?: boolean;
   closing: boolean;
-  onClose: (id: string) => void;
+  onClose: () => void;
+  onAnimationEnd: () => void;
 }
 
 const ToastBar: React.FC<Props> = ({
@@ -21,19 +22,20 @@ const ToastBar: React.FC<Props> = ({
   closing,
   playState,
   onClose,
+  onAnimationEnd,
 }) => {
-  const handleAnimationEnd = () => {
-    if (closing) {
-      onClose(id);
-    }
-  };
-
   return (
     <div
       className={cls('lanting-toast-bar', {
         'lanting-toast-bar--slideout': closing,
       })}
-      onAnimationEnd={handleAnimationEnd}
+      onAnimationEnd={(e) => {
+        if (e.target !== e.currentTarget) {
+          return;
+        }
+
+        onAnimationEnd();
+      }}
     >
       <div className='lanting-toast-bar-content'>{text}</div>
       {close && <Icon onClick={onClose} name='close' />}
