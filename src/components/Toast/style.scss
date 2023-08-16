@@ -22,6 +22,7 @@
   }
 
   &-bar {
+    position: relative;
     pointer-events: all;
     background-color: var(--toast-bg);
     border-radius: 6px;
