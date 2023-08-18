@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import createUID from 'utils/createUID';
 import './style.scss';
-import ToastItem, { IToastConfig } from './Toaster';
+import ToastItem, { IToastConfig, Position } from './Toaster';
 
 interface IContext {
   toast: (text: string) => void;
@@ -14,13 +14,9 @@ interface ToastProps {
   children: ReactNode;
 }
 
-interface IToastItem extends IToastConfig {
-  text: string;
-}
-
 const Toast: React.FC<ToastProps> = ({ children }) => {
   const [show, setShow] = useState(false);
-  const [list, setList] = useState<IToastItem[]>([]);
+  const [list, setList] = useState<IToastConfig[]>([]);
 
   const toast = useCallback(
     (text: string, config?: IToastConfig) => {
@@ -31,13 +27,13 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
         const prevIndex = list.findIndex((item) => item.id === newConfig.id);
 
         if (prevIndex !== -1 && newConfig.id) {
-          newList[prevIndex] = newConfig as IToastItem;
+          newList[prevIndex] = newConfig as IToastConfig;
         } else {
-          newList.push(newConfig as IToastItem);
+          newList.push(newConfig as IToastConfig);
         }
       } else {
         const id = createUID();
-        newList.push({ ...newConfig, id });
+        newList.push({ position: 'top', ...newConfig, id });
       }
 
       setList(newList);
@@ -68,15 +64,18 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
     );
   };
 
-  const calcOffset = (id: string) => {
+  const calcOffset = (id: string, position: Position) => {
     const toastIndex = list.findIndex((it) => it.id === id);
 
+    const isTop = position.includes('top');
+
     const offset = list
+      .filter((it) => it.position === position)
       .slice(toastIndex + 1)
       .reverse()
       .reduce((a, b) => a + (b.height || 0) + 16, 0);
 
-    return offset;
+    return offset * (isTop ? 1 : -1);
   };
 
   return (
@@ -86,7 +85,7 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
         ? createPortal(
             <div className='lanting-toast'>
               {list.map(({ id, ...config }) => {
-                const offset = calcOffset(id);
+                const offset = calcOffset(id, config.position);
 
                 return (
                   <ToastItem

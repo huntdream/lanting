@@ -1,17 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
+import cls from 'classnames';
 import './style.scss';
 import ToastBar from './ToastBar';
 
+export type Position =
+  | 'top'
+  | 'top-right'
+  | 'top-left'
+  | 'bottom'
+  | 'bottom-right'
+  | 'bottom-left';
+
 export interface IToastConfig {
   id: string;
+  text: string;
   close?: boolean;
   timeout?: number;
   height?: number;
+  position: Position;
   showProgress?: boolean;
 }
 
 interface Props extends IToastConfig {
-  text: string;
   offset: number;
   onClose: (id: string) => void;
   updateHeight: (id: string, height: number) => void;
@@ -22,6 +32,7 @@ const Toaster: React.FC<Props> = ({
   text,
   close,
   offset,
+  position = 'top',
   timeout = 3000,
   showProgress,
   updateHeight,
@@ -71,9 +82,14 @@ const Toaster: React.FC<Props> = ({
     setClosing(true);
   };
 
+  const [vertical, horizontal] = position.split('-');
+
   return (
     <div
-      className='lanting-toast-item'
+      className={cls('lanting-toast-item', {
+        [`lanting-toast--${vertical}`]: vertical,
+        [`lanting-toast--${horizontal}`]: horizontal,
+      })}
       onMouseEnter={handleClearTimeout}
       onMouseLeave={handleSetTimeout}
       ref={ref}
