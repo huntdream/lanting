@@ -10,12 +10,6 @@ interface Props {
   onClick?: () => void;
 }
 
-const Size = {
-  small: 32,
-  normal: 40,
-  large: 60,
-};
-
 const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
   return (
     <div
