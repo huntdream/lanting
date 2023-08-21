@@ -18,13 +18,13 @@ const Nav: React.FC<NavProps> = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [toast] = useToast();
-  const [user] = useUser();
+  const [user, setUser] = useUser();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
   }, [pathname]);
 
-  const handleAccountClick = () => {
+  const handleNavigateProfile = () => {
     if (user?.id) {
       navigate(`/profile/${user?.id}`);
     } else {
@@ -34,6 +34,13 @@ const Nav: React.FC<NavProps> = () => {
 
   const handleNotify = () => {
     toast('This feature is still work in progress');
+  };
+
+  const handleLogout = () => {
+    setUser(undefined);
+    localStorage.setItem('lanting-token', '');
+    navigate('/');
+    toast('See you again! 👋');
   };
 
   return (
@@ -57,14 +64,14 @@ const Nav: React.FC<NavProps> = () => {
           <ThemeToggle />
           <Icon onClick={handleNotify} name='notifications' />
           {user?.id ? (
-            <Avatar
-              onClick={handleAccountClick}
-              size='small'
-              src={user?.avatar}
-              round
-            />
+            <DropDown label={<Avatar size='small' src={user?.avatar} round />}>
+              <div className='lanting-nav-dropdown'>
+                <Item onClick={handleNavigateProfile}>Profile</Item>
+                <Item onClick={handleLogout}>Log out</Item>
+              </div>
+            </DropDown>
           ) : (
-            <Icon name='login' onClick={handleAccountClick} />
+            <Icon name='login' onClick={handleNavigateProfile} />
           )}
         </div>
       </div>
