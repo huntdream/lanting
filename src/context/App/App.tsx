@@ -4,7 +4,7 @@ import { IUser } from 'typing/user';
 
 interface IAppContext {
   user?: IUser;
-  setUser: (user: IUser) => void;
+  setUser: (user?: IUser) => void;
 }
 
 export const AppContext = createContext({} as IAppContext);
