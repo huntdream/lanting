@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import ToastBar from './ToastBar';
+import { flushSync } from 'react-dom';
 
 export type Position =
   | 'top'
@@ -54,8 +55,9 @@ const Toaster: React.FC<Props> = ({
   useEffect(() => {
     if (ref.current) {
       const el = ref.current;
-
-      updateHeight(id, el.getBoundingClientRect().height);
+      const { height } = el.getBoundingClientRect();
+      console.log(height, 'height');
+      updateHeight(id, height);
     }
   }, []);
 
