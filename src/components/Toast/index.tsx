@@ -5,7 +5,7 @@ import Toasts from './Toasts';
 import './style.scss';
 
 interface IContext {
-  toast: (text: string) => void;
+  toast: (text: ReactNode) => void;
 }
 
 export const ToastContext = createContext<IContext>({} as IContext);
@@ -18,7 +18,7 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
   const [list, setList] = useState<IToastConfig[]>([]);
 
   const toast = useCallback(
-    (text: string, config?: IToastConfig) => {
+    (text: ReactNode, config?: IToastConfig) => {
       const newConfig = { text, ...config };
       const newList = [...list];
 

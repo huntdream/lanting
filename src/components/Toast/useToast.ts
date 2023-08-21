@@ -1,9 +1,9 @@
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { ToastContext } from '.';
 import { IToastConfig } from './Toaster';
 
 const useToast = (): [
-  (text: string, config?: Partial<IToastConfig>) => void
+  (text: ReactNode, config?: Partial<IToastConfig>) => void
 ] => {
   const { toast } = useContext(ToastContext);
 

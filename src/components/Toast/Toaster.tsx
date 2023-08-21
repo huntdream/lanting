@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import ToastBar from './ToastBar';
@@ -14,7 +14,7 @@ export type Position =
 
 export interface IToastConfig {
   id: string;
-  text: string;
+  text: ReactNode;
   close?: boolean;
   timeout?: number;
   height?: number;
@@ -56,7 +56,7 @@ const Toaster: React.FC<Props> = ({
     if (ref.current) {
       const el = ref.current;
       const { height } = el.getBoundingClientRect();
-      console.log(height, 'height');
+
       updateHeight(id, height);
     }
   }, []);

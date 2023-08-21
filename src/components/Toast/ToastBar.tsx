@@ -1,11 +1,11 @@
-import React, { AnimationEvent } from 'react';
+import React, { AnimationEvent, ReactNode } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import Icon from 'components/Icon';
 
 interface Props {
   id: string;
-  text: string;
+  text: ReactNode;
   showProgress?: boolean;
   playState?: string;
   close?: boolean;
