@@ -6,7 +6,7 @@
   border-radius: 8px;
   min-width: 100px;
   background-color: var(--bg-color);
-  padding: 8px;
+  padding: 4px 0;
   display: block;
 
   &-label {
@@ -15,10 +15,6 @@
     border-radius: 4px;
     cursor: pointer;
     color: var(--primary-text);
-
-    &-text {
-      margin: 0 12px;
-    }
 
     &:hover {
       background-color: var(--hover-overlay);

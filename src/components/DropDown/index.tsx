@@ -1,11 +1,9 @@
-import Icon, { IconNames } from 'components/Icon';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './style.scss';
 
 interface Props {
-  label?: string;
-  icon?: IconNames;
+  label?: ReactNode;
   children: ReactNode;
   visible?: boolean;
   onVisibleChange?: (visible: boolean) => void;
@@ -13,7 +11,6 @@ interface Props {
 
 const DropDown: React.FC<Props> = ({
   label,
-  icon,
   children,
   visible = false,
   onVisibleChange,
@@ -27,13 +24,31 @@ const DropDown: React.FC<Props> = ({
     const button = buttonRef.current;
 
     if (button && dropDown) {
-      const { left, top, height } = button.getBoundingClientRect();
-
-      dropDown.style.top = `${top + height}px`;
-      dropDown.style.left = `${Math.min(
+      const {
         left,
-        window.innerWidth - dropDown.offsetWidth - 20
-      )}px`;
+        top,
+        height,
+        right,
+        width: buttonWidth,
+        bottom,
+      } = button.getBoundingClientRect();
+      const { width: dropDownWidth, height: dropDownHeight } =
+        dropDown.getBoundingClientRect();
+
+      let x = right - dropDownWidth;
+
+      if (left + buttonWidth < dropDownWidth) {
+        x = left;
+      }
+
+      let y = top + height;
+
+      if (window.innerHeight - bottom < dropDownHeight) {
+        y = top - height - dropDownHeight;
+      }
+
+      dropDown.style.top = `${y}px`;
+      dropDown.style.left = `${x}px`;
     }
   }, [showDropDown, dropDownRef, buttonRef]);
 
@@ -79,9 +94,7 @@ const DropDown: React.FC<Props> = ({
         onClick={handleClick}
         className='lanting-dropdown-label'
       >
-        {icon && <Icon name={icon} />}
-        {label && <span className='lanting-dropdown-label-text'>{label}</span>}
-        <Icon name='expand_more' />
+        {label}
       </div>
 
       {showDropDown &&
