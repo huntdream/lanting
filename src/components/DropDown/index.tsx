@@ -64,7 +64,7 @@ const DropDown: React.FC<Props> = ({
       const handle = (event: MouseEvent) => {
         const target = event.target as HTMLElement;
 
-        if (!button.contains(target) && !dropdown?.contains(target)) {
+        if (!button.contains(target)) {
           handleVisibleChange(false);
         }
       };
