@@ -11,6 +11,7 @@ import Avatar from 'components/Avatar';
 import Language from 'components/Language';
 import DropDown from 'components/DropDown';
 import Item from 'components/Item';
+import Tooltip from 'components/Tooltip';
 
 interface NavProps {}
 
@@ -48,9 +49,8 @@ const Nav: React.FC<NavProps> = () => {
       <div className='lanting-nav-inner'>
         <div className='lanting-nav-title'>
           <Link to='/' className='lanting-nav-link'>
-            <h2 className='lanting-nav-name'>兰亭</h2>
+            <div className='lanting-nav-bio'>小舟从此逝，江海寄余生</div>
           </Link>
-          <div className='lanting-nav-bio'>小舟从此逝，江海寄余生</div>
         </div>
 
         <div className='lanting-nav-icons'>
