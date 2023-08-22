@@ -19,10 +19,12 @@
     }
   }
 
-  &-avatar {
+  &-user {
+    display: flex;
   }
 
   &-name {
-    height: 1em;
+    height: 24px;
+    margin-top: 6px;
   }
 }
