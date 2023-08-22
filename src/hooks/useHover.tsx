@@ -18,10 +18,13 @@ const useHover = <T extends HTMLElement>(): [
   const isTouch = IS_TOUCH_DEVICE;
 
   const handleEnter: EventHandle = useCallback((e) => {
+    if (isTouch && e.type === 'mouseenter') return;
     setShow(true);
   }, []);
 
   const handleLeave: EventHandle = useCallback((e) => {
+    if (isTouch && e.type === 'mouseleave') return;
+
     setShow(false);
   }, []);
 
