@@ -25,14 +25,14 @@ const Icon: React.FC<IconProps> = ({
   onClick,
   ...props
 }) => {
-  const [ref, overlay] = useHover();
+  const [hoverEvents, overlay] = useHover();
   const SVGIcon = icons[name];
 
   const showOverlay = onClick || clickable;
 
   return (
     <i
-      ref={showOverlay ? ref : undefined}
+      {...hoverEvents}
       className={cls(
         'lanting-icon',
         showOverlay ? 'lanting-icon--clickable' : undefined,

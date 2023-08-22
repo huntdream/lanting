@@ -13,7 +13,7 @@ interface Props {
 const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const { t } = useTranslation();
-  const [ref, overlay] = useHover<HTMLDivElement>();
+  const [events, overlay] = useHover<HTMLDivElement>();
 
   useEffect(() => {
     setIsPublic(value);
@@ -32,7 +32,11 @@ const Visibility: React.FC<Props> = ({ value = true, onChange }) => {
     <Tooltip
       title={isPublic ? t('article.publicDesc') : t('article.privateDesc')}
     >
-      <div ref={ref} className='lanting-edit-visibility' onClick={handleChange}>
+      <div
+        {...events}
+        className='lanting-edit-visibility'
+        onClick={handleChange}
+      >
         <Icon name={isPublic ? 'public' : 'lock'} />
         <span>{isPublic ? t('article.public') : t('article.private')}</span>
         {overlay}
