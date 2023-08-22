@@ -20,7 +20,7 @@ const Tip: React.FC<Props> = ({
   onClose,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ left: 0, top: 0, transform: '' });
+  const [transform, setTransform] = useState('');
 
   useEffect(() => {
     const oberver = new ResizeObserver((entries) => {
@@ -60,37 +60,32 @@ const Tip: React.FC<Props> = ({
 
     let x = coorX;
     let y = coorY;
-    let transform = '';
 
     switch (placement) {
       case 'right':
         x = coorX + width;
         y = coorY + height / 2 - h / 2;
-        // transform = 'translateY(-50%)';
         break;
       case 'bottom':
         x = coorX + width / 2 - w / 2;
         y = coorY + height;
-        // transform = 'translateX(-50%)';
 
         break;
       case 'left':
         x = coorX - w;
         y = coorY + height / 2 - h / 2;
-        // transform = 'translate(-100%, -50%)';
 
         break;
       default:
         x = coorX + width / 2 - w / 2;
         y = coorY - h;
-        // transform = 'translate(-50%, -100%)';
         break;
     }
 
     x = Math.max(0, x);
     y = Math.max(0, y);
 
-    setPosition({ left: x, top: y, transform });
+    setTransform(`translate(${x}px, ${y}px)`);
   };
 
   return (
@@ -101,7 +96,7 @@ const Tip: React.FC<Props> = ({
       )}
       ref={ref}
       style={{
-        transform: `translate(${position.left}px, ${position.top}px)`,
+        transform,
       }}
     >
       <div
