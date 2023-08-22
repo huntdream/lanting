@@ -2,6 +2,7 @@ import React, {
   MouseEvent,
   ReactElement,
   ReactNode,
+  isValidElement,
   useEffect,
   useRef,
   useState,
@@ -28,7 +29,8 @@ const Tooltip: React.FC<Props> = ({
   const [rect, setRect] = useState<DOMRect>();
   const [isClosing, setIsClosing] = useState(false);
 
-  useEffect(() => {}, []);
+  const child = React.Children.only(children) as React.ReactElement;
+  const originChildProps = child?.props || {};
 
   const handleEnter = (event: MouseEvent) => {
     setIsClosing(false);
@@ -61,16 +63,39 @@ const Tooltip: React.FC<Props> = ({
     }
   };
 
-  const child = React.cloneElement(children, {
-    onMouseEnter: handleEnter,
-    onMouseLeave: handleLeave,
-    onTouchStart: handleEnter,
-    onTouchEnd: handleLeave,
-  });
+  const handleMouseEnter = (event: MouseEvent) => {
+    handleEnter(event);
+    originChildProps?.onMouseEnter(event);
+  };
+
+  const handleMouseLeave = (event: MouseEvent) => {
+    handleLeave(event);
+    originChildProps?.onMouseLeave(event);
+  };
+
+  const handleTouchStart = (event: MouseEvent) => {
+    handleEnter(event);
+    originChildProps?.onTouchStart(event);
+  };
+
+  const handleTouchEnd = (event: MouseEvent) => {
+    handleLeave(event);
+    originChildProps?.onTouchEnd(event);
+  };
+
+  const childProps = {
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    onTouchStart: handleTouchStart,
+    onTouchEnd: handleTouchEnd,
+  };
+
+  const trigger =
+    isValidElement(children) && React.cloneElement(children, childProps);
 
   return (
     <>
-      {child}
+      {trigger}
       {visible &&
         rect &&
         createPortal(
@@ -86,4 +111,5 @@ const Tooltip: React.FC<Props> = ({
     </>
   );
 };
+
 export default Tooltip;
