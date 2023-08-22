@@ -22,5 +22,6 @@
     "save": "Save",
     "publicDesc": "Everyone can view",
     "privateDesc": "Only you can view"
-  }
+  },
+  "greeting": "Hi!"
 }

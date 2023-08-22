@@ -22,5 +22,6 @@
     "save": "保存",
     "publicDesc": "所有人可见",
     "privateDesc": "仅自己可见"
-  }
+  },
+  "greeting": "你好！"
 }
