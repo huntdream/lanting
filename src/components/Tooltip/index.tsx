@@ -65,22 +65,22 @@ const Tooltip: React.FC<Props> = ({
 
   const handleMouseEnter = (event: MouseEvent) => {
     handleEnter(event);
-    originChildProps?.onMouseEnter(event);
+    originChildProps?.onMouseEnter?.(event);
   };
 
   const handleMouseLeave = (event: MouseEvent) => {
     handleLeave(event);
-    originChildProps?.onMouseLeave(event);
+    originChildProps?.onMouseLeave?.(event);
   };
 
   const handleTouchStart = (event: MouseEvent) => {
     handleEnter(event);
-    originChildProps?.onTouchStart(event);
+    originChildProps?.onTouchStart?.(event);
   };
 
   const handleTouchEnd = (event: MouseEvent) => {
     handleLeave(event);
-    originChildProps?.onTouchEnd(event);
+    originChildProps?.onTouchEnd?.(event);
   };
 
   const childProps = {
