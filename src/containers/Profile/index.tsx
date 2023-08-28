@@ -56,6 +56,7 @@ const Profile: React.FC<Props> = () => {
         <div className='lanting-profile-name'>
           {data?.name || data?.username}
         </div>
+        <div className='lanting-profile-bio'>{data?.bio}</div>
         <Icon
           className='lanting-profile-header-edit'
           onClick={() => navigate('/profile/edit')}
