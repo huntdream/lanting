@@ -13,7 +13,7 @@ const Language: React.FC<Props> = () => {
 
   const handleLanguageChange = () => {
     i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh-CN');
-    toast(t('greeting'));
+    toast(t('greeting'), { id: 'lang' });
   };
 
   return <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />;

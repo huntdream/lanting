@@ -19,20 +19,20 @@ const Toast: React.FC<ToastProps> = ({ children }) => {
 
   const toast = useCallback(
     (text: ReactNode, config?: IToastConfig) => {
-      const newConfig = { text, ...config };
+      const newConfig = { text, position: 'top', ...config } as IToastConfig;
       const newList = [...list];
 
       if (newConfig.id) {
         const prevIndex = list.findIndex((item) => item.id === newConfig.id);
 
         if (prevIndex !== -1 && newConfig.id) {
-          newList[prevIndex] = newConfig as IToastConfig;
+          newList[prevIndex] = newConfig;
         } else {
-          newList.push(newConfig as IToastConfig);
+          newList.push(newConfig);
         }
       } else {
         const id = createUID();
-        newList.push({ position: 'top', ...newConfig, id });
+        newList.push({ ...newConfig, id });
       }
 
       setList(newList);

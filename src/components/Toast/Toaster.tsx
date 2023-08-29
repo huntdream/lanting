@@ -2,7 +2,6 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import ToastBar from './ToastBar';
-import { flushSync } from 'react-dom';
 
 export type Position =
   | 'top'
