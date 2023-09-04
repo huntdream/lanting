@@ -44,6 +44,25 @@ const Nav: React.FC<NavProps> = () => {
     toast('See you again! 👋');
   };
 
+  const renderUserIcon = () => {
+    if (['/signup', '/login'].includes(pathname)) {
+      return null;
+    }
+
+    if (user?.id) {
+      return (
+        <DropDown label={<Avatar size='small' src={user?.avatar} round />}>
+          <div className='lanting-nav-dropdown'>
+            <Item onClick={handleNavigateProfile}>Profile</Item>
+            <Item onClick={handleLogout}>Log out</Item>
+          </div>
+        </DropDown>
+      );
+    }
+
+    return <Icon name='login' onClick={handleNavigateProfile} />;
+  };
+
   return (
     <nav className={classNames(`lanting-nav`)}>
       <div className='lanting-nav-inner'>
@@ -65,16 +84,7 @@ const Nav: React.FC<NavProps> = () => {
           <Language />
           <ThemeToggle />
           <Icon onClick={handleNotify} name='notifications' />
-          {user?.id ? (
-            <DropDown label={<Avatar size='small' src={user?.avatar} round />}>
-              <div className='lanting-nav-dropdown'>
-                <Item onClick={handleNavigateProfile}>Profile</Item>
-                <Item onClick={handleLogout}>Log out</Item>
-              </div>
-            </DropDown>
-          ) : (
-            <Icon name='login' onClick={handleNavigateProfile} />
-          )}
+          {renderUserIcon()}
         </div>
       </div>
     </nav>
