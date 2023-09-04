@@ -30,7 +30,9 @@
     font-size: 0.875rem;
 
     @media (max-width: 460px) {
-      display: none;
+      span {
+        display: none;
+      }
     }
   }
 

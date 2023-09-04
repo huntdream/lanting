@@ -49,7 +49,9 @@ const Nav: React.FC<NavProps> = () => {
       <div className='lanting-nav-inner'>
         <div className='lanting-nav-title'>
           <Link to='/' className='lanting-nav-link'>
-            <div className='lanting-nav-bio'>小舟从此逝，江海寄余生</div>
+            <div className='lanting-nav-bio'>
+              <span>小舟从此逝，</span>江海寄余生
+            </div>
           </Link>
         </div>
 
