@@ -50,6 +50,7 @@ import { ReactComponent as SettingsVoice } from 'assets/icons/settings_voice.svg
 import { ReactComponent as Ul } from 'assets/icons/ul.svg';
 import { ReactComponent as Undo } from 'assets/icons/undo.svg';
 import { ReactComponent as VolumeUp } from 'assets/icons/volume_up.svg';
+import { ReactComponent as FormatColorFill } from 'assets/icons/format_color_fill.svg';
 
 const icons = {
   account_circle: AccountCircle,
@@ -104,6 +105,7 @@ const icons = {
   ul: Ul,
   undo: Undo,
   volume_up: VolumeUp,
+  format_color_fill: FormatColorFill,
 };
 
 export default icons;
