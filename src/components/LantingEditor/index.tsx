@@ -7,6 +7,7 @@ import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { CodeHighlightNode, CodeNode } from '@lexical/code';
 import { AutoLinkNode, LinkNode } from '@lexical/link';
+
 import lanting from './themes/lanting';
 import { ImageNode } from './nodes/ImageNode';
 import Editor from './Editor';
@@ -15,12 +16,14 @@ import { AudioNode } from './nodes/AudioNode';
 import './style.scss';
 
 interface Props {
+  isCollab?: boolean;
   editable?: boolean;
   initialEditorState?: string;
   onChange?: (editorState: EditorState, editor: LexicalEditor) => void;
 }
 
 const LantingEditor: FC<Props> = ({
+  isCollab,
   editable = true,
   initialEditorState,
   onChange,
@@ -29,7 +32,7 @@ const LantingEditor: FC<Props> = ({
     namespace: 'lanting',
     editable,
     theme: lanting,
-    editorState: initialEditorState,
+    editorState: null,
     onError(error: Error) {
       throw error;
     },
@@ -61,6 +64,7 @@ const LantingEditor: FC<Props> = ({
           editable={editable}
           initialEditorState={initialEditorState}
           onChange={onChange}
+          isCollab={isCollab}
         />
       </LexicalComposer>
     </div>

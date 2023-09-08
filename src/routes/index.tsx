@@ -1,3 +1,4 @@
+import LantingEditor from 'components/LantingEditor';
 import React from 'react';
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
@@ -51,6 +52,10 @@ const routes: RouteObject[] = [
   {
     path: '/draw',
     element: <Draw />,
+  },
+  {
+    path: '/collabEditor',
+    element: <LantingEditor isCollab />,
   },
 ];
 
