@@ -9,7 +9,7 @@ const config: Config = {
   baseurl: isProd
     ? 'https://api.maoyu.info/api/v1'
     : 'http://localhost:4000/api/v1',
-  yjs: isProd ? "ws://yjs.maoyu.info" : "ws://localhost:1234"
+  yjs: isProd ? "wss://yjs.maoyu.info" : "ws://localhost:1234"
 };
 
 export default config;
