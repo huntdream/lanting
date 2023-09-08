@@ -30,7 +30,8 @@ import { Provider } from '@lexical/yjs';
 import './style.scss';
 import config from 'config';
 
-interface Props {
+export interface EditorProps {
+  id?: string | number;
   isCollab?: boolean;
   editable?: boolean;
   initialEditorState?: string;
@@ -49,7 +50,8 @@ const initState = (editor: LexicalEditor) => {
   root.append(paragraph);
 };
 
-const Editor: React.FC<Props> = ({
+const Editor: React.FC<EditorProps> = ({
+  id,
   isCollab,
   editable,
   initialEditorState,
@@ -86,7 +88,7 @@ const Editor: React.FC<Props> = ({
       // @ts-ignore
       return provider;
     },
-    []
+    [id]
   );
 
   return (
@@ -111,7 +113,7 @@ const Editor: React.FC<Props> = ({
           <AudioPlugin />
           {isCollab ? (
             <CollaborationPlugin
-              id='yjs-plugin'
+              id={id}
               providerFactory={provider}
               initialEditorState={initState}
               shouldBootstrap={true}

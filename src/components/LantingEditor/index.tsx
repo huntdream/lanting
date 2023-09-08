@@ -10,19 +10,13 @@ import { AutoLinkNode, LinkNode } from '@lexical/link';
 
 import lanting from './themes/lanting';
 import { ImageNode } from './nodes/ImageNode';
-import Editor from './Editor';
+import Editor, { EditorProps } from './Editor';
 import { AudioNode } from './nodes/AudioNode';
 
 import './style.scss';
 
-interface Props {
-  isCollab?: boolean;
-  editable?: boolean;
-  initialEditorState?: string;
-  onChange?: (editorState: EditorState, editor: LexicalEditor) => void;
-}
-
-const LantingEditor: FC<Props> = ({
+const LantingEditor: FC<EditorProps> = ({
+  id,
   isCollab,
   editable = true,
   initialEditorState,
@@ -65,6 +59,7 @@ const LantingEditor: FC<Props> = ({
           initialEditorState={initialEditorState}
           onChange={onChange}
           isCollab={isCollab}
+          id={id}
         />
       </LexicalComposer>
     </div>
