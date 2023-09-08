@@ -29,9 +29,11 @@ import { Provider } from '@lexical/yjs';
 
 import './style.scss';
 import config from 'config';
+import { IUser } from 'typing/user';
 
 export interface EditorProps {
-  id?: string | number;
+  id?: string;
+  user?: IUser;
   isCollab?: boolean;
   editable?: boolean;
   initialEditorState?: string;
@@ -52,6 +54,7 @@ const initState = (editor: LexicalEditor) => {
 
 const Editor: React.FC<EditorProps> = ({
   id,
+  user,
   isCollab,
   editable,
   initialEditorState,
@@ -67,8 +70,6 @@ const Editor: React.FC<EditorProps> = ({
     (id: string, yjsDocMap: Map<string, Y.Doc>): Provider => {
       let doc = yjsDocMap.get(id);
 
-      console.log('DOC', doc, yjsDocMap);
-
       if (!doc) {
         doc = new Y.Doc();
         yjsDocMap.set(id, doc);
@@ -80,16 +81,13 @@ const Editor: React.FC<EditorProps> = ({
         connect: false,
       });
 
-      console.log(provider);
-
-      provider.on('status', console.log);
-      provider.on('sync', console.log);
-
       // @ts-ignore
       return provider;
     },
     [id]
   );
+
+  console.log(user?.name || user?.username);
 
   return (
     <>
@@ -111,9 +109,10 @@ const Editor: React.FC<EditorProps> = ({
           <GalleryPlugin />
           <DragDropPaste />
           <AudioPlugin />
-          {isCollab ? (
+          {isCollab && id ? (
             <CollaborationPlugin
               id={id}
+              username={user?.name || user?.username}
               providerFactory={provider}
               initialEditorState={initState}
               shouldBootstrap={true}

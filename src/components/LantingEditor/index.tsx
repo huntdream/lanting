@@ -17,6 +17,7 @@ import './style.scss';
 
 const LantingEditor: FC<EditorProps> = ({
   id,
+  user,
   isCollab,
   editable = true,
   initialEditorState,
@@ -60,6 +61,7 @@ const LantingEditor: FC<EditorProps> = ({
           onChange={onChange}
           isCollab={isCollab}
           id={id}
+          user={user}
         />
       </LexicalComposer>
     </div>
