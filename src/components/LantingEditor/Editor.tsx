@@ -18,7 +18,6 @@ import Toolbar from './Toolbar';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ImagesPlugin from './plugins/ImagesPlugin';
 import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin';
-import InitializePlugin from './plugins/InitializePlugin';
 import GalleryPlugin from './plugins/GalleryPlugin';
 import DragDropPaste from './plugins/DragDropPastePlugin';
 import AudioPlugin from './plugins/AudioPlugin';
@@ -57,7 +56,6 @@ const Editor: React.FC<EditorProps> = ({
   user,
   isCollab,
   editable,
-  initialEditorState,
   onChange,
 }) => {
   const handleChange = (editorState: EditorState, editor: LexicalEditor) => {
@@ -87,8 +85,6 @@ const Editor: React.FC<EditorProps> = ({
     [id]
   );
 
-  console.log(user?.name || user?.username);
-
   return (
     <>
       <div>{editable && <Toolbar />}</div>
@@ -99,7 +95,6 @@ const Editor: React.FC<EditorProps> = ({
             placeholder={<Placeholder />}
             ErrorBoundary={LexicalErrorBoundary}
           />
-          <InitializePlugin initialEditorState={initialEditorState} />
           <OnChangePlugin onChange={handleChange} />
           <CodeHighlightPlugin />
           <AutoFocusPlugin />

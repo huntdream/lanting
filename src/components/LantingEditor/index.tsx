@@ -27,7 +27,7 @@ const LantingEditor: FC<EditorProps> = ({
     namespace: 'lanting',
     editable,
     theme: lanting,
-    editorState: null,
+    editorState: isCollab ? null : initialEditorState,
     onError(error: Error) {
       throw error;
     },
@@ -57,7 +57,6 @@ const LantingEditor: FC<EditorProps> = ({
       <LexicalComposer initialConfig={editorConfig}>
         <Editor
           editable={editable}
-          initialEditorState={initialEditorState}
           onChange={onChange}
           isCollab={isCollab}
           id={id}
