@@ -52,6 +52,7 @@ import { ReactComponent as Undo } from 'assets/icons/undo.svg';
 import { ReactComponent as VolumeUp } from 'assets/icons/volume_up.svg';
 import { ReactComponent as FormatColorFill } from 'assets/icons/format_color_fill.svg';
 import { ReactComponent as InkHighlighter } from 'assets/icons/format_ink_highlighter.svg';
+import { ReactComponent as Logout } from 'assets/icons/logout.svg';
 
 const icons = {
   account_circle: AccountCircle,
@@ -108,6 +109,7 @@ const icons = {
   volume_up: VolumeUp,
   format_color_fill: FormatColorFill,
   format_ink_highlighter: InkHighlighter,
+  logout: Logout,
 };
 
 export default icons;

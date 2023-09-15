@@ -53,8 +53,12 @@ const Nav: React.FC<NavProps> = () => {
       return (
         <DropDown label={<Avatar size='small' src={user?.avatar} round />}>
           <div className='lanting-nav-dropdown'>
-            <Item onClick={handleNavigateProfile}>Profile</Item>
-            <Item onClick={handleLogout}>Log out</Item>
+            <Item onClick={handleNavigateProfile} icon='account_circle'>
+              Profile
+            </Item>
+            <Item onClick={handleLogout} icon='logout'>
+              Log out
+            </Item>
           </div>
         </DropDown>
       );
