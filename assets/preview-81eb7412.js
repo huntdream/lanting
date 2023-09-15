@@ -1,2 +1,0 @@
-import{j as o}from"./index-111a7888.js";import{T as t}from"./index-9b3e7e7c.js";import"./index-76fb7be0.js";import"./_commonjsHelpers-de833af9.js";import"./index-d3ea75b5.js";import"./index-99281c91.js";const c={parameters:{actions:{argTypesRegex:"^on[A-Z].*"},controls:{matchers:{color:/(background|color)$/i,date:/Date$/}}},decorators:[r=>o.jsx(t,{children:o.jsx(r,{})})]};export{c as default};
-//# sourceMappingURL=preview-81eb7412.js.map
