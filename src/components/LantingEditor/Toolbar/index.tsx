@@ -16,7 +16,11 @@ import {
 import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
-import { $isCodeNode } from '@lexical/code';
+import {
+  $isCodeNode,
+  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+  CODE_LANGUAGE_MAP,
+} from '@lexical/code';
 import { $isParentElementRTL } from '@lexical/selection';
 
 import { IS_APPLE } from 'utils/platform';
@@ -29,11 +33,24 @@ import './style.scss';
 import useModal from 'hooks/useModal';
 import InsertImage from '../component/InsertImage';
 import BlockFormatDropDown from './BlockFormatDropDown';
-import { CODE_LANGUAGE_MAP, CODE_LANGUAGE_OPTIONS } from './constants';
 import Align from './Align';
 import AudioPlugin from '../component/InsertAudio';
 
 interface Props {}
+
+function getCodeLanguageOptions(): [string, string][] {
+  const options: [string, string][] = [];
+
+  for (const [lang, friendlyName] of Object.entries(
+    CODE_LANGUAGE_FRIENDLY_NAME_MAP
+  )) {
+    options.push([lang, friendlyName]);
+  }
+
+  return options;
+}
+
+const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();
 
 const Toolbar: FC<Props> = () => {
   const [editor] = useLexicalComposerContext();

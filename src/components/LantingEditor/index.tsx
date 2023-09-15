@@ -61,6 +61,7 @@ const LantingEditor: FC<EditorProps> = ({
           isCollab={isCollab}
           id={id}
           user={user}
+          initialEditorState={initialEditorState}
         />
       </LexicalComposer>
     </div>

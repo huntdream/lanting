@@ -6,6 +6,8 @@ import {
   EditorState,
   LexicalEditor,
 } from 'lexical';
+import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
+import { AutoLinkPlugin } from '@lexical/react/LexicalAutoLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -29,6 +31,8 @@ import { Provider } from '@lexical/yjs';
 import './style.scss';
 import config from 'config';
 import { IUser } from 'typing/user';
+import { URL_MATCHERS } from './constants';
+import InitializePlugin from './plugins/InitializePlugin';
 
 export interface EditorProps {
   id?: string;
@@ -57,6 +61,7 @@ const Editor: React.FC<EditorProps> = ({
   isCollab,
   editable,
   onChange,
+  initialEditorState,
 }) => {
   const handleChange = (editorState: EditorState, editor: LexicalEditor) => {
     if (onChange) {
@@ -98,6 +103,8 @@ const Editor: React.FC<EditorProps> = ({
           <OnChangePlugin onChange={handleChange} />
           <CodeHighlightPlugin />
           <AutoFocusPlugin />
+          <AutoLinkPlugin matchers={URL_MATCHERS} />
+          <TabIndentationPlugin />
           <ListPlugin />
           <LinkPlugin />
           <ImagesPlugin />
@@ -113,7 +120,10 @@ const Editor: React.FC<EditorProps> = ({
               shouldBootstrap={true}
             />
           ) : (
-            <HistoryPlugin />
+            <>
+              <HistoryPlugin />
+              <InitializePlugin initialEditorState={initialEditorState} />
+            </>
           )}
         </div>
       </div>
