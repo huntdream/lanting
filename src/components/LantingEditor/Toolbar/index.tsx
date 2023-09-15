@@ -64,6 +64,7 @@ const Toolbar: FC<Props> = () => {
   const [isItalic, setIsItalic] = useState(false);
   const [isUnderline, setIsUnderline] = useState(false);
   const [isStrikethrough, setIsStrikethrough] = useState(false);
+  const [isHighlight, setIsHighlight] = useState(false);
   const [formatType, setFormatType] = useState<ElementFormatType>('');
   const [isCode, setIsCode] = useState(false);
   const [isRTL, setIsRTL] = useState(false);
@@ -88,6 +89,7 @@ const Toolbar: FC<Props> = () => {
       setIsItalic(selection.hasFormat('italic'));
       setIsUnderline(selection.hasFormat('underline'));
       setIsStrikethrough(selection.hasFormat('strikethrough'));
+      setIsHighlight(selection.hasFormat('highlight'));
       setIsCode(selection.hasFormat('code'));
       setIsRTL($isParentElementRTL(selection));
 
@@ -261,6 +263,16 @@ const Toolbar: FC<Props> = () => {
             }}
             title='Strikethrough'
             aria-label='Format text with a strikethrough'
+          />
+          <Button
+            active={isHighlight}
+            icon='format_ink_highlighter'
+            variant='text'
+            onClick={() => {
+              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight');
+            }}
+            title='Highlight'
+            aria-label='Format text with a highlight'
           />
           <Button
             icon='code'
