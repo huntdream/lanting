@@ -1,14 +1,13 @@
 import React from 'react';
 import Icon from 'components/Icon';
 import { useTheme } from 'context/Theme';
-import './style.scss';
 
-interface ThemeToggleProps {}
+interface ThemeProps {}
 
-const ThemeToggle: React.FC<ThemeToggleProps> = () => {
+const Theme: React.FC<ThemeProps> = () => {
   const [theme, setTheme] = useTheme();
 
-  const toggleTheme = () => {
+  const switchTheme = () => {
     if (theme === 'dark') {
       setTheme('light');
     } else {
@@ -18,11 +17,11 @@ const ThemeToggle: React.FC<ThemeToggleProps> = () => {
 
   return (
     <Icon
-      onClick={toggleTheme}
+      onClick={switchTheme}
       name={theme === 'dark' ? 'dark_mode' : 'light_mode'}
-      className='lanting-themetoggle'
+      className='lanting-theme'
     />
   );
 };
 
-export default ThemeToggle;
+export default Theme;

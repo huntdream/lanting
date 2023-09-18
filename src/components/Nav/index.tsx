@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from 'components/Icon';
-import ThemeToggle from 'components/ThemeToggle';
+import Theme from 'components/Theme';
 import useToast from 'components/Toast/useToast';
 import { useUser } from 'context/App';
 
@@ -86,7 +86,7 @@ const Nav: React.FC<NavProps> = () => {
           )}
 
           <Language />
-          <ThemeToggle />
+          <Theme />
           <Icon onClick={handleNotify} name='notifications' />
           {renderUserIcon()}
         </div>
