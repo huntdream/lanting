@@ -127,7 +127,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
         className={cls('lanting-editor-image', {
           'lanting-editor-image--focused': isFocused,
         })}
-        src={src}
+        src={`${src}?imageView2/2/w/1000`}
         alt={alt}
         onClick={handleImageClick}
       />

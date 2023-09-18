@@ -17,7 +17,7 @@ const InsertImage: React.FC<Props> = ({ activeEditor, onClose }) => {
     if (images) {
       images.forEach((image) => {
         activeEditor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-          src: image.url,
+          src: image.url!,
           height: 'inherit',
           width: 500,
           altText: image.name,
