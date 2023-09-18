@@ -14,11 +14,11 @@
     background-color: var(--tooltip-bg);
     font-size: 12px;
     color: var(--tooltip-text-color);
-    animation: fadeIn 300ms ease;
+    animation: fadeIn 200ms ease;
     margin: 4px;
 
     &--fadeOut {
-      animation: fadeOut 300ms ease;
+      animation: fadeOut 200ms ease;
       opacity: 0;
     }
   }
