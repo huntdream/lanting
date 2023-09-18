@@ -3,14 +3,13 @@ import React, {
   ReactElement,
   ReactNode,
   isValidElement,
-  useEffect,
   useRef,
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import './style.scss';
 import Tip, { Placement } from './Tip';
 import { IS_TOUCH_DEVICE } from 'utils/platform';
+import './style.scss';
 
 interface Props {
   title?: ReactNode;
@@ -53,12 +52,11 @@ const Tooltip: React.FC<Props> = ({
   };
 
   const handleClose = () => {
-    console.log('let close');
     setVisible(false);
     setRect(undefined);
   };
 
-  const handleLeave = (event: MouseEvent) => {
+  const handleLeave = () => {
     setIsClosing(true);
 
     if (timer.current) {
@@ -79,7 +77,7 @@ const Tooltip: React.FC<Props> = ({
 
     if (isTouch) return;
 
-    handleLeave(event);
+    handleLeave();
   };
 
   const handleTouchStart = (event: MouseEvent) => {
@@ -88,7 +86,7 @@ const Tooltip: React.FC<Props> = ({
   };
 
   const handleTouchEnd = (event: MouseEvent) => {
-    handleLeave(event);
+    handleLeave();
     originChildProps?.onTouchEnd?.(event);
   };
 
