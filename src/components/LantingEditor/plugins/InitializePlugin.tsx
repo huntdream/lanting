@@ -11,8 +11,10 @@ const InitializePlugin: FC<Props> = ({ initialEditorState }) => {
   useEffect(() => {
     if (initialEditorState) {
       try {
-        const editorState = editor.parseEditorState(initialEditorState);
-        editor.setEditorState(editorState);
+        setTimeout(() => {
+          const editorState = editor.parseEditorState(initialEditorState);
+          editor.setEditorState(editorState);
+        });
       } catch (e) {}
     }
   }, [editor, initialEditorState]);
