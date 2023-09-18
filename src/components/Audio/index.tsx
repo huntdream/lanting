@@ -37,12 +37,6 @@ const AudioPlayer: React.FC<Props> = ({ src, name }) => {
     setDuration(msToMinutes((audioRef.current?.duration || 0) * 1000));
   };
 
-  console.log(
-    duration,
-    audioRef.current?.currentTime,
-    audioRef.current?.duration
-  );
-
   const handleTimeUpdate = () => {
     console.log(audioRef.current?.currentTime);
     const played = audioRef.current?.currentTime || 0;
@@ -94,6 +88,7 @@ const AudioPlayer: React.FC<Props> = ({ src, name }) => {
                 notify('还没做好🤣');
               }}
               name='volume_up'
+              size={20}
             />
           </div>
         </div>
