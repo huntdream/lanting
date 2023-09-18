@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import cls from 'classnames';
 import './style.scss';
-import useHover, { EventType } from 'hooks/useHover';
+import useHover from 'hooks/useHover';
 import icons from './icons';
 
 export type IconNames = keyof typeof icons;

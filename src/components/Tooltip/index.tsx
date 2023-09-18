@@ -10,6 +10,7 @@ import React, {
 import { createPortal } from 'react-dom';
 import './style.scss';
 import Tip, { Placement } from './Tip';
+import { IS_TOUCH_DEVICE } from 'utils/platform';
 
 interface Props {
   title?: ReactNode;
@@ -28,6 +29,7 @@ const Tooltip: React.FC<Props> = ({
   const [visible, setVisible] = useState(false);
   const [rect, setRect] = useState<DOMRect>();
   const [isClosing, setIsClosing] = useState(false);
+  const isTouch = IS_TOUCH_DEVICE;
 
   const child = React.Children.only(children) as React.ReactElement;
   const originChildProps = child?.props || {};
@@ -51,6 +53,7 @@ const Tooltip: React.FC<Props> = ({
   };
 
   const handleClose = () => {
+    console.log('let close');
     setVisible(false);
     setRect(undefined);
   };
@@ -64,13 +67,19 @@ const Tooltip: React.FC<Props> = ({
   };
 
   const handleMouseEnter = (event: MouseEvent) => {
-    handleEnter(event);
     originChildProps?.onMouseEnter?.(event);
+
+    if (isTouch) return;
+
+    handleEnter(event);
   };
 
   const handleMouseLeave = (event: MouseEvent) => {
-    handleLeave(event);
     originChildProps?.onMouseLeave?.(event);
+
+    if (isTouch) return;
+
+    handleLeave(event);
   };
 
   const handleTouchStart = (event: MouseEvent) => {
