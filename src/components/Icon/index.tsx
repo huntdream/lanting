@@ -1,7 +1,12 @@
-import React, { CSSProperties, HTMLAttributes, useEffect, useRef } from 'react';
+import React, {
+  CSSProperties,
+  HTMLAttributes,
+  MouseEvent,
+  TouchEvent,
+} from 'react';
 import cls from 'classnames';
 import './style.scss';
-import useHover from 'hooks/useHover';
+import useHover, { EventType } from 'hooks/useHover';
 import icons from './icons';
 
 export type IconNames = keyof typeof icons;
@@ -23,6 +28,10 @@ const Icon: React.FC<IconProps> = ({
   name,
   clickable,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
+  onTouchStart,
+  onTouchEnd,
   ...props
 }) => {
   const [hoverEvents, overlay] = useHover();
@@ -30,9 +39,28 @@ const Icon: React.FC<IconProps> = ({
 
   const showOverlay = onClick || clickable;
 
+  const handleMouseEnter = (e: MouseEvent<HTMLElement>) => {
+    hoverEvents.onMouseEnter(e);
+    onMouseEnter?.(e);
+  };
+
+  const handleMouseLeave = (e: MouseEvent<HTMLElement>) => {
+    hoverEvents.onMouseLeave(e);
+    onMouseLeave?.(e);
+  };
+
+  const handleTouchStart = (e: TouchEvent<HTMLElement>) => {
+    hoverEvents.onTouchStart(e);
+    onTouchStart?.(e);
+  };
+
+  const handleTouchEnd = (e: TouchEvent<HTMLElement>) => {
+    hoverEvents.onTouchEnd(e);
+    onTouchEnd?.(e);
+  };
+
   return (
     <i
-      {...hoverEvents}
       className={cls(
         'lanting-icon',
         showOverlay ? 'lanting-icon--clickable' : undefined,
@@ -42,6 +70,10 @@ const Icon: React.FC<IconProps> = ({
         }
       )}
       onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       {...props}
     >
       {SVGIcon && <SVGIcon width={size} height={size} fill='currentColor' />}

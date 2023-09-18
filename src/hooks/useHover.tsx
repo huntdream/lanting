@@ -1,8 +1,8 @@
 import React, { ReactNode, useCallback } from 'react';
-import { FC, RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IS_TOUCH_DEVICE } from 'utils/platform';
 
-type EventType =
+export type EventType =
   | MouseEvent
   | React.MouseEvent<Element, MouseEvent>
   | React.TouchEvent<Element>
@@ -10,8 +10,10 @@ type EventType =
 
 type EventHandle = (e: EventType) => void;
 
+type Events = 'onMouseEnter' | 'onMouseLeave' | 'onTouchStart' | 'onTouchEnd';
+
 const useHover = <T extends HTMLElement>(): [
-  Record<string, EventHandle>,
+  Record<Events, EventHandle>,
   ReactNode
 ] => {
   const [show, setShow] = useState(false);
