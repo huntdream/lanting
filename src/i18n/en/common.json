@@ -23,5 +23,7 @@
     "publicDesc": "Everyone can view",
     "privateDesc": "Only you can view"
   },
-  "greeting": "Hi!"
+  "greeting": "Hi!",
+  "edit": "Edit",
+  "delete": "Delete"
 }

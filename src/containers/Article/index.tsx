@@ -8,6 +8,8 @@ import Icon from 'components/Icon';
 import User from 'components/User';
 import useRequest from 'hooks/useRequest';
 import useToast from 'components/Toast/useToast';
+import Tooltip from 'components/Tooltip';
+import { useTranslation } from 'react-i18next';
 
 interface ArticleProps {}
 
@@ -20,6 +22,7 @@ const Article: React.FC<ArticleProps> = () => {
   const navigate = useNavigate();
   const [fetcher] = useRequest();
   const [toast] = useToast();
+  const { t } = useTranslation();
 
   const { article } = useArticle(id);
 
@@ -48,8 +51,12 @@ const Article: React.FC<ArticleProps> = () => {
 
         {article?.canEdit && (
           <div className='lanting-article-meta-actions'>
-            <Icon onClick={navigateToEdit} name='edit' />
-            <Icon onClick={handleDelete} name='delete' />
+            <Tooltip title={t('edit')}>
+              <Icon onClick={navigateToEdit} name='edit' />
+            </Tooltip>
+            <Tooltip title={t('delete')}>
+              <Icon onClick={handleDelete} name='delete' />
+            </Tooltip>
           </div>
         )}
       </div>

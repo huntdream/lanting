@@ -23,5 +23,7 @@
     "publicDesc": "所有人可见",
     "privateDesc": "仅自己可见"
   },
-  "greeting": "你好！"
+  "greeting": "你好！",
+  "edit": "编辑",
+  "delete": "删除"
 }

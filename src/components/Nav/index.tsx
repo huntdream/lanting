@@ -12,6 +12,8 @@ import Language from 'components/Language';
 import DropDown from 'components/DropDown';
 import Item from 'components/Item';
 import Tooltip from 'components/Tooltip';
+import { useI18n } from '@excalidraw/excalidraw';
+import { useTranslation } from 'react-i18next';
 
 interface NavProps {}
 
@@ -20,6 +22,7 @@ const Nav: React.FC<NavProps> = () => {
   const navigate = useNavigate();
   const [toast] = useToast();
   const [user, setUser] = useUser();
+  const { t } = useTranslation();
 
   const isEditPage = useMemo(() => {
     return pathname === '/edit';
@@ -64,7 +67,11 @@ const Nav: React.FC<NavProps> = () => {
       );
     }
 
-    return <Icon name='login' onClick={handleNavigateProfile} />;
+    return (
+      <Tooltip title={t('login')} placement='bottom'>
+        <Icon name='login' onClick={handleNavigateProfile} />
+      </Tooltip>
+    );
   };
 
   return (
@@ -81,13 +88,17 @@ const Nav: React.FC<NavProps> = () => {
         <div className='lanting-nav-icons'>
           {!isEditPage && (
             <Link className='lanting-nav-edit' to='/edit'>
-              <Icon clickable name='edit' />
+              <Tooltip title='Write your story' placement='bottom'>
+                <Icon clickable name='edit' />
+              </Tooltip>
             </Link>
           )}
-
           <Language />
           <Theme />
-          <Icon onClick={handleNotify} name='notifications' />
+          <Tooltip title='Notifications' placement='bottom'>
+            <Icon onClick={handleNotify} name='notifications' />
+          </Tooltip>
+
           {renderUserIcon()}
         </div>
       </div>

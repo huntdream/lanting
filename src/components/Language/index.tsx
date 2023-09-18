@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import useToast from 'components/Toast/useToast';
+import Tooltip from 'components/Tooltip';
 
 interface Props {}
 
@@ -16,7 +17,11 @@ const Language: React.FC<Props> = () => {
     toast(t('greeting'), { id: 'lang' });
   };
 
-  return <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />;
+  return (
+    <Tooltip title='Switch language' placement='bottom'>
+      <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />
+    </Tooltip>
+  );
 };
 
 export default Language;
