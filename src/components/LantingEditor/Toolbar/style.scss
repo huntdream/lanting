@@ -1,4 +1,8 @@
 .lanting-editor-toolbar {
   display: flex;
   flex-wrap: wrap;
+
+  .lanting-button {
+    margin-right: 2px;
+  }
 }
