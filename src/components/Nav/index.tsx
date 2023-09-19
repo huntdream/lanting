@@ -88,14 +88,14 @@ const Nav: React.FC<NavProps> = () => {
         <div className='lanting-nav-icons'>
           {!isEditPage && (
             <Link className='lanting-nav-edit' to='/edit'>
-              <Tooltip title='Write your story' placement='bottom'>
+              <Tooltip title={t('newStory')} placement='bottom'>
                 <Icon clickable name='edit' />
               </Tooltip>
             </Link>
           )}
           <Language />
           <Theme />
-          <Tooltip title='Notifications' placement='bottom'>
+          <Tooltip title={t('notifications')} placement='bottom'>
             <Icon onClick={handleNotify} name='notifications' />
           </Tooltip>
 

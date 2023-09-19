@@ -33,5 +33,7 @@
   "switchLang": {
     "zh-CN": "切换为中文/Switch to Chinese",
     "en-US": "切换为英文/Switch to English"
-  }
+  },
+  "notifications": "通知",
+  "newStory": "畅叙幽情"
 }

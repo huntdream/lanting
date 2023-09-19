@@ -33,5 +33,7 @@
   "switchLang": {
     "zh-CN": "Switch to Chinese/切换为中文",
     "en-US": "Switch to English/切换为英文"
-  }
+  },
+  "notifications": "Notifications",
+  "newStory": "Write your story"
 }
