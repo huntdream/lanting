@@ -25,5 +25,13 @@
   },
   "greeting": "Hi!",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "switchTheme": {
+    "dark": "Switch to dark theme",
+    "light": "Switch to light theme"
+  },
+  "switchLang": {
+    "zh-CN": "Switch to Chinese/切换为中文",
+    "en-US": "Switch to English/切换为英文"
+  }
 }

@@ -25,5 +25,13 @@
   },
   "greeting": "你好！",
   "edit": "编辑",
-  "delete": "删除"
+  "delete": "删除",
+  "switchTheme": {
+    "dark": "切换为深色模式",
+    "light": "切换为浅色模式"
+  },
+  "switchLang": {
+    "zh-CN": "切换为中文/Switch to Chinese",
+    "en-US": "切换为英文/Switch to English"
+  }
 }

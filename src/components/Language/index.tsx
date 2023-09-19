@@ -18,7 +18,12 @@ const Language: React.FC<Props> = () => {
   };
 
   return (
-    <Tooltip title='Switch language' placement='bottom'>
+    <Tooltip
+      title={t(
+        `switchLang.${i18n.language.includes('zh') ? 'en-US' : 'zh-CN'}`
+      )}
+      placement='bottom'
+    >
       <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />
     </Tooltip>
   );
