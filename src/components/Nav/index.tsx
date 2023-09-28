@@ -90,7 +90,7 @@ const Nav: React.FC<NavProps> = () => {
           {!isEditPage && (
             <Link className='lanting-nav-edit' to='/edit'>
               <Tooltip title={t('newStory')} placement='bottom'>
-                <Icon name='edit' />
+                <Icon clickable name='edit' />
               </Tooltip>
             </Link>
           )}
