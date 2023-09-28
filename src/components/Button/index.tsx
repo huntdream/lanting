@@ -36,6 +36,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
+        tabIndex={0}
         {...props}
         ref={ref}
         className={cls(
