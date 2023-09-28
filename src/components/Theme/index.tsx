@@ -3,6 +3,7 @@ import Icon from 'components/Icon';
 import { useTheme } from 'context/Theme';
 import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
+import Button from 'components/Button';
 
 interface ThemeProps {}
 
@@ -23,9 +24,10 @@ const Theme: React.FC<ThemeProps> = () => {
       title={t(`switchTheme.${theme === 'dark' ? 'light' : 'dark'}`)}
       placement='bottom'
     >
-      <Icon
+      <Button
+        variant='text'
         onClick={switchTheme}
-        name={theme === 'dark' ? 'dark_mode' : 'light_mode'}
+        icon={theme === 'dark' ? 'dark_mode' : 'light_mode'}
         className='lanting-theme'
       />
     </Tooltip>

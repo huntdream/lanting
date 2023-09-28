@@ -14,6 +14,7 @@ import Item from 'components/Item';
 import Tooltip from 'components/Tooltip';
 import { useI18n } from '@excalidraw/excalidraw';
 import { useTranslation } from 'react-i18next';
+import Button from 'components/Button';
 
 interface NavProps {}
 
@@ -69,7 +70,7 @@ const Nav: React.FC<NavProps> = () => {
 
     return (
       <Tooltip title={t('login')} placement='bottom'>
-        <Icon name='login' onClick={handleNavigateProfile} />
+        <Button variant='text' icon='login' onClick={handleNavigateProfile} />
       </Tooltip>
     );
   };
@@ -89,14 +90,18 @@ const Nav: React.FC<NavProps> = () => {
           {!isEditPage && (
             <Link className='lanting-nav-edit' to='/edit'>
               <Tooltip title={t('newStory')} placement='bottom'>
-                <Icon clickable name='edit' />
+                <Icon name='edit' />
               </Tooltip>
             </Link>
           )}
           <Language />
           <Theme />
           <Tooltip title={t('notifications')} placement='bottom'>
-            <Icon onClick={handleNotify} name='notifications' />
+            <Button
+              variant='text'
+              onClick={handleNotify}
+              icon='notifications'
+            />
           </Tooltip>
 
           {renderUserIcon()}

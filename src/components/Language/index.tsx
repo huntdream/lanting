@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Icon from 'components/Icon';
 import useToast from 'components/Toast/useToast';
 import Tooltip from 'components/Tooltip';
+import Button from 'components/Button';
 
 interface Props {}
 
@@ -24,7 +25,11 @@ const Language: React.FC<Props> = () => {
       )}
       placement='bottom'
     >
-      <Icon onClick={handleLanguageChange} name={i18n.language as Lang} />
+      <Button
+        variant='text'
+        onClick={handleLanguageChange}
+        icon={i18n.language as Lang}
+      />
     </Tooltip>
   );
 };
