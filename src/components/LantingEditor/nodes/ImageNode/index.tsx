@@ -218,7 +218,7 @@ export function $createImageNode({
       src,
       altText,
       maxWidth,
-      width || 500,
+      width,
       height,
       showCaption,
       caption,

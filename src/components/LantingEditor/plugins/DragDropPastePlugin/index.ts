@@ -32,10 +32,10 @@ const DragDropPaste = () => {
             if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
               upload(file).then((result: IFile) => {
                 editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
-                  height: 500,
-                  width: 'inherit',
+                  height: 'inherit',
                   altText: file.name,
                   src: result.url,
+                  maxWidth: "100%",
                 });
               });
             }
