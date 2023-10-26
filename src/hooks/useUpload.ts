@@ -1,5 +1,6 @@
 import { AxiosProgressEvent } from 'axios';
 import useToast from 'components/Toast/useToast';
+import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
 import request from 'utils/request';
@@ -23,7 +24,7 @@ const useUpload = () => {
       return Promise.resolve();
     }
 
-    return request('/tools/uploadToken', {
+    return request('/helper/uploadToken', {
       method: 'post',
     }).then((res: any) => {
       token.current = res.token;
@@ -41,8 +42,7 @@ const useUpload = () => {
 
           const name = file.name;
           const uid = createUID();
-          const ext = file.name.split('.').pop();
-          const key = `${Date.now().toString().slice(-6)}_${uid}.${ext}`;
+          const key = `${dayjs().format("YYYYMMDD-HHmmss")}-${uid}-${name}`;
 
           formData.append('token', token.current);
           formData.append('file', file);
