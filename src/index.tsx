@@ -2,8 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './containers/App';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { SWRConfig } from 'swr';
-import request from 'utils/request';
+import SWRProvider from 'context/SWR';
 import './i18n';
 import './index.scss';
 
@@ -12,13 +11,8 @@ const root = createRoot(container!);
 
 root.render(
   <Router>
-    <SWRConfig
-      value={{
-        fetcher: request,
-        revalidateOnMount: true,
-      }}
-    >
+    <SWRProvider>
       <App />
-    </SWRConfig>
+    </SWRProvider>
   </Router>
 );

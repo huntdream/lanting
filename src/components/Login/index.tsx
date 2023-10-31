@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import request from 'utils/request';
 import Input from 'components/Input';
 import { useTranslation } from 'react-i18next';
 import './style.scss';
@@ -10,6 +9,7 @@ import { useUser } from 'context/App';
 import { IUser } from 'typing/user';
 import useToast from 'components/Toast/useToast';
 import { useForm } from 'react-hook-form';
+import useRequest from 'hooks/useRequest';
 
 interface LoginProps {
   isLogin?: boolean;
@@ -25,6 +25,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
   const navigate = useNavigate();
   const [toast] = useToast();
   const { t } = useTranslation();
+  const [request] = useRequest();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

@@ -3,7 +3,7 @@ import useToast from 'components/Toast/useToast';
 import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
-import request from 'utils/request';
+import useRequest from './useRequest';
 
 export interface IFile {
   type: string;
@@ -18,6 +18,7 @@ export interface IFile {
 const useUpload = () => {
   const token = useRef<string>('');
   const [toast] = useToast()
+  const [request] = useRequest();
 
   const getToken = () => {
     if (token.current) {

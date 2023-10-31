@@ -30,7 +30,8 @@ const useRequest = () => {
         return response.data;
       },
       (error) => {
-        toast(error?.response?.data?.message)
+        toast(error?.response?.data?.message || error?.message)
+
         if (error?.response?.status === 401) {
           localStorage.setItem('lanting-token', '')
           navigate('/login');
