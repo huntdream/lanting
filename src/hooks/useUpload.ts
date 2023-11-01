@@ -64,7 +64,8 @@ const useUpload = () => {
               };
             })
             .catch((error) => {
-              console.log(error);
+              toast(error.error)
+              throw new Error(error.error)
             });
         }
 

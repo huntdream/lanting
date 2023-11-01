@@ -29,6 +29,8 @@ const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
   };
 
   const handleUpload = () => {
+    setLoading(true);
+
     upload(file, handleProgress)
       .then((uploadedFile) => {
         if (uploadedFile) {
@@ -50,7 +52,6 @@ const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
 
   useEffect(() => {
     if (isUploaded.current) return;
-    setLoading(true);
     setError('');
 
     handleUpload();
