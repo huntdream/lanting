@@ -37,7 +37,9 @@
     padding: 4px;
   }
 
-  .lanting-icon {
-    font-size: inherit;
+  &-account {
+    fill: var(--icon-color);
+    width: 100%;
+    height: 100%;
   }
 }

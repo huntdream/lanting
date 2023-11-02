@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from 'classnames';
+import { ReactComponent as AccountCircle } from '../../assets/icons/account_circle.svg';
 import './style.scss';
-import Icon from 'components/Icon';
 
 interface Props {
   src?: string;
@@ -27,7 +27,7 @@ const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
           className='lanting-avatar-img'
         />
       ) : (
-        <Icon name='account_circle' clickable={!!onClick} size='100%' />
+        <AccountCircle className='lanting-avatar-account' />
       )}
     </div>
   );
