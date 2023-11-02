@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from 'classnames';
-import { ReactComponent as AccountCircle } from '../../assets/icons/account_circle.svg';
+import AccountCircle from 'assets/icons/account_circle.svg?react';
 import './style.scss';
 
 interface Props {

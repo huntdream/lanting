@@ -55,7 +55,15 @@ const Nav: React.FC<NavProps> = () => {
 
     if (user?.id) {
       return (
-        <DropDown label={<Avatar size='small' src={user?.avatar} round />}>
+        <DropDown
+          label={
+            user?.avatar ? (
+              <Avatar size='small' src={user?.avatar} round />
+            ) : (
+              <Icon name='account_circle' />
+            )
+          }
+        >
           <div className='lanting-nav-dropdown'>
             <Item onClick={handleNavigateProfile} icon='account_circle'>
               Profile

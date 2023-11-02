@@ -14,7 +14,7 @@ import {
   REMOVE_LIST_COMMAND,
 } from '@lexical/list';
 import { createPortal } from 'react-dom';
-import { ReactComponent as Arrow } from 'assets/icons/chevron-down.svg';
+import Arrow from 'assets/icons/chevron-down.svg?react';
 import DropDownItem from './Item';
 import './style.scss';
 import Icon from 'components/Icon';
