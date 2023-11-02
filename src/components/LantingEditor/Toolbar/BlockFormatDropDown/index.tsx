@@ -17,10 +17,10 @@ import { createPortal } from 'react-dom';
 import Arrow from 'assets/icons/chevron-down.svg?react';
 import DropDownItem from './Item';
 import './style.scss';
-import Icon from 'components/Icon';
+import Icon, { IconNames } from 'components/Icon';
 
 interface Props {
-  blockType: string;
+  blockType: IconNames;
   editor: LexicalEditor;
 }
 
@@ -198,7 +198,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
           <div className='lanting-editor-dropdown' ref={dropDownRef}>
             {Object.entries(blockTypeToBlockName).map(([key, value]) => (
               <DropDownItem
-                icon={key}
+                icon={key as IconNames}
                 key={key}
                 onClick={() => handleBlockTypeClick(key)}
               >

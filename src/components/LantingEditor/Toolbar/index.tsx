@@ -35,6 +35,7 @@ import InsertImage from '../component/InsertImage';
 import BlockFormatDropDown from './BlockFormatDropDown';
 import Align from './Align';
 import AudioPlugin from '../component/InsertAudio';
+import { IconNames } from 'components/Icon';
 
 interface Props {}
 
@@ -199,7 +200,10 @@ const Toolbar: FC<Props> = () => {
         disabled={!canRedo}
         aria-label='Redo'
       />
-      <BlockFormatDropDown blockType={blockType} editor={activeEditor} />
+      <BlockFormatDropDown
+        blockType={blockType as IconNames}
+        editor={activeEditor}
+      />
       {blockType === 'code' ? (
         <>
           <Select
