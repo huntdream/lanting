@@ -1,9 +1,9 @@
-import Icon from 'components/Icon';
+import Icon, { IconNames } from 'components/Icon';
 import React, { FC, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
-  icon?: string;
+  icon?: IconNames;
   onClick?: () => void;
 }
 
