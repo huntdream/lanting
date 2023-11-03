@@ -15,6 +15,7 @@
     "maxLength": "长度不能超过个{{count}}字符"
   },
   "article": {
+    "label": "文章",
     "title": "标题",
     "publish": "发布",
     "public": "公开",
@@ -35,5 +36,7 @@
     "en-US": "切换为英文/Switch to English"
   },
   "notifications": "通知",
-  "newStory": "畅叙幽情"
+  "newStory": "畅叙幽情",
+  "cancel": "取消",
+  "deleteMessage": "确认删除此{{type}}？"
 }

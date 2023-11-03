@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import LantingEditor from 'components/LantingEditor';
@@ -10,6 +10,10 @@ import useRequest from 'hooks/useRequest';
 import useToast from 'components/Toast/useToast';
 import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
+import useModal from 'hooks/useModal';
+import Button from 'components/Button';
+import Modal from 'components/Modal';
+import Prompt from 'components/Prompt';
 
 interface ArticleProps {}
 
@@ -31,7 +35,7 @@ const Article: React.FC<ArticleProps> = () => {
   };
 
   const handleDelete = () => {
-    fetcher('/articles', {
+    return fetcher('/articles', {
       method: 'delete',
       data: {
         ids: [parseInt(id, 10)],
@@ -54,9 +58,15 @@ const Article: React.FC<ArticleProps> = () => {
             <Tooltip title={t('edit')}>
               <Icon onClick={navigateToEdit} name='edit' />
             </Tooltip>
-            <Tooltip title={t('delete')}>
-              <Icon onClick={handleDelete} name='delete' />
-            </Tooltip>
+            <Prompt
+              title={t('delete')}
+              message={t('deleteMessage', { type: t('article.label') })}
+              onOk={handleDelete}
+            >
+              <Tooltip title={t('delete')}>
+                <Icon clickable name='delete' />
+              </Tooltip>
+            </Prompt>
           </div>
         )}
       </div>

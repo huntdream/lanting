@@ -1,0 +1,20 @@
+.lanting-prompt {
+  &-trigger {
+    display: contents;
+  }
+
+  &-message {
+    padding: 16px;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px;
+    border-top: 1px solid var(--border-color);
+
+    .lanting-button {
+      margin-left: 16px;
+    }
+  }
+}
