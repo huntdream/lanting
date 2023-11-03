@@ -28,7 +28,7 @@ import H2 from 'assets/icons/h2.svg?react';
 import H3 from 'assets/icons/h3.svg?react';
 import Image from 'assets/icons/image.svg?react';
 import EnUS from 'assets/icons/en-US.svg?react';
-import Zh from 'assets/icons/zh.svg?react';
+import Zh from 'assets/icons/zh-CN.svg?react';
 import LightMode from 'assets/icons/light_mode.svg?react';
 import Lock from 'assets/icons/lock.svg?react';
 import Login from 'assets/icons/login.svg?react';
