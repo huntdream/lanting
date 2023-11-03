@@ -10,15 +10,12 @@ export default defineConfig(() => {
     },
     build: {
       outDir: 'build',
-    },
-    plugins: [
-      react(),
-      viteTsconfigPaths(),
-      svgrPlugin({
-        svgrOptions: {
-          icon: true,
+      rollupOptions: {
+        output: {
+          chunkFileNames: 'assets/index-[hash].js',
         },
-      }),
-    ],
+      },
+    },
+    plugins: [react(), viteTsconfigPaths(), svgrPlugin()],
   };
 });
