@@ -54,7 +54,7 @@ const Comments: React.FC<Props> = ({ id, type }) => {
       {user?.id && (
         <div className='lanting-comments-reply'>
           <div className='lanting-comments-reply-content'>
-            <Avatar src={user?.avatar} />
+            <Avatar src={user?.avatar} round />
             <textarea
               className='lanting-comments-textarea'
               placeholder={t('comments.placeholder')}
@@ -78,7 +78,7 @@ const Comments: React.FC<Props> = ({ id, type }) => {
         {data?.data?.map(({ text, replier, createdAt }) => (
           <div className='lanting-comments-comment'>
             <div className='lanting-comments-replier'>
-              <Avatar src={replier.avatar} />
+              <Avatar src={replier.avatar} round />
               <div>
                 <User user={replier} hideAvatar />
               </div>
