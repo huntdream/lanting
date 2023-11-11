@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import LantingEditor from 'components/LantingEditor';
@@ -10,9 +10,6 @@ import useRequest from 'hooks/useRequest';
 import useToast from 'components/Toast/useToast';
 import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
-import useModal from 'hooks/useModal';
-import Button from 'components/Button';
-import Modal from 'components/Modal';
 import Prompt from 'components/Prompt';
 import Comments from 'components/Comments';
 
@@ -79,9 +76,11 @@ const Article: React.FC<ArticleProps> = () => {
           />
         )}
       </div>
-      <div className='lanting-article-comments'>
-        <Comments id={id} type='article' />
-      </div>
+      {article && (
+        <div className='lanting-article-comments'>
+          <Comments id={id} type='article' />
+        </div>
+      )}
     </div>
   );
 };
