@@ -38,5 +38,10 @@
   "notifications": "通知",
   "newStory": "畅叙幽情",
   "cancel": "取消",
-  "deleteMessage": "确认删除此{{type}}？"
+  "deleteMessage": "确认删除此{{type}}？",
+  "comments": {
+    "label": "评论",
+    "comment": "评论",
+    "placeholder": "回复"
+  }
 }

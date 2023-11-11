@@ -6,9 +6,10 @@ import './style.scss';
 
 interface Props {
   user?: IUser;
+  hideAvatar?: boolean;
 }
 
-const User: React.FC<Props> = ({ user }) => {
+const User: React.FC<Props> = ({ user, hideAvatar }) => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -19,7 +20,7 @@ const User: React.FC<Props> = ({ user }) => {
 
   return (
     <div className='lanting-user' onClick={handleNavigate}>
-      <Avatar size='small' round src={user?.avatar} />
+      {!hideAvatar && <Avatar size='small' round src={user?.avatar} />}
       <div className='lanting-user-name'>{user?.name || user?.username}</div>
     </div>
   );

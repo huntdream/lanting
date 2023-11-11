@@ -1,0 +1,54 @@
+.lanting-comments {
+  &-header {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  &-reply {
+    margin: 22px 0 36px;
+
+    &-content {
+      display: flex;
+      align-items: center;
+    }
+
+    &-action {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &-publish {
+    }
+  }
+
+  &-textarea {
+    margin: 0 0 0 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-color);
+    resize: none;
+    outline: none;
+    border-radius: 6px;
+    flex: 1;
+  }
+
+  &-comment {
+    padding: 8px 0;
+  }
+
+  &-replier {
+    display: flex;
+    align-items: center;
+
+    .lanting-date {
+      margin-left: 8px;
+      color: var(--secondary-text);
+      font-size: 14px;
+    }
+  }
+
+  &-text {
+    margin-left: 46px;
+  }
+}

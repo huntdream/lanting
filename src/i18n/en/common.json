@@ -38,5 +38,10 @@
   "notifications": "Notifications",
   "newStory": "Write your story",
   "cancel": "Cancel",
-  "deleteMessage": "Are your sure you want to delete this {{type}}?"
+  "deleteMessage": "Are your sure you want to delete this {{type}}?",
+  "comments": {
+    "label": "Comments",
+    "comment": "comment",
+    "placeholder": "Reply"
+  }
 }

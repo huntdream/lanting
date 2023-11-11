@@ -11,12 +11,14 @@ interface DateProps {
   date?: string;
   format?: string;
   fromNow?: boolean;
+  icon?: boolean;
 }
 
 const Date: React.FC<DateProps> = ({
   date,
   format = 'YYYY-MM-DD',
   fromNow,
+  icon = true,
   ...props
 }) => {
   const { i18n } = useTranslation();
@@ -44,7 +46,9 @@ const Date: React.FC<DateProps> = ({
 
   return (
     <div className='lanting-date' {...props}>
-      {dateStr && <Icon name='date_range' className='lanting-date-icon' />}
+      {dateStr && icon && (
+        <Icon name='date_range' className='lanting-date-icon' />
+      )}
       <Tooltip title={datetime} timeout={300}>
         <span>{dateStr}</span>
       </Tooltip>

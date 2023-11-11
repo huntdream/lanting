@@ -14,6 +14,7 @@ import useModal from 'hooks/useModal';
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 import Prompt from 'components/Prompt';
+import Comments from 'components/Comments';
 
 interface ArticleProps {}
 
@@ -77,6 +78,9 @@ const Article: React.FC<ArticleProps> = () => {
             editable={false}
           />
         )}
+      </div>
+      <div className='lanting-article-comments'>
+        <Comments id={id} type='article' />
       </div>
     </div>
   );
