@@ -22,6 +22,7 @@ const Comments: React.FC<Props> = ({ id, type }) => {
   const { t } = useTranslation();
   const [replyText, setReplyText] = useState('');
   const [fetcher] = useRequest();
+  const [loading, setLoading] = useState(false);
 
   const handleReplyChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReplyText(e.target.value);
@@ -33,10 +34,18 @@ const Comments: React.FC<Props> = ({ id, type }) => {
       text: replyText,
     };
 
-    fetcher.post('/comments', payload).then((res) => {
-      setReplyText('');
-      mutate(`/comments/${type}/${id}`);
-    });
+    setLoading(true);
+
+    fetcher
+      .post('/comments', payload)
+      .then((res) => {
+        setReplyText('');
+        mutate(`/comments/${type}/${id}`);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -57,7 +66,7 @@ const Comments: React.FC<Props> = ({ id, type }) => {
             <Button
               color='primary'
               className='lanting-comments-reply-publish'
-              disabled={!replyText}
+              disabled={!replyText || loading}
               onClick={handleSubmit}
             >
               {t('article.publish')}
