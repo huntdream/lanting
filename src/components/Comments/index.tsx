@@ -89,10 +89,10 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
           <div className='lanting-comments-comment'>
             <div className='lanting-comments-replier'>
               <Avatar src={replier.avatar} round />
-              <div>
+              <div className='lanting-comments-replier-info'>
                 <User user={replier} hideAvatar />
+                <Date date={createdAt} fromNow icon={false} />
               </div>
-              <Date date={createdAt} fromNow icon={false} />
             </div>
             <div className='lanting-comments-text'>{text}</div>
             {showDetail && (

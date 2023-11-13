@@ -19,6 +19,14 @@
       justify-content: flex-end;
     }
 
+    &-info {
+      display: inline-flex;
+
+      .lanting-date {
+        height: auto;
+      }
+    }
+
     &-publish {
     }
   }
