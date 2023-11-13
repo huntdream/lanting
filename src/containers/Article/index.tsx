@@ -12,6 +12,7 @@ import Tooltip from 'components/Tooltip';
 import { useTranslation } from 'react-i18next';
 import Prompt from 'components/Prompt';
 import Comments from 'components/Comments';
+import useTitle from 'hooks/useTitle';
 
 interface ArticleProps {}
 
@@ -27,6 +28,7 @@ const Article: React.FC<ArticleProps> = () => {
   const { t } = useTranslation();
 
   const { article } = useArticle(id);
+  useTitle(article?.title);
 
   const navigateToEdit = () => {
     navigate(`/edit/${id}`);

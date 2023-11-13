@@ -8,6 +8,7 @@ import Tabs, { Tab } from 'components/Tabs';
 import Feed from 'containers/Feed';
 import Icon from 'components/Icon';
 import Comments from 'components/Comments';
+import useTitle from 'hooks/useTitle';
 
 interface Props {}
 
@@ -20,6 +21,8 @@ const Profile: React.FC<Props> = () => {
     refreshInterval: 0,
     shouldRetryOnError: false,
   });
+
+  useTitle(data?.name || data?.username);
 
   useEffect(() => {
     setActiveTab(type || 'posts');
