@@ -7,6 +7,7 @@ import './style.scss';
 import Tabs, { Tab } from 'components/Tabs';
 import Feed from 'containers/Feed';
 import Icon from 'components/Icon';
+import Comments from 'components/Comments';
 
 interface Props {}
 
@@ -29,6 +30,11 @@ const Profile: React.FC<Props> = () => {
       id: 'posts',
       label: 'Posts',
       content: <Feed id={id} />,
+    },
+    {
+      id: 'comments',
+      label: 'Comments',
+      content: <Comments id={id!} type='user' presentation showDetail />,
     },
     {
       id: 'media',

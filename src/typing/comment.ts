@@ -1,3 +1,4 @@
+import { IArticle } from './article'
 import { IUser } from './user'
 
 export interface IComment {
@@ -8,6 +9,7 @@ export interface IComment {
   interlocutorId: number
   interlocutor: IUser
   createdAt: string
+  article: IArticle
 }
 
 export type IComments = Data<IComment>;
