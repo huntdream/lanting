@@ -5,12 +5,21 @@
     text-transform: capitalize;
   }
 
+  &-comment {
+    display: flex;
+    padding: 8px 0;
+  }
+
+  &-content {
+    padding-left: 6px;
+    flex: 1;
+  }
+
   &-reply {
     margin: 22px 0 36px;
 
     &-content {
       display: flex;
-      align-items: center;
     }
 
     &-action {
@@ -21,13 +30,6 @@
 
     &-info {
       display: inline-flex;
-
-      .lanting-date {
-        height: auto;
-      }
-    }
-
-    &-publish {
     }
   }
 
@@ -39,29 +41,42 @@
     outline: none;
     border-radius: 6px;
     flex: 1;
-  }
+    transition: height 200ms ease-in-out;
+    height: 40px;
 
-  &-comment {
-    padding: 8px 0;
+    &:focus,
+    &:not(:empty) {
+      height: 88px;
+    }
   }
 
   &-replier {
     display: flex;
     align-items: center;
+    height: 40px;
+
+    .lanting-user-name {
+      margin-left: 0;
+    }
 
     .lanting-date {
       margin-left: 8px;
       color: var(--secondary-text);
       font-size: 14px;
+      height: auto;
     }
   }
 
   &-text {
-    margin-left: 46px;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
   }
 
   &-article {
-    margin-left: 46px;
     border-radius: 4px;
     // background-color: #eee;
     padding: 4px 8px;

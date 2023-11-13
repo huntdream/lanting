@@ -10,6 +10,7 @@ import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import useRequest from 'hooks/useRequest';
 import { useNavigate } from 'react-router-dom';
+import Icon from 'components/Icon';
 
 interface Props {
   id: string;
@@ -87,22 +88,24 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
       <div className='lanting-comments-list'>
         {data?.data?.map(({ text, replier, createdAt, article }) => (
           <div className='lanting-comments-comment'>
-            <div className='lanting-comments-replier'>
-              <Avatar src={replier.avatar} round />
-              <div className='lanting-comments-replier-info'>
-                <User user={replier} hideAvatar />
-                <Date date={createdAt} fromNow icon={false} />
+            <Avatar src={replier.avatar} round />
+            <div className='lanting-comments-content'>
+              <div className='lanting-comments-replier'>
+                <div className='lanting-comments-replier-info'>
+                  <User user={replier} hideAvatar />
+                  <Date date={createdAt} fromNow icon={false} />
+                </div>
               </div>
+              <div className='lanting-comments-text'>{text}</div>
+              {showDetail && (
+                <div
+                  className='lanting-comments-article'
+                  onClick={() => handleViewArticle(article.id)}
+                >
+                  {article.title}
+                </div>
+              )}
             </div>
-            <div className='lanting-comments-text'>{text}</div>
-            {showDetail && (
-              <div
-                className='lanting-comments-article'
-                onClick={() => handleViewArticle(article.id)}
-              >
-                {article.title}
-              </div>
-            )}
           </div>
         ))}
       </div>
