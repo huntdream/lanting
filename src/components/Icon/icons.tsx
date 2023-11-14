@@ -53,6 +53,8 @@ import VolumeUp from 'assets/icons/volume_up.svg?react';
 import FormatColorFill from 'assets/icons/format_color_fill.svg?react';
 import InkHighlighter from 'assets/icons/format_ink_highlighter.svg?react';
 import Logout from 'assets/icons/logout.svg?react';
+import Chat from 'assets/icons/chat.svg?react';
+import Comment from 'assets/icons/comment.svg?react';
 
 const icons = {
   account_circle: AccountCircle,
@@ -110,6 +112,8 @@ const icons = {
   format_color_fill: FormatColorFill,
   format_ink_highlighter: InkHighlighter,
   logout: Logout,
+  chat: Chat,
+  comment: Comment,
 };
 
 export default icons;

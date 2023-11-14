@@ -60,7 +60,10 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
   return (
     <div className='lanting-comments'>
       {type !== 'user' && (
-        <div className='lanting-comments-header'>{t('comments.label')}</div>
+        <div className='lanting-comments-header'>
+          <Icon name='comment' />
+          {t('comments.label')}
+        </div>
       )}
       {user?.id && !presentation && (
         <div className='lanting-comments-reply'>

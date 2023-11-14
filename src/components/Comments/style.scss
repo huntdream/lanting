@@ -3,6 +3,12 @@
     font-size: 20px;
     font-weight: bold;
     text-transform: capitalize;
+    display: flex;
+    align-items: center;
+
+    .lanting-icon {
+      margin-right: 4px;
+    }
   }
 
   &-comment {
