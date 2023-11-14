@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import useRequest from 'hooks/useRequest';
 import { useNavigate } from 'react-router-dom';
 import Icon from 'components/Icon';
+import Prompt from 'components/Prompt';
+import useToast from 'components/Toast/useToast';
 
 interface Props {
   id: string;
@@ -28,6 +30,7 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
   const [fetcher] = useRequest();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [toast] = useToast();
 
   const handleViewArticle = (articleId: number) => {
     navigate(`/article/${articleId}`);
@@ -35,6 +38,21 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
 
   const handleReplyChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReplyText(e.target.value);
+  };
+
+  const handleDelete = (commentId: number) => {
+    const payload = {
+      ids: [commentId],
+    };
+
+    return fetcher
+      .delete('/comments', {
+        data: payload,
+      })
+      .then(() => {
+        toast('Comment deleted');
+        mutate(`/comments/${type}/${id}`);
+      });
   };
 
   const handleSubmit = () => {
@@ -89,28 +107,41 @@ const Comments: React.FC<Props> = ({ id, type, presentation, showDetail }) => {
         </div>
       )}
       <div className='lanting-comments-list'>
-        {data?.data?.map(({ text, replier, createdAt, article }) => (
-          <div className='lanting-comments-comment'>
-            <Avatar src={replier.avatar} round />
-            <div className='lanting-comments-content'>
-              <div className='lanting-comments-replier'>
-                <div className='lanting-comments-replier-info'>
-                  <User user={replier} hideAvatar />
-                  <Date date={createdAt} fromNow icon={false} />
+        {data?.data?.map(
+          ({ id, text, replier, createdAt, article, canDelete }) => (
+            <div className='lanting-comments-comment' key={id}>
+              <Avatar src={replier.avatar} round />
+              <div className='lanting-comments-content'>
+                <div className='lanting-comments-replier'>
+                  <div className='lanting-comments-replier-info'>
+                    <User user={replier} hideAvatar />
+                    <Date date={createdAt} fromNow icon={false} />
+                  </div>
+                  {canDelete && type !== 'user' && (
+                    <Prompt
+                      title={t('delete')}
+                      message={t('deleteMessage', {
+                        type: t('comments.comment'),
+                      })}
+                      onOk={() => handleDelete(id)}
+                    >
+                      <Icon name='delete' clickable />
+                    </Prompt>
+                  )}
                 </div>
+                <div className='lanting-comments-text'>{text}</div>
+                {showDetail && (
+                  <div
+                    className='lanting-comments-article'
+                    onClick={() => handleViewArticle(article.id)}
+                  >
+                    {article.title}
+                  </div>
+                )}
               </div>
-              <div className='lanting-comments-text'>{text}</div>
-              {showDetail && (
-                <div
-                  className='lanting-comments-article'
-                  onClick={() => handleViewArticle(article.id)}
-                >
-                  {article.title}
-                </div>
-              )}
             </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
     </div>
   );
