@@ -50,6 +50,7 @@ const Comments: React.FC<Props> = ({ id, type, canReply, showDetail }) => {
             key={comment.id}
             showDetail={showDetail}
             refresh={handleRefresh}
+            canReply={canReply}
           />
         ))}
       </div>

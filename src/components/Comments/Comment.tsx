@@ -16,10 +16,16 @@ import Button from 'components/Button';
 interface Props {
   comment: IComment;
   showDetail?: boolean;
+  canReply?: boolean;
   refresh: () => void;
 }
 
-const Comment: React.FC<Props> = ({ comment, showDetail, refresh }) => {
+const Comment: React.FC<Props> = ({
+  comment,
+  showDetail,
+  canReply,
+  refresh,
+}) => {
   const navigate = useNavigate();
   const [toast] = useToast();
   const [fetcher] = useRequest();
@@ -96,15 +102,22 @@ const Comment: React.FC<Props> = ({ comment, showDetail, refresh }) => {
           </div>
         )}
         <div className='lanting-comments-actions'>
-          <Button icon='reply' onClick={handleShowReply} variant='text'>
-            {t('comments.comment')}
-          </Button>
+          {canReply && (
+            <Button icon='reply' onClick={handleShowReply} variant='text'>
+              {t('comments.comment')}
+            </Button>
+          )}
         </div>
-        {showReply && (
+        {showReply && canReply && (
           <Reply to={comment} id={articleId} onSuccess={handleReplySuccess} />
         )}
         {comment.comments?.map((c) => (
-          <Comment refresh={refresh} comment={c} key={c.id} />
+          <Comment
+            refresh={refresh}
+            comment={c}
+            key={c.id}
+            canReply={canReply}
+          />
         ))}
       </div>
     </div>
