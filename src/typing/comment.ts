@@ -10,6 +10,7 @@ export interface IComment {
   interlocutor: IUser
   createdAt: string
   article: IArticle
+  canDelete: boolean
 }
 
 export type IComments = Data<IComment>;
