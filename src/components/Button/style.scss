@@ -6,13 +6,14 @@
   align-items: center;
   justify-content: center;
 
-  padding: 6px 8px;
+  padding: 6px 16px;
   height: 32px;
   line-height: 32px;
   border-radius: 4px;
   font-weight: 600;
   font-size: inherit;
   min-width: 78px;
+  text-transform: capitalize;
 
   transition: background 200ms;
 
@@ -46,7 +47,7 @@
 
   &-text {
     background-color: transparent;
-    color: var(--primary-text);
+    color: var(--secondary-text);
 
     &:hover {
       background-color: var(--hover-overlay);
@@ -54,8 +55,21 @@
   }
 
   &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    margin-left: -4px;
+  }
+
+  &-icononly {
     padding: 0;
     min-width: auto;
+    width: 32px;
+
+    .lanting-button-icon {
+      margin: 0;
+    }
   }
 
   &--disabled {
@@ -69,12 +83,6 @@
 
   &--wide {
     width: 100%;
-  }
-
-  &-hasicon {
-    .lanting-icon {
-      padding-left: 0;
-    }
   }
 
   &:active {

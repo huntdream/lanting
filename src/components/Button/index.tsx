@@ -2,6 +2,7 @@ import React, { CSSProperties, ButtonHTMLAttributes, forwardRef } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import Icon, { IconNames } from 'components/Icon';
+import icons from 'components/Icon/icons';
 
 type ButtonColor = 'primary' | 'secondary';
 
@@ -34,6 +35,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const iconOnly = icon && !children;
 
+    const SVGIcon = icon ? icons[icon] : undefined;
+
     return (
       <button
         tabIndex={0}
@@ -45,7 +48,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           `lanting-button-${variant}--${color}`,
           {
             'lanting-button--disabled': disabled,
-            'lanting-button-icon': iconOnly,
+            'lanting-button-icononly': iconOnly,
             'lanting-button--active': active,
             'lanting-button--wide': wide,
             'lanting-button-hasicon': icon && children,
@@ -55,7 +58,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         style={style}
         disabled={disabled}
       >
-        {icon && <Icon name={icon} />}
+        {SVGIcon && (
+          <div className='lanting-button-icon'>
+            <SVGIcon fill='currentColor' width={20} height={20} />
+          </div>
+        )}
         {children}
       </button>
     );
