@@ -5,6 +5,10 @@
 
   &-name {
     margin-left: 6px;
+
+    &--hl {
+      color: var(--anchor-color);
+    }
   }
 
   &:hover & {
