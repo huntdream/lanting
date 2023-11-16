@@ -37,7 +37,7 @@ const Profile: React.FC<Props> = () => {
     {
       id: 'comments',
       label: 'Comments',
-      content: <Comments id={id!} type='user' presentation showDetail />,
+      content: <Comments id={id!} type='user' showDetail />,
     },
     {
       id: 'media',

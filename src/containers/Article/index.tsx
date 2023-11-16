@@ -80,7 +80,7 @@ const Article: React.FC<ArticleProps> = () => {
       </div>
       {article && (
         <div className='lanting-article-comments'>
-          <Comments id={id} type='article' />
+          <Comments id={id} type='article' canReply />
         </div>
       )}
     </div>

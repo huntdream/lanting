@@ -17,7 +17,7 @@
     margin-bottom: 16px;
   }
 
-  &-content {
+  &-wrapper {
     padding-left: 6px;
     flex: 1;
   }
@@ -75,13 +75,28 @@
     }
   }
 
+  &-interlocutor {
+    display: flex;
+    align-items: center;
+    margin-right: 4px;
+
+    &::after {
+      content: ':';
+    }
+  }
+
   &-text {
+    display: flex;
   }
 
   &-actions {
     display: flex;
     align-items: center;
     margin-top: 16px;
+
+    .lanting-button {
+      font-size: 14px;
+    }
   }
 
   &-article {

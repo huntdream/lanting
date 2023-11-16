@@ -42,6 +42,7 @@
   "comments": {
     "label": "评论",
     "comment": "评论",
-    "placeholder": "回复"
+    "placeholder": "评论",
+    "replyTo": "回复"
   }
 }

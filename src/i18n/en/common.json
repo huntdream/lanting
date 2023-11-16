@@ -42,6 +42,7 @@
   "comments": {
     "label": "Comments",
     "comment": "comment",
-    "placeholder": "Reply"
+    "placeholder": "Comment",
+    "replyTo": "Reply to"
   }
 }
