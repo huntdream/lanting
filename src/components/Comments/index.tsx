@@ -38,6 +38,9 @@ const Comments: React.FC<Props> = ({ id, type, canReply, showDetail }) => {
         <div className='lanting-comments-header'>
           <Icon name='comment' />
           {t('comments.label')}
+          <span className='lanting-comments-header-total'>
+            {data?.data.length ? `(${data.total})` : null}
+          </span>
         </div>
       )}
       {user?.id && canReply && (
