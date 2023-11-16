@@ -55,6 +55,7 @@ import InkHighlighter from 'assets/icons/format_ink_highlighter.svg?react';
 import Logout from 'assets/icons/logout.svg?react';
 import Chat from 'assets/icons/chat.svg?react';
 import Comment from 'assets/icons/comment.svg?react';
+import Reply from 'assets/icons/reply.svg?react';
 
 const icons = {
   account_circle: AccountCircle,
@@ -114,6 +115,7 @@ const icons = {
   logout: Logout,
   chat: Chat,
   comment: Comment,
+  reply: Reply,
 };
 
 export default icons;
