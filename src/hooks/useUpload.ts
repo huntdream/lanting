@@ -25,7 +25,7 @@ const useUpload = () => {
       return Promise.resolve();
     }
 
-    return request('/helper/uploadToken', {
+    return request('/upload/uploadToken', {
       method: 'post',
     }).then((res: any) => {
       token.current = res.token;
