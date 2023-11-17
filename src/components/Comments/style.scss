@@ -55,6 +55,7 @@
     flex: 1;
     transition: height 200ms ease-in-out;
     height: 40px;
+    background-color: transparent;
 
     &:focus,
     &:not(:empty) {
