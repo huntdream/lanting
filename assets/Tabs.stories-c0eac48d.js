@@ -11,4 +11,4 @@ import{j as n,c as C}from"./index-111a7888.js";import{r as a}from"./index-76fb7b
     }]
   }
 }`,...(h=(T=s.parameters)==null?void 0:T.docs)==null?void 0:h.source}}};const q=["Primary"];export{s as Primary,q as __namedExportsOrder,k as default};
-//# sourceMappingURL=Tabs.stories-196778b2.js.map
+//# sourceMappingURL=Tabs.stories-c0eac48d.js.map
