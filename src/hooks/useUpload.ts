@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
 import useRequest from './useRequest';
+import config from 'config';
 
 export interface IFile {
   type: string;
@@ -43,7 +44,7 @@ const useUpload = () => {
 
           const name = file.name;
           const uid = createUID();
-          const key = `${dayjs().format("YYYYMMDD-HHmmss")}-${uid}-${name}`;
+          const key = `${name}-${dayjs().format("YYYYMMDD-HHmmss")}-${uid}`;
 
           formData.append('token', token.current);
           formData.append('file', file);
@@ -59,7 +60,7 @@ const useUpload = () => {
               const { key, ...info } = res;
 
               return {
-                url: `https://storage.maoyu.info/${key}`,
+                url: `${config.storage}/${key}`,
                 ...info,
               };
             })
