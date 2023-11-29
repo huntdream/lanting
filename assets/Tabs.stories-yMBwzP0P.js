@@ -11,4 +11,4 @@ import{j as n,c as C}from"./index-b9F5Aj1R.js";import{r as a}from"./index-4g5l5L
     }]
   }
 }`,...(y=(h=s.parameters)==null?void 0:h.docs)==null?void 0:y.source}}};const q=["Primary"];export{s as Primary,q as __namedExportsOrder,k as default};
-//# sourceMappingURL=Tabs.stories-QrQMpHCb.js.map
+//# sourceMappingURL=Tabs.stories-yMBwzP0P.js.map
