@@ -49,16 +49,13 @@ const Edit: React.FC<Props> = () => {
   };
 
   return (
-    <div className='lanting-profile-edit'>
+    <div className='lanting-profile-edit lanting-page'>
       <form onSubmit={handleSubmit((data) => handleSave(data))}>
         <FormItem label='Name' name='name' message={errors.name?.message}>
           <Input {...register('name')} />
         </FormItem>
         <FormItem label='Bio' name='bio'>
           <Input {...register('bio')} />
-        </FormItem>
-        <FormItem label='Email' name='email'>
-          <Input {...register('email')} />
         </FormItem>
         <Button type='submit' disabled={isSubmitting}>
           Save
