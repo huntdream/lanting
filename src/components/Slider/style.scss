@@ -1,0 +1,27 @@
+.lanting-slider {
+  display: flex;
+  align-items: center;
+  height: 8px;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.25);
+
+  &-track {
+    height: 8px;
+    background-color: #1877f2;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  &-handler {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    position: absolute;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, 0.25),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    background-color: #1877f2;
+  }
+}
