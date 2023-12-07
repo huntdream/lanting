@@ -175,9 +175,15 @@
   }
 
   .editor-heading-h2 {
+    font-size: 15px;
     font-weight: 700;
-    margin-top: 10px;
-    padding: 0;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .editor-heading-h3 {
+    font-size: 12px;
+    margin: 0;
     text-transform: uppercase;
   }
 
