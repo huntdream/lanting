@@ -1,13 +1,18 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import {
+  $INTERNAL_isPointSelection,
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
   LexicalEditor,
 } from 'lexical';
-import { $wrapNodes } from '@lexical/selection';
+import { $setBlocksType } from '@lexical/selection';
 import { $createCodeNode } from '@lexical/code';
-import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
+import {
+  $createHeadingNode,
+  $createQuoteNode,
+  HeadingTagType,
+} from '@lexical/rich-text';
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
@@ -83,20 +88,19 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
       editor.update(() => {
         const selection = $getSelection();
 
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createParagraphNode());
+        if ($INTERNAL_isPointSelection(selection)) {
+          $setBlocksType(selection, () => $createParagraphNode());
         }
       });
     }
   };
 
-  const formatHeading = (headingSize: any) => {
+  const formatHeading = (headingSize: HeadingTagType) => {
     if (blockType !== headingSize) {
       editor.update(() => {
         const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createHeadingNode(headingSize));
+        if ($INTERNAL_isPointSelection(selection)) {
+          $setBlocksType(selection, () => $createHeadingNode(headingSize));
         }
       });
     }
@@ -123,9 +127,8 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
     if (blockType !== 'quote') {
       editor.update(() => {
         const selection = $getSelection();
-
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createQuoteNode());
+        if ($INTERNAL_isPointSelection(selection)) {
+          $setBlocksType(selection, () => $createQuoteNode());
         }
       });
     }
@@ -134,17 +137,18 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
   const formatCode = () => {
     if (blockType !== 'code') {
       editor.update(() => {
-        const selection = $getSelection();
+        let selection = $getSelection();
 
-        if ($isRangeSelection(selection)) {
+        if ($INTERNAL_isPointSelection(selection)) {
           if (selection.isCollapsed()) {
-            $wrapNodes(selection, () => $createCodeNode());
+            $setBlocksType(selection, () => $createCodeNode());
           } else {
             const textContent = selection.getTextContent();
             const codeNode = $createCodeNode();
-            selection.removeText();
             selection.insertNodes([codeNode]);
-            selection.insertRawText(textContent);
+            selection = $getSelection();
+            if ($isRangeSelection(selection))
+              selection.insertRawText(textContent);
           }
         }
       });
