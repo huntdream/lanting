@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import cls from 'classnames';
-import { EditorState, LexicalEditor } from 'lexical';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
