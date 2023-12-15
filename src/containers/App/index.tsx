@@ -7,8 +7,6 @@ import Loading from 'components/Loading';
 import ThemeProvider from 'context/Theme';
 import AppProvider from 'context/App';
 import Toast from 'components/Toast';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import './style.scss';
 
@@ -27,8 +25,6 @@ function App() {
               </main>
             </div>
           </Toast>
-          <Analytics />
-          <SpeedInsights />
         </ErrorBoundary>
       </ThemeProvider>
     </AppProvider>
