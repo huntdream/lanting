@@ -11,4 +11,3 @@ import{j as n}from"./jsx-runtime-vNq4Oc-g.js";import{r as a}from"./index-4g5l5LR
     }]
   }
 }`,...(y=(h=s.parameters)==null?void 0:h.docs)==null?void 0:y.source}}};const L=["Primary"];export{s as Primary,L as __namedExportsOrder,q as default};
-//# sourceMappingURL=Tabs.stories-V4nOMVtg.js.map

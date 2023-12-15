@@ -4,4 +4,3 @@ import{I as t}from"./index-X43VlhMI.js";import"./jsx-runtime-vNq4Oc-g.js";import
     name: 'account_circle'
   }
 }`,...(a=(e=r.parameters)==null?void 0:e.docs)==null?void 0:a.source}}};const _=["Primary"];export{r as Primary,_ as __namedExportsOrder,d as default};
-//# sourceMappingURL=Icon.stories-gtFOxgJ5.js.map

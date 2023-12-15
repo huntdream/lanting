@@ -19,4 +19,3 @@ import{j as a}from"./jsx-runtime-vNq4Oc-g.js";import{c as d}from"./index-EtqCS5i
       </div>;
   }
 }`,...(c=(o=e.parameters)==null?void 0:o.docs)==null?void 0:c.source}}};const y=["Primary"];export{e as Primary,y as __namedExportsOrder,j as default};
-//# sourceMappingURL=Avatar.stories-vIRn1twX.js.map

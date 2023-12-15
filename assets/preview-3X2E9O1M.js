@@ -1,2 +1,1 @@
 import{j as o}from"./jsx-runtime-vNq4Oc-g.js";import{T as t}from"./index-VAAO3AqT.js";import"./index-4g5l5LRQ.js";import"./_commonjsHelpers-4gQjN7DL.js";import"./index-jmm5gWkb.js";import"./index-EtqCS5in.js";import"./index-X43VlhMI.js";import"./platform-DTidj1Fe.js";import"./icons-UAwrDR8W.js";import"./account_circle-CWE-8K_X.js";const l={parameters:{actions:{argTypesRegex:"^on[A-Z].*"},controls:{matchers:{color:/(background|color)$/i,date:/Date$/}}},decorators:[r=>o.jsx(t,{children:o.jsx(r,{})})]};export{l as default};
-//# sourceMappingURL=preview-3X2E9O1M.js.map
