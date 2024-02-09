@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import {
-  $INTERNAL_isPointSelection,
   $createParagraphNode,
   $getSelection,
   $isRangeSelection,
@@ -88,9 +87,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
       editor.update(() => {
         const selection = $getSelection();
 
-        if ($INTERNAL_isPointSelection(selection)) {
-          $setBlocksType(selection, () => $createParagraphNode());
-        }
+        $setBlocksType(selection, () => $createParagraphNode());
       });
     }
   };
@@ -99,9 +96,8 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
     if (blockType !== headingSize) {
       editor.update(() => {
         const selection = $getSelection();
-        if ($INTERNAL_isPointSelection(selection)) {
-          $setBlocksType(selection, () => $createHeadingNode(headingSize));
-        }
+
+        $setBlocksType(selection, () => $createHeadingNode(headingSize));
       });
     }
   };
@@ -127,9 +123,8 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
     if (blockType !== 'quote') {
       editor.update(() => {
         const selection = $getSelection();
-        if ($INTERNAL_isPointSelection(selection)) {
-          $setBlocksType(selection, () => $createQuoteNode());
-        }
+
+        $setBlocksType(selection, () => $createQuoteNode());
       });
     }
   };
@@ -139,7 +134,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
       editor.update(() => {
         let selection = $getSelection();
 
-        if ($INTERNAL_isPointSelection(selection)) {
+        if (selection !== null) {
           if (selection.isCollapsed()) {
             $setBlocksType(selection, () => $createCodeNode());
           } else {
