@@ -9,11 +9,11 @@ const meta: Meta<typeof Avatar> = {
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 
-const src = 'https://storage.maoyu.info/109895_chggwv.webp';
+const src = 'https://storage.maoyu.space/109895_chggwv.webp';
 
 export const Primary: Story = {
   args: {
-    src: 'https://storage.maoyu.info',
+    src: 'https://storage.maoyu.space',
   },
   render: () => {
     return (
