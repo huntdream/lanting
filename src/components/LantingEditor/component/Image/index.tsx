@@ -131,7 +131,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
         alt={alt}
         onClick={handleImageClick}
       />
-      {isFocused && (
+      {isFocused && editor.isEditable() && (
         <Resizer
           onResizeEnd={onResizeEnd}
           onResizeStart={onResizeStart}
