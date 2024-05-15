@@ -6,7 +6,7 @@ import {
   $getSelection,
   CLICK_COMMAND,
   COMMAND_PRIORITY_LOW,
-  GridSelection,
+  BaseSelection,
   LexicalEditor,
   NodeSelection,
   RangeSelection,
@@ -36,7 +36,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
 
   const [isResizing, setIsResizing] = useState(false);
   const [, setSelection] = useState<
-    RangeSelection | NodeSelection | GridSelection | null
+    RangeSelection | NodeSelection | BaseSelection | null
   >(null);
   const [editor] = useLexicalComposerContext();
 
@@ -62,7 +62,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
           activeEditorRef.current = activeEditor;
           return false;
         },
-        COMMAND_PRIORITY_LOW
+        COMMAND_PRIORITY_LOW,
       ),
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
@@ -84,8 +84,8 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
 
           return false;
         },
-        COMMAND_PRIORITY_LOW
-      )
+        COMMAND_PRIORITY_LOW,
+      ),
     );
   }, [clearSelection, editor, isResizing, isSelected, nodeKey, setSelected]);
 
