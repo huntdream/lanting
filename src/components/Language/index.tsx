@@ -13,22 +13,22 @@ const Language: React.FC<Props> = () => {
   const { i18n, t } = useTranslation();
   const [toast] = useToast();
 
+  const isZH = i18n.language.includes('zh');
+
   const handleLanguageChange = () => {
-    i18n.changeLanguage(i18n.language.includes('zh') ? 'en-US' : 'zh-CN');
+    i18n.changeLanguage(isZH ? 'en-US' : 'zh-CN');
     toast(t('greeting'), { id: 'lang' });
   };
 
   return (
     <Tooltip
-      title={t(
-        `switchLang.${i18n.language.includes('zh') ? 'en-US' : 'zh-CN'}`
-      )}
+      title={t(`switchLang.${isZH ? 'en-US' : 'zh-CN'}`)}
       placement='bottom'
     >
       <Button
         variant='text'
         onClick={handleLanguageChange}
-        icon={i18n.language as Lang}
+        icon={isZH ? 'zh-CN' : 'en-US'}
       />
     </Tooltip>
   );
