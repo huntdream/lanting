@@ -19,8 +19,8 @@
     display: inline;
     cursor: pointer;
     margin: 0;
-    @include underline;
     line-height: 1;
+    @include underline;
   }
 
   &-content {
