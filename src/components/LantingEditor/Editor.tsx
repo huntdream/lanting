@@ -15,7 +15,6 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import Toolbar from './Toolbar';
 import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 import ImagesPlugin from './plugins/ImagesPlugin';
@@ -23,6 +22,7 @@ import { CollaborationPlugin } from '@lexical/react/LexicalCollaborationPlugin';
 import GalleryPlugin from './plugins/GalleryPlugin';
 import DragDropPaste from './plugins/DragDropPastePlugin';
 import AudioPlugin from './plugins/AudioPlugin';
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 
 import * as Y from 'yjs';
 import { WebsocketProvider } from 'y-websocket';
@@ -87,7 +87,7 @@ const Editor: React.FC<EditorProps> = ({
       // @ts-ignore
       return provider;
     },
-    [id]
+    [id],
   );
 
   return (
