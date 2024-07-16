@@ -30,11 +30,6 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    reset();
-    setErrorMsg('');
-  }, [isLogin]);
-
   const {
     register,
     handleSubmit,
@@ -144,6 +139,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
             replace
             style={{ textDecoration: 'none' }}
             className='lanting-login-link'
+            onClick={() => reset()}
           >
             {isLogin ? t('register') : t('login')}
           </Link>
