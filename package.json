@@ -9,6 +9,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "type": "module",
   "dependencies": {
     "@excalidraw/excalidraw": "^0.17.6",
     "@lexical/react": "^0.16.1",
