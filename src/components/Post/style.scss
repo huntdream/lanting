@@ -1,10 +1,7 @@
-@import 'src/styles/mixin/underline.scss';
+@use '../../styles/mixin.scss';
 
 .lanting-post {
   padding: 1rem 0;
-
-  &-header {
-  }
 
   &-anchor {
     text-decoration: none;
@@ -20,7 +17,7 @@
     cursor: pointer;
     margin: 0;
     line-height: 1;
-    @include underline;
+    @include mixin.underline;
   }
 
   &-content {
