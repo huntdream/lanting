@@ -8,7 +8,7 @@ const TOKEN_WHITELIST = ['/auth/login', '/auth/signup'];
 
 const useRequest = () => {
   const navigate = useNavigate();
-  const [toast] = useToast()
+  const [toast] = useToast();
 
   const request = useMemo(() => {
     const instance = axios.create({
@@ -18,10 +18,14 @@ const useRequest = () => {
     instance.interceptors.request.use((config) => {
       const token = localStorage.getItem('lanting-token');
 
-      if (token && config.url && !TOKEN_WHITELIST.includes(config.url)) {
+      if (
+        token &&
+        config.url &&
+        !TOKEN_WHITELIST.includes(config.url) &&
+        !config.url.startsWith('http')
+      ) {
         config.headers!.Authorization = 'Bearer ' + token;
       }
-
       return config;
     });
 
@@ -30,10 +34,10 @@ const useRequest = () => {
         return response.data;
       },
       (error) => {
-        toast(error?.response?.data?.message || error?.message)
+        toast(error?.response?.data?.message || error?.message);
 
         if (error?.response?.status === 401) {
-          localStorage.setItem('lanting-token', '')
+          localStorage.setItem('lanting-token', '');
           navigate('/login');
         }
 
