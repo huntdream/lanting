@@ -18,7 +18,7 @@ interface Props {
 }
 
 const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
-  const [fileInfo, setFileInfo] = useState<IFile>();
+  const [fileInfo, setFileInfo] = useState<IFile>(file);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<AxiosProgressEvent>();
   const [error, setError] = useState<string>('');

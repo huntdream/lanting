@@ -3,13 +3,12 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { IFile } from '.';
 import Audio from './Audio';
 import './style.scss';
+import { FileType, getFileType } from 'utils/file';
 
 interface PreviewProps {
   file: IFile | File;
   onRemove: () => void;
 }
-
-export type FileType = 'image' | 'audio' | 'video' | string;
 
 const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
   const [url, setUrl] = useState<string | undefined>();
@@ -17,7 +16,10 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
 
   useEffect(() => {
     if (file instanceof File) {
-      if (file.type.startsWith('image/')) {
+      const fileType = file.type.split('/')[0] as FileType;
+      setType(fileType);
+
+      if (fileType === 'image') {
         const reader = new FileReader();
 
         reader.readAsDataURL(file);
@@ -25,12 +27,9 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
         reader.onload = (event: ProgressEvent<FileReader>) => {
           setUrl(event.target?.result?.toString());
         };
+      } else if (fileType === 'video' || fileType === 'audio') {
+        setUrl(URL.createObjectURL(file));
       }
-    } else {
-      let fileType = file.type.split('/').shift() as FileType;
-
-      setUrl(file.url);
-      setType(fileType);
     }
   }, [file]);
 
@@ -38,7 +37,7 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
     if (type === 'image') {
       return (
         <img
-          src={`${url}?imageView2/2/w/100`}
+          src={url}
           alt={file.name}
           className='lanting-upload-preview-image'
         />
