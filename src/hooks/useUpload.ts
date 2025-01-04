@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { useCallback, useRef } from 'react';
 import createUID from 'utils/createUID';
 import useRequest from './useRequest';
-import config from 'config';
+import { splitFilename } from 'utils/file';
 
 export interface IFile {
   type: string;
@@ -17,63 +17,61 @@ export interface IFile {
 }
 
 const useUpload = () => {
-  const token = useRef<string>('');
-  const [toast] = useToast()
+  const [toast] = useToast();
   const [request] = useRequest();
 
-  const getToken = () => {
-    if (token.current) {
-      return Promise.resolve();
-    }
+  const getPresignedURL = (filename: string) => {
+    const uid = createUID();
+    const { name, extension } = splitFilename(filename);
 
-    return request('/upload/uploadToken', {
+    const key = `${name}-${dayjs().format(
+      'YYYYMMDDHHmmss'
+    )}-${uid}.${extension}`;
+
+    return request('/upload/presignedURL', {
       method: 'post',
-    }).then((res: any) => {
-      token.current = res.token;
-    }).catch(e => {
-      toast(e.message)
-      throw new Error(e.message)
-    });
+      data: { name: key },
+    })
+      .then((res: any) => {
+        return res.url;
+      })
+      .catch((e) => {
+        const message = e?.message || '上传失败';
+        toast(message);
+        throw new Error(message);
+      });
   };
 
   const upload = useCallback(
     (file: File, onUploadProgress?: (progress: AxiosProgressEvent) => void) => {
-      return getToken().then(() => {
-        if (file && token.current) {
-          const formData = new FormData();
-
-          const name = file.name;
-          const uid = createUID();
-          const key = `${name}-${dayjs().format("YYYYMMDD-HHmmss")}-${uid}`;
-
-          formData.append('token', token.current);
-          formData.append('file', file);
-          formData.append('key', key);
-          formData.append('fname', name);
-
-          return request('https://upload.qiniup.com/', {
-            method: 'post',
-            data: formData,
+      return getPresignedURL(file.name).then((url) => {
+        if (file && url) {
+          return request(url, {
+            method: 'put',
+            data: file,
+            headers: {
+              'Content-Type': file.type,
+              'Content-Disposition': `attachment; filename="${file.name}"`,
+            },
             onUploadProgress,
           })
-            .then((res: any) => {
-              const { key, ...info } = res;
-
+            .then(() => {
               return {
-                url: `${config.storage}/${key}`,
-                ...info,
+                ...file,
+                url: url.split('?')[0],
               };
             })
             .catch((error) => {
-              toast(error.error)
-              throw new Error(error.error)
+              const message = error?.error || '上传失败';
+              toast(message);
+              throw new Error(message);
             });
         }
 
         return Promise.reject();
-      })
+      });
     },
-    [token]
+    []
   );
 
   return [upload];
