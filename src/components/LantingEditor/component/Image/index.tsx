@@ -62,7 +62,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
           activeEditorRef.current = activeEditor;
           return false;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
@@ -84,8 +84,8 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
 
           return false;
         },
-        COMMAND_PRIORITY_LOW,
-      ),
+        COMMAND_PRIORITY_LOW
+      )
     );
   }, [clearSelection, editor, isResizing, isSelected, nodeKey, setSelected]);
 
@@ -127,7 +127,7 @@ const Image: FC<Props> = ({ src, alt, width, height, maxWidth, nodeKey }) => {
         className={cls('lanting-editor-image', {
           'lanting-editor-image--focused': isFocused,
         })}
-        src={`${src}?imageView2/2/w/1000`}
+        src={src}
         alt={alt}
         onClick={handleImageClick}
       />

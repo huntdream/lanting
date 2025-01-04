@@ -21,11 +21,7 @@ const Avatar: React.FC<Props> = ({ src, size = 'normal', round, onClick }) => {
       onClick={onClick}
     >
       {src ? (
-        <img
-          src={`${src}?imageView2/2/w/100`}
-          alt='Avatar'
-          className='lanting-avatar-img'
-        />
+        <img src={src} alt='Avatar' className='lanting-avatar-img' />
       ) : (
         <AccountCircle className='lanting-avatar-account' />
       )}
