@@ -78,7 +78,7 @@ const Edit: React.FC<Props> = () => {
         <div className='avatar'>
           <Upload
             files={avatar}
-            accept='image/jpg,png,jpeg'
+            accept='image/jpg,image/jpeg,image/png'
             onChange={handleAvatarChange}
             round
           />
