@@ -40,19 +40,11 @@ const Preview: React.FC<PreviewProps> = ({ file, round, onRemove }) => {
 
   const preview = useMemo(() => {
     if (type === 'image') {
-      return (
-        <img
-          src={url}
-          alt={file.name}
-          className='lanting-upload-preview-image'
-        />
-      );
+      return <img src={url} alt={file.name} className='image' />;
     }
 
     if (type === 'video') {
-      return (
-        <video src={url} className='lanting-upload-preview-video' controls />
-      );
+      return <video src={url} className='video' controls />;
     }
 
     if (type === 'audio') {
