@@ -1,0 +1,19 @@
+.lanting-textarea {
+  border: 1px solid #dfe1e5;
+  outline: none;
+  border-radius: 3px;
+  padding: 6px;
+  color: var(--primary-text);
+  transition: border-color 200ms;
+  background: none;
+  font-size: inherit;
+
+  &:hover,
+  &:focus {
+    border-color: #1771e6;
+  }
+
+  &--borderless {
+    border: none;
+  }
+}
