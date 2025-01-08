@@ -2,7 +2,26 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-bottom: 24px;
+
+  .label {
+    color: var(--primary-text);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 32px;
+
+    &::after {
+      content: ':';
+    }
+  }
+
+  &--horizontal {
+    flex-direction: row;
+
+    .label {
+      margin-right: 16px;
+      width: 120px;
+    }
+  }
 
   &--error {
     input {
@@ -10,21 +29,25 @@
     }
   }
 
-  &-label {
-    color: var(--primary-text);
-    margin-bottom: 8px;
-    font-size: 16px;
-  }
+  .wrapper {
+    position: relative;
+    margin-bottom: 16px;
+    padding-bottom: 24px;
 
-  &-child {
-    input {
-      min-width: 180px;
+    .formitem {
+      min-height: 32px;
+      line-height: 32px;
+
+      input,
+      textarea {
+        min-width: 180px;
+      }
     }
-  }
 
-  .lanting-text--error {
-    position: absolute;
-    left: 0;
-    bottom: 6px;
+    .message {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
   }
 }

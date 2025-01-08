@@ -8,20 +8,30 @@ interface Props {
   name?: string;
   message?: string;
   children?: ReactNode;
+  layout?: 'horizontal' | 'vertical';
 }
 
-const FormItem: React.FC<Props> = ({ children, name, label, message }) => {
+const FormItem: React.FC<Props> = ({
+  children,
+  name,
+  label,
+  layout,
+  message,
+}) => {
   return (
     <div
       className={cls('lanting-formitem', {
         'lanting-formitem--error': message,
+        'lanting-formitem--horizontal': layout === 'horizontal',
       })}
     >
-      <label htmlFor={name} className='lanting-formitem-label'>
+      <label htmlFor={name} className='label'>
         {label}
       </label>
-      <div className='lanting-formitem-child'>{children}</div>
-      <Text.Error>{message}</Text.Error>
+      <div className='wrapper'>
+        <div className='formitem'>{children}</div>
+        <Text.Error className='message'>{message}</Text.Error>
+      </div>
     </div>
   );
 };
