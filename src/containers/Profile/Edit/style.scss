@@ -1,4 +1,33 @@
 .lanting-profile-edit {
-  max-width: 48em;
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
+  .form {
+    max-width: 100%;
+  }
+
+  .avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    flex-direction: column;
+
+    .username {
+      font-size: 24px;
+      font-weight: 500;
+      margin-top: 16px;
+    }
+  }
+
+  .save {
+    display: flex;
+    justify-content: center;
+  }
+
+  .lanting-input,
+  .lanting-textarea {
+    width: 300px;
+  }
 }
