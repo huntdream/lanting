@@ -1,12 +1,12 @@
 import Button from 'components/Button';
 import React, { useEffect, useMemo, useState } from 'react';
-import { IFile } from '.';
 import Audio from './Audio';
 import './style.scss';
 import { FileType, getFileType } from 'utils/file';
+import { IFile } from 'hooks/useUpload';
 
 interface PreviewProps {
-  file: IFile | File;
+  file: IFile;
   onRemove: () => void;
 }
 
@@ -15,7 +15,7 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
   const [type, setType] = useState<FileType>();
 
   useEffect(() => {
-    if (file instanceof File) {
+    if (file.type && file instanceof File) {
       const fileType = file.type.split('/')[0] as FileType;
       setType(fileType);
 
@@ -30,6 +30,9 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
       } else if (fileType === 'video' || fileType === 'audio') {
         setUrl(URL.createObjectURL(file));
       }
+    } else if (file.url) {
+      setType(getFileType(file.name || file.url));
+      setUrl(file.url);
     }
   }, [file]);
 

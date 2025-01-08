@@ -8,6 +8,8 @@ export const splitFilename = (filename: string) => {
 };
 
 export const getFileType = (name: string): FileType => {
+  if (!name) return 'unknown';
+
   const extension = name.split('.').pop()?.toLowerCase();
 
   switch (extension) {
@@ -15,6 +17,8 @@ export const getFileType = (name: string): FileType => {
     case 'jpeg':
     case 'png':
     case 'gif':
+    case 'svg':
+    case 'webp':
       return 'image';
     case 'mp4':
     case 'avi':
@@ -23,8 +27,18 @@ export const getFileType = (name: string): FileType => {
     case 'mp3':
     case 'wav':
     case 'ogg':
+    case 'flac':
       return 'audio';
     default:
       return 'unknown';
   }
+};
+
+export const imageUrlToFile = async (url: string) => {
+  const fileName = url.split('/').pop() || 'file';
+  const response = await fetch(url);
+  const blob = await response.blob();
+
+  const file = new File([blob], fileName, { type: blob.type });
+  return file;
 };

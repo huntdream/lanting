@@ -1,14 +1,14 @@
 import { AxiosProgressEvent } from 'axios';
 import Loading from 'components/Loading';
 import React, { useEffect, useRef, useState } from 'react';
-import { IFile } from '.';
 import Preview from './Preview';
 import './style.scss';
 import Icon from 'components/Icon';
 import Text from 'components/Text';
+import { IFile } from 'hooks/useUpload';
 
 interface Props {
-  file: File;
+  file: IFile;
   upload: (
     file: File,
     onUploadProgress?: (progress: AxiosProgressEvent) => void
@@ -51,7 +51,7 @@ const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
   };
 
   useEffect(() => {
-    if (isUploaded.current) return;
+    if (isUploaded.current || file.url) return;
     setError('');
 
     handleUpload();

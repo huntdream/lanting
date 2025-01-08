@@ -1,6 +1,6 @@
 import cls from 'classnames';
 import Icon from 'components/Icon';
-import useUpload from 'hooks/useUpload';
+import useUpload, { IFile } from 'hooks/useUpload';
 import React, {
   ChangeEvent,
   DragEvent,
@@ -11,20 +11,10 @@ import React, {
 import FileUpload from './FileUpload';
 import './style.scss';
 
-export interface IFile {
-  type: string;
-  size: number;
-  key?: string;
-  name: string;
-  url?: string;
-  width?: number;
-  height?: number;
-}
-
 interface UploadProps {
   accept?: string;
   multiple?: boolean;
-  files?: IFile[];
+  files?: Partial<IFile>[];
   children?: ReactNode;
   onChange?: (files: IFile[]) => void;
 }
@@ -32,15 +22,14 @@ interface UploadProps {
 const Upload: React.FC<UploadProps> = ({
   accept,
   multiple,
-  files,
+  files = [],
   children,
   onChange,
 }) => {
   const [upload] = useUpload();
   const ref = useRef<HTMLInputElement>(null);
 
-  const [fileList, setFileList] = useState<File[]>([]);
-  const [fileInfoList, setFileInfoList] = useState<IFile[]>([]);
+  const [fileList, setFileList] = useState<IFile[]>(files as IFile[]);
   const [isDragOver, setIsDragOver] = useState(false);
 
   const updateFileList = (files: FileList) => {
@@ -62,12 +51,10 @@ const Upload: React.FC<UploadProps> = ({
   };
 
   const handleFileChange = (file: IFile, index: number) => {
-    setFileInfoList((list) => {
+    setFileList((list) => {
       const newFiles = [...list];
 
       newFiles[index] = file;
-
-      setFileInfoList(newFiles);
 
       if (onChange) {
         onChange(newFiles);
@@ -81,14 +68,12 @@ const Upload: React.FC<UploadProps> = ({
     const newFiles = [...fileList];
     newFiles.splice(index, 1);
 
-    const newFileInfoList = [...fileInfoList];
     newFiles.splice(index, 1);
 
     setFileList(newFiles);
-    setFileInfoList(newFileInfoList);
 
     if (onChange) {
-      onChange(newFileInfoList);
+      onChange(newFiles);
     }
   };
 

@@ -6,14 +6,11 @@ import createUID from 'utils/createUID';
 import useRequest from './useRequest';
 import { splitFilename } from 'utils/file';
 
-export interface IFile {
-  type: string;
-  size: string;
-  key: string;
-  name: string;
-  url: string;
-  width: number;
-  height: number;
+export interface IFile extends File {
+  key?: string;
+  url?: string;
+  width?: number;
+  height?: number;
 }
 
 const useUpload = () => {
