@@ -13,11 +13,18 @@ interface Props {
     file: File,
     onUploadProgress?: (progress: AxiosProgressEvent) => void
   ) => Promise<any>;
+  round?: boolean;
   onChange: (file: IFile) => void;
   onRemove: () => void;
 }
 
-const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
+const FileUpload: React.FC<Props> = ({
+  file,
+  upload,
+  round,
+  onChange,
+  onRemove,
+}) => {
   const [fileInfo, setFileInfo] = useState<IFile>(file);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState<AxiosProgressEvent>();
@@ -60,7 +67,9 @@ const FileUpload: React.FC<Props> = ({ file, upload, onChange, onRemove }) => {
   return (
     <Loading loading={loading}>
       <div className='lanting-upload-file'>
-        {fileInfo && <Preview file={fileInfo} onRemove={onRemove} />}
+        {fileInfo && (
+          <Preview file={fileInfo} round={round} onRemove={onRemove} />
+        )}
         {error && (
           <div className='lanting-upload-error'>
             <Icon name='refresh' onClick={handleUpload} />

@@ -16,6 +16,7 @@ interface UploadProps {
   multiple?: boolean;
   files?: Partial<IFile>[];
   children?: ReactNode;
+  round?: boolean;
   onChange?: (files: IFile[]) => void;
 }
 
@@ -23,6 +24,7 @@ const Upload: React.FC<UploadProps> = ({
   accept,
   multiple,
   files = [],
+  round,
   children,
   onChange,
 }) => {
@@ -119,6 +121,7 @@ const Upload: React.FC<UploadProps> = ({
           file={file}
           key={index}
           upload={upload}
+          round={round}
           onRemove={() => removeFile(index)}
           onChange={(fileInfo) => handleFileChange(fileInfo, index)}
         />
@@ -151,10 +154,10 @@ const Upload: React.FC<UploadProps> = ({
             <div
               className={cls('lanting-upload-placeholder', {
                 'lanting-upload-placeholder--over': isDragOver,
+                'lanting-upload-placeholder--round': round,
               })}
             >
               <Icon name='file_upload' />
-              <span>Upload</span>
             </div>
           )}
         </div>

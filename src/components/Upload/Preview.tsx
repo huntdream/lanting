@@ -1,5 +1,6 @@
 import Button from 'components/Button';
 import React, { useEffect, useMemo, useState } from 'react';
+import cls from 'classnames';
 import Audio from './Audio';
 import './style.scss';
 import { FileType, getFileType } from 'utils/file';
@@ -7,10 +8,11 @@ import { IFile } from 'hooks/useUpload';
 
 interface PreviewProps {
   file: IFile;
+  round?: boolean;
   onRemove: () => void;
 }
 
-const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
+const Preview: React.FC<PreviewProps> = ({ file, round, onRemove }) => {
   const [url, setUrl] = useState<string | undefined>();
   const [type, setType] = useState<FileType>();
 
@@ -59,7 +61,13 @@ const Preview: React.FC<PreviewProps> = ({ file, onRemove }) => {
   }, [file.name, type, url]);
 
   return url ? (
-    <div className='lanting-upload-preview' key={url}>
+    <div
+      className={cls(
+        'lanting-upload-preview',
+        round && 'lanting-upload-preview--round'
+      )}
+      key={url}
+    >
       {preview}
       {onRemove && (
         <Button
