@@ -2,7 +2,6 @@ import React, { ReactNode, MouseEvent } from 'react';
 import cls from 'classnames';
 import './style.scss';
 import { createPortal } from 'react-dom';
-import Icon from 'components/Icon';
 import Button from 'components/Button';
 import useScrollLock from 'hooks/useScrollLock';
 
@@ -31,7 +30,7 @@ const Modal: React.FC<ModalProps> = ({
     ? createPortal(
         <div className='lanting-modal'>
           <div className='lanting-modal-mask'></div>
-          <div className='lanting-modal-wrapper' onClick={onClose}>
+          <div className='lanting-modal-wrapper'>
             <div className='lanting-modal-inner'>
               <div className='lanting-modal-main'>
                 <div
