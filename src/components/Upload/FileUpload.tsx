@@ -6,15 +6,14 @@ import './style.scss';
 import Icon from 'components/Icon';
 import Text from 'components/Text';
 import { IFile } from 'hooks/useUpload';
+import { IProgress } from '.';
 
 interface Props {
   file: IFile;
-  upload: (
-    file: File,
-    onUploadProgress?: (progress: AxiosProgressEvent) => void
-  ) => Promise<any>;
+  upload: () => Promise<any>;
   round?: boolean;
-  onChange: (file: IFile) => void;
+  error?: string;
+  progress?: IProgress;
   onRemove: () => void;
 }
 
@@ -22,54 +21,18 @@ const FileUpload: React.FC<Props> = ({
   file,
   upload,
   round,
-  onChange,
+  error,
+  progress,
   onRemove,
 }) => {
-  const [fileInfo, setFileInfo] = useState<IFile>(file);
-  const [loading, setLoading] = useState(false);
-  const [progress, setProgress] = useState<AxiosProgressEvent>();
-  const [error, setError] = useState<string>('');
-  const isUploaded = useRef(false);
-
-  const handleProgress = (progress: AxiosProgressEvent) => {
-    setProgress(progress);
-  };
-
   const handleUpload = () => {
-    setLoading(true);
-
-    upload(file, handleProgress)
-      .then((uploadedFile) => {
-        if (uploadedFile) {
-          isUploaded.current = true;
-          setFileInfo(uploadedFile);
-
-          if (onChange) {
-            onChange(uploadedFile);
-          }
-        }
-
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setError(err.message);
-      });
+    upload();
   };
-
-  useEffect(() => {
-    if (isUploaded.current || file.url) return;
-    setError('');
-
-    handleUpload();
-  }, [file, upload]);
 
   return (
-    <Loading loading={loading}>
+    <Loading loading={progress?.loading}>
       <div className='lanting-upload-file'>
-        {fileInfo && (
-          <Preview file={fileInfo} round={round} onRemove={onRemove} />
-        )}
+        {file && <Preview file={file} round={round} onRemove={onRemove} />}
         {error && (
           <div className='lanting-upload-error'>
             <Icon name='refresh' onClick={handleUpload} />
@@ -78,7 +41,7 @@ const FileUpload: React.FC<Props> = ({
             </Text.Error>
           </div>
         )}
-        {loading && (
+        {progress?.loading && (
           <div className='lanting-upload-file-progress'>
             {Math.floor((progress?.progress || 0) * 100)}%
           </div>
