@@ -29,6 +29,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'contained',
       color = 'primary',
       wide,
+      type = 'button',
       ...props
     },
     ref
@@ -40,6 +41,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         tabIndex={0}
+        type={type}
         {...props}
         ref={ref}
         className={cls(
