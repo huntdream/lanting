@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import Input from 'components/Input';
 import { useForm } from 'react-hook-form';
 import { IUser } from 'typing/user';
@@ -13,14 +13,19 @@ import { t } from 'i18next';
 import Upload from 'components/Upload';
 import { IFile } from 'hooks/useUpload';
 import Textarea from 'components/Textarea';
+import Avatar from 'components/Avatar';
+import Modal from 'components/Modal';
+import Cropper from 'components/Cropper';
 
 interface Props {}
 
 const Edit: React.FC<Props> = () => {
   const { data: user, mutate } = useSWR('/user/me', {
-    revalidateOnFocus: true,
+    revalidateOnFocus: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState<string>('');
   const [fetcher] = useRequest();
   const [toast] = useToast();
   const navigate = useNavigate();
@@ -29,6 +34,7 @@ const Edit: React.FC<Props> = () => {
     register,
     reset,
     setValue,
+    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<IUser>({
@@ -39,7 +45,7 @@ const Edit: React.FC<Props> = () => {
     reset(user);
   }, [user]);
 
-  const avatar = user?.avatar ? [{ url: user?.avatar }] : [];
+  const avatar = getValues('avatar');
 
   const handleSave = (data: IUser) => {
     setIsSubmitting(true);
@@ -54,7 +60,7 @@ const Edit: React.FC<Props> = () => {
       .then((newUser) => {
         toast('Profile saved!');
         setIsSubmitting(false);
-        mutate(newUser);
+        mutate('/user/me', newUser);
         navigate(`/profile/${newUser.id}`);
       })
       .catch((err) => {
@@ -65,8 +71,17 @@ const Edit: React.FC<Props> = () => {
 
   const handleAvatarChange = (files: IFile[]) => {
     const file = files[0];
+    if (!file) return;
 
-    setValue('avatar', file?.url ?? '');
+    setImage(file?.url || '');
+    setVisible(true);
+  };
+
+  const handleCrop = (file: IFile) => {
+    if (!file) return;
+
+    setValue('avatar', file.url || '');
+    setVisible(false);
   };
 
   return (
@@ -75,13 +90,14 @@ const Edit: React.FC<Props> = () => {
         className='form'
         onSubmit={handleSubmit((data) => handleSave(data))}
       >
-        <div className='avatar'>
-          <Upload
-            files={avatar}
-            accept='image/jpg,image/jpeg,image/png'
-            onChange={handleAvatarChange}
-            round
-          />
+        <div className='header'>
+          <div className='avatar'>
+            <Avatar src={avatar} size={100} round />
+            <Upload round showList={false} onChange={handleAvatarChange}>
+              <Button icon='edit' color='secondary'></Button>
+            </Upload>
+          </div>
+
           <div className='username'>{user?.username}</div>
         </div>
 
@@ -101,6 +117,9 @@ const Edit: React.FC<Props> = () => {
           </Button>
         </div>
       </form>
+      <Modal visible={visible} onClose={() => setVisible(false)}>
+        <Cropper image={image} onCrop={handleCrop} />
+      </Modal>
     </div>
   );
 };

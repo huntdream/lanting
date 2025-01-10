@@ -60,7 +60,7 @@ const Profile: React.FC<Props> = () => {
     <div className='lanting-profile'>
       <div className='lanting-profile-header'>
         <div className='lanting-profile-user'>
-          <Avatar src={data?.avatar} round size='large' />
+          <Avatar src={data?.avatar} round size={100} />
         </div>
         <div className='lanting-profile-name'>
           {data?.name || data?.username}
