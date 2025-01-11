@@ -68,7 +68,8 @@ const Reply: React.FC<Props> = ({ id, to, onSuccess }) => {
         <Button
           color='primary'
           className='lanting-comments-reply-publish'
-          disabled={!replyText || loading}
+          disabled={!replyText}
+          loading={loading}
           onClick={handleSubmit}
         >
           {t('article.publish')}
