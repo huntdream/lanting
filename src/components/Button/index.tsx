@@ -3,6 +3,8 @@ import cls from 'classnames';
 import './style.scss';
 import Icon, { IconNames } from 'components/Icon';
 import icons from 'components/Icon/icons';
+import Loading from 'components/Loading';
+import Spin from 'components/Loading/Spin';
 
 type ButtonColor = 'primary' | 'secondary';
 
@@ -15,6 +17,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconNames;
   variant?: 'contained' | 'text';
   wide?: boolean;
+  loading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -30,6 +33,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color = 'primary',
       wide,
       type = 'button',
+      loading = false,
       ...props
     },
     ref
@@ -49,23 +53,30 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           `lanting-button-${variant}`,
           `lanting-button-${variant}--${color}`,
           {
-            'lanting-button--disabled': disabled,
+            'lanting-button--disabled': disabled || loading,
             'lanting-button-icononly': iconOnly,
             'lanting-button--active': active,
             'lanting-button--wide': wide,
             'lanting-button-hasicon': icon && children,
+            'lanting-button--loading': loading,
           },
           className
         )}
         style={style}
-        disabled={disabled}
+        disabled={disabled || loading}
       >
-        {SVGIcon && (
-          <div className='lanting-button-icon'>
-            <SVGIcon fill='currentColor' width={20} height={20} />
-          </div>
+        {loading ? (
+          <Spin size={24} />
+        ) : (
+          <>
+            {SVGIcon && (
+              <div className='lanting-button-icon'>
+                <SVGIcon fill='currentColor' width={20} height={20} />
+              </div>
+            )}
+            {children}
+          </>
         )}
-        {children}
       </button>
     );
   }
