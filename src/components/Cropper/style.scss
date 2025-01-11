@@ -4,7 +4,6 @@
   .content {
     max-height: 500px;
     overflow-y: auto;
-    margin: 40px;
   }
 
   .container {
@@ -74,10 +73,5 @@
         right: 0;
       }
     }
-  }
-
-  .footer {
-    margin: 20px;
-    display: flex;
   }
 }

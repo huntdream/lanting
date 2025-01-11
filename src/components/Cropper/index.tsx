@@ -1,13 +1,23 @@
-import React, { FC, SyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, {
+  FC,
+  RefObject,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import loadImage from './loadImage';
 import './style.scss';
-import Button from 'components/Button';
 import useUpload, { IFile } from 'hooks/useUpload';
 
 export interface CropperProps {
   image: string;
   size?: number;
-  onCrop: (file: IFile) => void;
+  ref?: RefObject<CropperRef | null>;
+}
+
+export interface CropperRef {
+  crop: () => Promise<IFile | undefined>;
 }
 
 interface Point {
@@ -16,7 +26,7 @@ interface Point {
   r: number;
 }
 
-const Cropper: FC<CropperProps> = ({ image, size = 400, onCrop }) => {
+const Cropper: FC<CropperProps> = ({ image, size = 400, ref }) => {
   const [imageData, setImageData] = useState<string>(image);
   const [point, setPoint] = useState<Point>({ x: 0, y: 0, r: 0 });
   const [dragging, setDragging] = useState(false);
@@ -130,6 +140,12 @@ const Cropper: FC<CropperProps> = ({ image, size = 400, onCrop }) => {
     };
   }, [box.current, dragPoint, dragging, resizing]);
 
+  useImperativeHandle(ref, () => ({
+    crop() {
+      return handleCrop();
+    },
+  }));
+
   const handleCrop = async () => {
     if (!imageRef.current || !overlay.current) return;
 
@@ -152,17 +168,19 @@ const Cropper: FC<CropperProps> = ({ image, size = 400, onCrop }) => {
 
       ctx?.drawImage(img, sx, sy, r, r, 0, 0, size, size);
 
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const file = new File([blob], 'avatar.png', { type: 'image/png' });
+      return new Promise<IFile>((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], 'avatar.png', { type: 'image/png' });
 
-          upload(file).then((res) => {
-            if (onCrop) {
-              onCrop(res);
-            }
-          });
-        }
-      }, 'image/png');
+            upload(file)
+              .then((uploadedFile) => resolve(uploadedFile))
+              .catch((error) => reject(error));
+          } else {
+            reject(new Error('Canvas is empty'));
+          }
+        }, 'image/png');
+      });
     }
   };
 
@@ -191,12 +209,6 @@ const Cropper: FC<CropperProps> = ({ image, size = 400, onCrop }) => {
             )}
           </div>
         </div>
-      </div>
-
-      <div className='footer'>
-        <Button color='primary' wide onClick={handleCrop}>
-          Crop
-        </Button>
       </div>
     </div>
   );
