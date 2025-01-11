@@ -6,6 +6,7 @@ import useUpload, { IFile } from 'hooks/useUpload';
 
 export interface CropperProps {
   image: string;
+  size?: number;
   onCrop: (file: IFile) => void;
 }
 
@@ -15,7 +16,7 @@ interface Point {
   r: number;
 }
 
-const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
+const Cropper: FC<CropperProps> = ({ image, size = 400, onCrop }) => {
   const [imageData, setImageData] = useState<string>(image);
   const [point, setPoint] = useState<Point>({ x: 0, y: 0, r: 0 });
   const [dragging, setDragging] = useState(false);
@@ -143,13 +144,13 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
       const canvas = document.createElement('canvas') as HTMLCanvasElement;
       const ctx = canvas.getContext('2d');
 
-      canvas.width = 150;
-      canvas.height = 150;
+      canvas.width = size;
+      canvas.height = size;
       const sx = (point.x - (imageBox.left - containerBox.left)) * ratio;
       const sy = (point.y - (imageBox.top - containerBox.top)) * ratio;
       const r = point.r * ratio;
 
-      ctx?.drawImage(img, sx, sy, r, r, 0, 0, 150, 150);
+      ctx?.drawImage(img, sx, sy, r, r, 0, 0, size, size);
 
       canvas.toBlob((blob) => {
         if (blob) {
