@@ -21,11 +21,12 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
   const [dragging, setDragging] = useState(false);
   const [resizing, setResizing] = useState(false);
   const [dragPoint, setDragPoint] = useState<Point>();
+  const [direction, setDirection] = useState<'west' | 'east'>();
 
   const [upload] = useUpload();
 
   const box = useRef<HTMLDivElement>(null);
-  const container = useRef<HTMLDivElement>(null);
+  const overlay = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
   }, [image]);
 
   useEffect(() => {
-    if (!container.current) return;
+    if (!overlay.current) return;
 
     const handleMouseDown = (e: MouseEvent) => {
       e.stopPropagation();
@@ -56,6 +57,7 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
         setDragging(true);
       } else if (target.classList.contains('handler')) {
         setResizing(true);
+        setDirection(target.dataset.direction as 'west' | 'east' | undefined);
       } else {
         return;
       }
@@ -70,14 +72,14 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
         (!dragging && !resizing) ||
         !dragPoint ||
         !box.current ||
-        !container.current
+        !overlay.current
       )
         return;
 
       const offsetX = e.clientX - dragPoint.x;
       const offsetY = e.clientY - dragPoint.y;
 
-      const { width, height } = container.current.getBoundingClientRect();
+      const { width, height } = overlay.current.getBoundingClientRect();
       const { width: boxWidth, height: boxHeight } =
         box.current.getBoundingClientRect();
 
@@ -86,9 +88,12 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
       let r = point.r;
 
       if (resizing) {
-        x -= offsetX / 2;
-        y -= offsetX / 2;
-        r += offsetX;
+        const sign = direction === 'east' ? -1 : 1;
+        const offset = (sign * offsetX) / 2;
+
+        x = x + offset;
+        y = y + offset;
+        r = r - sign * offsetX;
       } else {
         x = point.x + offsetX;
         y = point.y + offsetY;
@@ -125,12 +130,12 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
   }, [box.current, dragPoint, dragging, resizing]);
 
   const handleCrop = async () => {
-    if (!imageRef.current || !container.current) return;
+    if (!imageRef.current || !overlay.current) return;
 
     const img = await loadImage(image);
 
     if (img) {
-      const containerBox = container.current.getBoundingClientRect();
+      const containerBox = overlay.current.getBoundingClientRect();
       const imageBox = imageRef.current.getBoundingClientRect();
 
       const ratio = img.width / containerBox.width;
@@ -163,27 +168,30 @@ const Cropper: FC<CropperProps> = ({ image, onCrop }) => {
   return (
     <div className='lanting-cropper'>
       <div className='content'>
-        <img src={imageData} className='image' ref={imageRef} />
-        <div className='container' ref={container}>
-          {point.r > 0 && (
-            <div
-              className='box'
-              style={{
-                left: point.x,
-                top: point.y,
-                width: point.r,
-                height: point.r,
-              }}
-              ref={box}
-            >
-              <div className='handler nw'></div>
-              <div className='handler ne'></div>
-              <div className='handler sw'></div>
-              <div className='handler se'></div>
-            </div>
-          )}
+        <div className='container'>
+          <img src={imageData} className='image' ref={imageRef} />
+          <div className='overlay' ref={overlay}>
+            {point.r > 0 && (
+              <div
+                className='box'
+                style={{
+                  left: point.x,
+                  top: point.y,
+                  width: point.r,
+                  height: point.r,
+                }}
+                ref={box}
+              >
+                <div className='handler nw' data-direction='west'></div>
+                <div className='handler ne' data-direction='east'></div>
+                <div className='handler sw' data-direction='west'></div>
+                <div className='handler se' data-direction='east'></div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
       <div className='footer'>
         <Button color='primary' wide onClick={handleCrop}>
           Crop
