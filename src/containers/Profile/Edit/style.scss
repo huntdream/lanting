@@ -40,3 +40,16 @@
     width: 300px;
   }
 }
+
+.lanting-profile-cropper {
+  width: 400px;
+
+  &-container {
+    margin: 16px;
+  }
+
+  .footer {
+    margin: 16px;
+    display: flex;
+  }
+}

@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import useSWR, { useSWRConfig } from 'swr';
 import Input from 'components/Input';
 import { useForm } from 'react-hook-form';
 import { IUser } from 'typing/user';
 import Button from 'components/Button';
-import './style.scss';
 import useRequest from 'hooks/useRequest';
 import useToast from 'components/Toast/useToast';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +14,8 @@ import { IFile } from 'hooks/useUpload';
 import Textarea from 'components/Textarea';
 import Avatar from 'components/Avatar';
 import Modal from 'components/Modal';
-import Cropper from 'components/Cropper';
+import Cropper, { CropperRef } from 'components/Cropper';
+import './style.scss';
 
 interface Props {}
 
@@ -26,9 +26,12 @@ const Edit: React.FC<Props> = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState<string>('');
+  const [cropping, setCropping] = useState(false);
   const [fetcher] = useRequest();
   const [toast] = useToast();
   const navigate = useNavigate();
+
+  const cropperRef = useRef<CropperRef>(null);
 
   const {
     register,
@@ -77,11 +80,21 @@ const Edit: React.FC<Props> = () => {
     setVisible(true);
   };
 
-  const handleCrop = (file: IFile) => {
-    if (!file) return;
+  const handleCrop = () => {
+    if (!cropperRef.current) return;
+    setCropping(true);
 
-    setValue('avatar', file.url || '');
-    setVisible(false);
+    cropperRef.current
+      .crop()
+      .then((file?: IFile) => {
+        if (file) {
+          setValue('avatar', file.url || '');
+          setVisible(false);
+        }
+      })
+      .finally(() => {
+        setCropping(false);
+      });
   };
 
   return (
@@ -122,8 +135,21 @@ const Edit: React.FC<Props> = () => {
           </Button>
         </div>
       </form>
-      <Modal visible={visible} onClose={() => setVisible(false)}>
-        <Cropper image={image} onCrop={handleCrop} />
+      <Modal
+        className='lanting-profile-cropper'
+        visible={visible}
+        onClose={() => setVisible(false)}
+        width={400}
+      >
+        <div className='lanting-profile-cropper-container'>
+          <Cropper image={image} ref={cropperRef} />
+        </div>
+
+        <div className='footer'>
+          <Button color='primary' wide onClick={handleCrop} loading={cropping}>
+            Set New Profile Picture
+          </Button>
+        </div>
       </Modal>
     </div>
   );
