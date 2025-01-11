@@ -49,18 +49,18 @@ const Edit: React.FC<Props> = () => {
 
   const handleSave = (data: IUser) => {
     setIsSubmitting(true);
-
+    const newUser = {
+      ...user,
+      ...data,
+    };
     fetcher<IUser, any>('/user/update', {
       method: 'post',
-      data: {
-        ...user,
-        ...data,
-      },
+      data: newUser,
     })
       .then((newUser) => {
         toast('Profile saved!');
         setIsSubmitting(false);
-        mutate('/user/me', newUser);
+        mutate(newUser);
         navigate(`/profile/${newUser.id}`);
       })
       .catch((err) => {
