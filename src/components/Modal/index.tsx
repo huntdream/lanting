@@ -9,16 +9,18 @@ interface ModalProps {
   visible?: boolean;
   className?: string;
   title?: ReactNode;
+  width?: string | number;
   children?: ReactNode;
   onClose?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
   visible,
-  onClose,
   title,
+  width,
   className,
   children,
+  onClose,
 }) => {
   useScrollLock(visible);
 
@@ -35,6 +37,7 @@ const Modal: React.FC<ModalProps> = ({
               <div className='lanting-modal-main'>
                 <div
                   className={cls('lanting-modal-body', className)}
+                  style={{ width }}
                   onClick={stopPropagation}
                 >
                   <div className='lanting-modal-header'>
