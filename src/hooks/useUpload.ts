@@ -48,7 +48,6 @@ const useUpload = () => {
             data: file,
             headers: {
               'Content-Type': file.type,
-              'Content-Disposition': `attachment; filename="${file.name}"`,
             },
             onUploadProgress,
           })
