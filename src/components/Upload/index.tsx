@@ -5,6 +5,7 @@ import React, {
   ChangeEvent,
   DragEvent,
   ReactNode,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -44,6 +45,14 @@ const Upload: React.FC<UploadProps> = ({
   const [errros, setErrors] = useState<string[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
 
+  useEffect(() => {
+    if (fileInfo.every((file) => file.url)) {
+      if (onChange) {
+        onChange(fileInfo);
+      }
+    }
+  }, [fileInfo]);
+
   const updateProgress = ({
     progress,
     index,
@@ -68,24 +77,18 @@ const Upload: React.FC<UploadProps> = ({
   const handleUpload = (files: File[]) => {
     const startIndex = multiple ? fileInfo.length : 0;
 
-    files.map((file, index) => {
+    return files.map((file, index) => {
       uploadFile(file, startIndex + index);
     });
   };
 
   const updateFile = (file: IFile, index: number) => {
-    const newFiles = [...fileInfo];
-    newFiles[index] = { ...file };
+    setFileInfo((files) => {
+      const newFiles = [...files];
+      newFiles[index] = { ...file };
 
-    if (onChange) {
-      onChange(newFiles);
-    }
-
-    setFileInfo(newFiles);
-
-    if (onChange) {
-      onChange(newFiles);
-    }
+      return newFiles;
+    });
   };
 
   const updateError = (error: string, index: number) => {
@@ -109,6 +112,10 @@ const Upload: React.FC<UploadProps> = ({
       .finally(() => {
         updateProgress({ index, loading: false });
       });
+  };
+
+  const handleReupload = (file: IFile, index: number) => {
+    return uploadFile(file, index);
   };
 
   const updateFileList = (files: FileList) => {
@@ -143,10 +150,6 @@ const Upload: React.FC<UploadProps> = ({
 
     setFileList(newFiles);
     setFileInfo(newFileInfo);
-
-    if (onChange) {
-      onChange(newFileInfo);
-    }
   };
 
   const openFilePicker = () => {
@@ -190,7 +193,7 @@ const Upload: React.FC<UploadProps> = ({
         <FileUpload
           file={file}
           key={index}
-          upload={() => uploadFile(file, index)}
+          upload={() => handleReupload(file, index)}
           round={round}
           progress={progress[index]}
           onRemove={() => removeFile(index)}
