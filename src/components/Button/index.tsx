@@ -58,25 +58,27 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'lanting-button--active': active,
             'lanting-button--wide': wide,
             'lanting-button-hasicon': icon && children,
-            'lanting-button--loading': loading,
           },
           className
         )}
         style={style}
         disabled={disabled || loading}
       >
-        {loading ? (
-          <Spin size={24} />
-        ) : (
-          <>
-            {SVGIcon && (
-              <div className='lanting-button-icon'>
-                <SVGIcon fill='currentColor' width={20} height={20} />
-              </div>
-            )}
-            {children}
-          </>
-        )}
+        <div
+          style={{
+            visibility: loading ? 'hidden' : 'visible',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {SVGIcon && (
+            <div className='lanting-button-icon'>
+              <SVGIcon fill='currentColor' width={20} height={20} />
+            </div>
+          )}
+          {children}
+        </div>
+        {loading && <Spin size={24} />}
       </button>
     );
   }
