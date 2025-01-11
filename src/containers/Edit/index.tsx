@@ -16,9 +16,10 @@ interface EditProps {}
 
 const Edit: React.FC<EditProps> = () => {
   const { id = '' } = useParams<{ id: string }>();
-  const ref = useRef<EditorState>();
+  const ref = useRef<EditorState>(null);
   const [request] = useRequest();
   const { t } = useTranslation();
+  const [isSaving, setIsSaving] = useState(false);
 
   const { article: articleData } = useArticle(id, {
     revalidateOnFocus: false,
@@ -52,7 +53,7 @@ const Edit: React.FC<EditProps> = () => {
     const excerpt = text.split('\n').filter(Boolean)[0];
 
     console.log(text, excerpt);
-
+    setIsSaving(true);
     request
       .post<any, IArticle>(`article/${id}`, {
         ...article,
@@ -62,6 +63,7 @@ const Edit: React.FC<EditProps> = () => {
         text,
       })
       .then((res) => {
+        setIsSaving(false);
         if (res.id) {
           navigate(`/article/${res.id}`);
         } else {
@@ -70,6 +72,7 @@ const Edit: React.FC<EditProps> = () => {
       })
       .catch((error) => {
         console.log(error);
+        setIsSaving(false);
       });
   };
 
@@ -92,7 +95,7 @@ const Edit: React.FC<EditProps> = () => {
           value={article?.visibility !== 2}
           onChange={(value) => handleChange('visibility', value ? 1 : 2)}
         />
-        <Button onClick={publish} disabled={!article?.title}>
+        <Button onClick={publish} disabled={!article?.title} loading={isSaving}>
           {id ? t('article.save') : t('article.publish')}
         </Button>
       </div>

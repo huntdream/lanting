@@ -130,7 +130,7 @@ const Edit: React.FC<Props> = () => {
           <Textarea {...register('bio')} />
         </FormItem>
         <div className='save'>
-          <Button type='submit' disabled={isSubmitting}>
+          <Button type='submit' loading={isSubmitting}>
             Save
           </Button>
         </div>

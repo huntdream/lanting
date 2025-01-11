@@ -127,7 +127,7 @@ const Login: React.FC<LoginProps> = ({ isLogin }) => {
         </div>
 
         <div className='lanting-login-submit'>
-          <Button type='submit' disabled={isSubmitting} wide>
+          <Button type='submit' loading={isSubmitting} wide>
             {isLogin ? t('login') : t('register')}
           </Button>
         </div>
