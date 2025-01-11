@@ -93,7 +93,12 @@ const Edit: React.FC<Props> = () => {
         <div className='header'>
           <div className='avatar'>
             <Avatar src={avatar} size={100} round />
-            <Upload round showList={false} onChange={handleAvatarChange}>
+            <Upload
+              accept='image/jpg,image/jpeg,image/png'
+              round
+              showList={false}
+              onChange={handleAvatarChange}
+            >
               <Button icon='edit' color='secondary'></Button>
             </Upload>
           </div>
