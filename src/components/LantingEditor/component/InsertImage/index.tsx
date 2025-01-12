@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'components/Button';
-import Upload, { IFile } from 'components/Upload';
+import Upload from 'components/Upload';
+import { IFile } from 'hooks/useUpload';
 import { LexicalEditor } from 'lexical';
 import { INSERT_IMAGE_COMMAND } from '../../plugins/ImagesPlugin';
 import './style.scss';
