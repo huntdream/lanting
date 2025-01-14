@@ -13,6 +13,7 @@ import {
   HeadingTagType,
 } from '@lexical/rich-text';
 import {
+  INSERT_CHECK_LIST_COMMAND,
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
@@ -22,22 +23,15 @@ import Arrow from 'assets/icons/chevron-down.svg?react';
 import DropDownItem from './Item';
 import './style.scss';
 import Icon, { IconNames } from 'components/Icon';
+import {
+  BlockType,
+  blockTypeToBlockName,
+} from 'components/LantingEditor/context/ToolbarContext';
 
 interface Props {
-  blockType: IconNames;
+  blockType: BlockType;
   editor: LexicalEditor;
 }
-
-const blockTypeToBlockName: { [key: string]: string } = {
-  paragraph: 'Normal',
-  h1: 'Heading 1',
-  h2: 'Heading 2',
-  h3: 'Heading 3',
-  ol: 'Numbered List',
-  ul: 'Bulleted List',
-  quote: 'Quote',
-  code: 'Code Block',
-};
 
 const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -103,16 +97,23 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
   };
 
   const formatBulletList = () => {
-    if (blockType !== 'ul') {
+    if (blockType !== 'bullet') {
       editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
     } else {
       editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
     }
   };
 
+  const formatCheckList = () => {
+    if (blockType !== 'check') {
+      editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
+    } else {
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    }
+  };
+
   const formatNumberedList = () => {
-    console.log(blockType);
-    if (blockType !== 'ol') {
+    if (blockType !== 'number') {
       editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
     } else {
       editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
@@ -150,6 +151,8 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
     }
   };
 
+  console.log(blockType);
+
   const handleBlockTypeClick = (type: string) => {
     switch (type) {
       case 'paragraph':
@@ -173,6 +176,9 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
       case 'ul':
         formatBulletList();
         break;
+      case 'check':
+        formatCheckList();
+        break;
       case 'code':
         formatCode();
         break;
@@ -188,7 +194,7 @@ const BlockFormatDropDown: FC<Props> = ({ blockType, editor }) => {
         onClick={handleClick}
         className='lanting-editor-dropdown-item'
       >
-        <Icon name={blockType} /> {blockTypeToBlockName[blockType]}
+        <Icon name={blockType as IconNames} /> {blockTypeToBlockName[blockType]}
         <Arrow style={{ margin: ' 3px 0 0 6px' }} />
       </div>
 

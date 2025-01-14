@@ -1,19 +1,35 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, {
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getNodeByKey,
   $getSelection,
+  $isElementNode,
   $isRangeSelection,
+  $isRootOrShadowRoot,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
   ElementFormatType,
   FORMAT_TEXT_COMMAND,
+  LexicalEditor,
+  NodeKey,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
-import { $getNearestNodeOfType, mergeRegister } from '@lexical/utils';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import {
+  $findMatchingParent,
+  $getNearestNodeOfType,
+  $isEditorIsNestedEditor,
+  mergeRegister,
+} from '@lexical/utils';
 import { $isListNode, ListNode } from '@lexical/list';
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
@@ -21,7 +37,11 @@ import {
   CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   CODE_LANGUAGE_MAP,
 } from '@lexical/code';
-import { $isParentElementRTL } from '@lexical/selection';
+import {
+  $getSelectionStyleValueForProperty,
+  $isParentElementRTL,
+} from '@lexical/selection';
+import { $isTableNode, $isTableSelection } from '@lexical/table';
 
 import { IS_APPLE } from 'utils/platform';
 import Button from 'components/Button';
@@ -36,8 +56,14 @@ import BlockFormatDropDown from './BlockFormatDropDown';
 import Align from './Align';
 import AudioPlugin from '../component/InsertAudio';
 import { IconNames } from 'components/Icon';
-
-interface Props {}
+import {
+  BlockType,
+  blockTypeToBlockName,
+  useToolbarState,
+} from '../context/ToolbarContext';
+import { isRTL } from '@excalidraw/excalidraw/types/utils';
+import { isBold, isItalic, isUnderline } from 'lexical/LexicalUtils';
+import { getSelectedNode } from '../utils/getSelectedNode';
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
@@ -53,74 +79,144 @@ function getCodeLanguageOptions(): [string, string][] {
 
 const CODE_LANGUAGE_OPTIONS = getCodeLanguageOptions();
 
-const Toolbar: FC<Props> = () => {
-  const [editor] = useLexicalComposerContext();
-  const [activeEditor, setActiveEditor] = useState(editor);
-  const [canUndo, setCanUndo] = useState(false);
-  const [canRedo, setCanRedo] = useState(false);
-  const [blockType, setBlockType] = useState('paragraph');
-  const [selectedElementKey, setSelectedElementKey] = useState<string>('');
-  const [codeLanguage, setCodeLanguage] = useState<string>('');
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [isUnderline, setIsUnderline] = useState(false);
-  const [isStrikethrough, setIsStrikethrough] = useState(false);
-  const [isHighlight, setIsHighlight] = useState(false);
-  const [formatType, setFormatType] = useState<ElementFormatType>('');
-  const [isCode, setIsCode] = useState(false);
-  const [isRTL, setIsRTL] = useState(false);
-  const [modal, showModal] = useModal();
+interface Props {
+  activeEditor: LexicalEditor;
+  setActiveEditor: (editor: LexicalEditor) => void;
+}
 
-  useEffect(() => {}, []);
+const Toolbar: FC<Props> = ({ activeEditor, setActiveEditor }) => {
+  const [editor] = useLexicalComposerContext();
+
+  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
+    null
+  );
+
+  const [isEditable, setIsEditable] = useState(() => editor.isEditable());
+  const { toolbarState, updateToolbarState } = useToolbarState();
+
+  const [modal, showModal] = useModal();
 
   const updateToolbar = useCallback(() => {
     const selection = $getSelection();
-
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
-      const element =
+      let element =
         anchorNode.getKey() === 'root'
           ? anchorNode
-          : anchorNode.getTopLevelElementOrThrow();
+          : $findMatchingParent(anchorNode, (e) => {
+              const parent = e.getParent();
+              return parent !== null && $isRootOrShadowRoot(parent);
+            });
+
+      if (element === null) {
+        element = anchorNode.getTopLevelElementOrThrow();
+      }
+
       const elementKey = element.getKey();
       const elementDOM = activeEditor.getElementByKey(elementKey);
 
-      // Update text format
-      setIsBold(selection.hasFormat('bold'));
-      setIsItalic(selection.hasFormat('italic'));
-      setIsUnderline(selection.hasFormat('underline'));
-      setIsStrikethrough(selection.hasFormat('strikethrough'));
-      setIsHighlight(selection.hasFormat('highlight'));
-      setIsCode(selection.hasFormat('code'));
-      setIsRTL($isParentElementRTL(selection));
+      updateToolbarState('isRTL', $isParentElementRTL(selection));
+
+      // Update links
+      const node = getSelectedNode(selection);
+      const parent = node.getParent();
+      const isLink = $isLinkNode(parent) || $isLinkNode(node);
+      updateToolbarState('isLink', isLink);
+
+      const tableNode = $findMatchingParent(node, $isTableNode);
+      if ($isTableNode(tableNode)) {
+        updateToolbarState('rootType', 'table');
+      } else {
+        updateToolbarState('rootType', 'root');
+      }
 
       if (elementDOM !== null) {
         setSelectedElementKey(elementKey);
-        setFormatType(element.getFormatType());
-
         if ($isListNode(element)) {
-          const parentList = $getNearestNodeOfType(anchorNode, ListNode);
+          const parentList = $getNearestNodeOfType<ListNode>(
+            anchorNode,
+            ListNode
+          );
+          const type = parentList
+            ? parentList.getListType()
+            : element.getListType();
 
-          const type = parentList ? parentList.getTag() : element.getTag();
-          setBlockType(type);
+          updateToolbarState('blockType', type);
         } else {
           const type = $isHeadingNode(element)
             ? element.getTag()
             : element.getType();
-
-          setBlockType(type);
-
+          if (type in blockTypeToBlockName) {
+            updateToolbarState('blockType', type as BlockType);
+          }
           if ($isCodeNode(element)) {
-            const language = element.getLanguage();
-            setCodeLanguage(
+            const language =
+              element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
+            updateToolbarState(
+              'codeLanguage',
               language ? CODE_LANGUAGE_MAP[language] || language : ''
             );
             return;
           }
         }
       }
+      // Handle buttons
+      updateToolbarState(
+        'fontColor',
+        $getSelectionStyleValueForProperty(selection, 'color', '#000')
+      );
+      updateToolbarState(
+        'bgColor',
+        $getSelectionStyleValueForProperty(
+          selection,
+          'background-color',
+          '#fff'
+        )
+      );
+      updateToolbarState(
+        'fontFamily',
+        $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial')
+      );
+      let matchingParent;
+      if ($isLinkNode(parent)) {
+        // If node is a link, we need to fetch the parent paragraph node to set format
+        matchingParent = $findMatchingParent(
+          node,
+          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline()
+        );
+      }
+
+      // If matchingParent is a valid node, pass it's format type
+      updateToolbarState(
+        'elementFormat',
+        $isElementNode(matchingParent)
+          ? matchingParent.getFormatType()
+          : $isElementNode(node)
+          ? node.getFormatType()
+          : parent?.getFormatType() || 'left'
+      );
     }
-  }, [activeEditor]);
+    if ($isRangeSelection(selection) || $isTableSelection(selection)) {
+      // Update text format
+      updateToolbarState('isBold', selection.hasFormat('bold'));
+      updateToolbarState('isItalic', selection.hasFormat('italic'));
+      updateToolbarState('isUnderline', selection.hasFormat('underline'));
+      updateToolbarState(
+        'isStrikethrough',
+        selection.hasFormat('strikethrough')
+      );
+      updateToolbarState('isSubscript', selection.hasFormat('subscript'));
+      updateToolbarState('isSuperscript', selection.hasFormat('superscript'));
+      updateToolbarState('isCode', selection.hasFormat('code'));
+      updateToolbarState(
+        'fontSize',
+        $getSelectionStyleValueForProperty(selection, 'font-size', '15px')
+      );
+      updateToolbarState('isLowercase', selection.hasFormat('lowercase'));
+      updateToolbarState('isUppercase', selection.hasFormat('uppercase'));
+      updateToolbarState('isCapitalize', selection.hasFormat('capitalize'));
+    }
+  }, [activeEditor, editor, updateToolbarState]);
 
   const handleUndo = () => {
     activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
@@ -148,39 +244,63 @@ const Toolbar: FC<Props> = () => {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       (_payload, newEditor) => {
-        updateToolbar();
         setActiveEditor(newEditor);
+        updateToolbar();
         return false;
       },
       COMMAND_PRIORITY_CRITICAL
     );
-  }, [editor, updateToolbar]);
+  }, [editor, updateToolbar, setActiveEditor]);
+
+  useEffect(() => {
+    activeEditor.getEditorState().read(() => {
+      updateToolbar();
+    });
+  }, [activeEditor, updateToolbar]);
 
   useEffect(() => {
     return mergeRegister(
+      editor.registerEditableListener((editable) => {
+        setIsEditable(editable);
+      }),
       activeEditor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           updateToolbar();
         });
       }),
-      activeEditor.registerCommand(
+      activeEditor.registerCommand<boolean>(
         CAN_UNDO_COMMAND,
-        (payload: boolean) => {
-          setCanUndo(payload);
+        (payload) => {
+          updateToolbarState('canUndo', payload);
           return false;
         },
         COMMAND_PRIORITY_CRITICAL
       ),
-      activeEditor.registerCommand(
+      activeEditor.registerCommand<boolean>(
         CAN_REDO_COMMAND,
-        (payload: boolean) => {
-          setCanRedo(payload);
+        (payload) => {
+          updateToolbarState('canRedo', payload);
           return false;
         },
         COMMAND_PRIORITY_CRITICAL
       )
     );
-  }, [activeEditor, updateToolbar]);
+  }, [updateToolbar, activeEditor, editor, updateToolbarState]);
+
+  const {
+    canRedo,
+    canUndo,
+    blockType,
+    codeLanguage,
+    isBold,
+    isStrikethrough,
+    isCode,
+    isItalic,
+    isUnderline,
+    isLink,
+    elementFormat,
+    isRTL,
+  } = toolbarState;
 
   return (
     <div className='lanting-editor-toolbar'>
@@ -200,10 +320,7 @@ const Toolbar: FC<Props> = () => {
         disabled={!canRedo}
         aria-label='Redo'
       />
-      <BlockFormatDropDown
-        blockType={blockType as IconNames}
-        editor={activeEditor}
-      />
+      <BlockFormatDropDown blockType={blockType} editor={activeEditor} />
       {blockType === 'code' ? (
         <>
           <Select
@@ -269,16 +386,6 @@ const Toolbar: FC<Props> = () => {
             aria-label='Format text with a strikethrough'
           />
           <Button
-            active={isHighlight}
-            icon='format_ink_highlighter'
-            variant='text'
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight');
-            }}
-            title='Highlight'
-            aria-label='Format text with a highlight'
-          />
-          <Button
             icon='code'
             active={isCode}
             variant='text'
@@ -296,8 +403,8 @@ const Toolbar: FC<Props> = () => {
                 <InsertImage activeEditor={activeEditor} onClose={onClose} />
               ));
             }}
-            title='Insert code block'
-            aria-label='Insert code block'
+            title='Insert image'
+            aria-label='Insert image'
           />
           <Button
             icon='music_note'
@@ -307,11 +414,15 @@ const Toolbar: FC<Props> = () => {
                 <AudioPlugin activeEditor={activeEditor} onClose={onClose} />
               ));
             }}
-            title='Insert code block'
-            aria-label='Insert code block'
+            title='Insert audio'
+            aria-label='Insert audio'
           />
           <Divider />
-          <Align editor={activeEditor} isRTL={isRTL} formatType={formatType} />
+          <Align
+            editor={activeEditor}
+            isRTL={isRTL}
+            formatType={elementFormat}
+          />
         </>
       )}
       {modal}

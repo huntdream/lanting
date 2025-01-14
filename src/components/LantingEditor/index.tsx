@@ -1,18 +1,16 @@
 import React, { FC } from 'react';
 import cls from 'classnames';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
-import { ListItemNode, ListNode } from '@lexical/list';
-import { CodeHighlightNode, CodeNode } from '@lexical/code';
-import { AutoLinkNode, LinkNode } from '@lexical/link';
+import {
+  InitialConfigType,
+  LexicalComposer,
+} from '@lexical/react/LexicalComposer';
 
+import { nodes } from './nodes';
 import lanting from './themes/lanting';
-import { ImageNode } from './nodes/ImageNode';
 import Editor, { EditorProps } from './Editor';
-import { AudioNode } from './nodes/AudioNode';
 
 import './style.scss';
+import { ToolbarContext } from './context/ToolbarContext';
 
 const LantingEditor: FC<EditorProps> = ({
   id,
@@ -22,7 +20,7 @@ const LantingEditor: FC<EditorProps> = ({
   initialEditorState,
   onChange,
 }) => {
-  const editorConfig = {
+  const editorConfig: InitialConfigType = {
     namespace: 'lanting',
     editable,
     theme: lanting,
@@ -30,21 +28,7 @@ const LantingEditor: FC<EditorProps> = ({
     onError(error: Error) {
       throw error;
     },
-    nodes: [
-      HeadingNode,
-      ListNode,
-      ListItemNode,
-      QuoteNode,
-      CodeNode,
-      CodeHighlightNode,
-      TableNode,
-      TableCellNode,
-      TableRowNode,
-      AutoLinkNode,
-      LinkNode,
-      ImageNode,
-      AudioNode,
-    ],
+    nodes,
   };
 
   return (
@@ -54,14 +38,16 @@ const LantingEditor: FC<EditorProps> = ({
       })}
     >
       <LexicalComposer initialConfig={editorConfig}>
-        <Editor
-          editable={editable}
-          onChange={onChange}
-          isCollab={isCollab}
-          id={id}
-          user={user}
-          initialEditorState={initialEditorState}
-        />
+        <ToolbarContext>
+          <Editor
+            editable={editable}
+            onChange={onChange}
+            isCollab={isCollab}
+            id={id}
+            user={user}
+            initialEditorState={initialEditorState}
+          />
+        </ToolbarContext>
       </LexicalComposer>
     </div>
   );

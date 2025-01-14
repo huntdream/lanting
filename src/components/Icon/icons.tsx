@@ -56,6 +56,7 @@ import Logout from 'assets/icons/logout.svg?react';
 import Chat from 'assets/icons/chat.svg?react';
 import Comment from 'assets/icons/comment.svg?react';
 import Reply from 'assets/icons/reply.svg?react';
+import Check from 'assets/icons/check.svg?react';
 
 const icons = {
   account_circle: AccountCircle,
@@ -63,6 +64,7 @@ const icons = {
   'chevron-down': ChevronDown,
   close: Close,
   code: Code,
+  check: Check,
   dark_mode: DarkMode,
   date_range: DateRange,
   delete: Delete,
@@ -95,7 +97,7 @@ const icons = {
   mic: Mic,
   music_note: MusicNote,
   notifications: Notifications,
-  ol: Ol,
+  number: Ol,
   paragraph: Paragraph,
   pause: Pause,
   play_arrow: PlayArrow,
@@ -107,7 +109,7 @@ const icons = {
   search: Search,
   settings: Settings,
   settings_voice: SettingsVoice,
-  ul: Ul,
+  bullet: Ul,
   undo: Undo,
   volume_up: VolumeUp,
   format_color_fill: FormatColorFill,

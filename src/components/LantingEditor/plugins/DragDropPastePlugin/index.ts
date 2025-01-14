@@ -31,11 +31,13 @@ const DragDropPaste = () => {
           for (const { file } of filesResult) {
             if (isMimeType(file, ACCEPTABLE_IMAGE_TYPES)) {
               upload(file).then((result: IFile) => {
+                if (!result.url) return;
+
                 editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
                   height: 'inherit',
                   altText: file.name,
                   src: result.url,
-                  maxWidth: "100%",
+                  maxWidth: '100%',
                 });
               });
             }

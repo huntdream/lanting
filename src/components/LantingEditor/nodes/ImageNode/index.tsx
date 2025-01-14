@@ -13,6 +13,7 @@ import {
   DOMConversionOutput,
   DOMExportOutput,
   $applyNodeReplacement,
+  LexicalUpdateJSON,
 } from 'lexical';
 import React from 'react';
 
@@ -79,23 +80,20 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const { altText, height, width, maxWidth, caption, src, showCaption } =
+    const { altText, height, width, maxWidth, src, showCaption } =
       serializedNode;
-
-    const node = $createImageNode({
+    return $createImageNode({
       altText,
       height,
       maxWidth,
       showCaption,
       src,
       width,
-    });
-    const nestedEditor = node.__caption;
-    const editorState = nestedEditor.parseEditorState(caption.editorState);
+    }).updateFromJSON(serializedNode);
+  }
 
-    if (!editorState.isEmpty()) {
-      nestedEditor.setEditorState(editorState);
-    }
+  updateFromJSON(serializedNode: LexicalUpdateJSON<SerializedImageNode>): this {
+    const node = super.updateFromJSON(serializedNode);
 
     return node;
   }

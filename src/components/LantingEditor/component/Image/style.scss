@@ -6,6 +6,10 @@
     user-select: none;
   }
 
+  &--draggable {
+    cursor: move;
+  }
+
   &-resizer {
     display: block;
     width: 9px;
