@@ -171,7 +171,9 @@ const Cropper: FC<CropperProps> = ({ image, size = 400, ref }) => {
       return new Promise<IFile>((resolve, reject) => {
         canvas.toBlob((blob) => {
           if (blob) {
-            const file = new File([blob], 'avatar.png', { type: 'image/png' });
+            const file = new File([blob], 'avatar.jpg', {
+              type: 'image/jpeg',
+            });
 
             upload(file)
               .then((uploadedFile) => resolve(uploadedFile))
@@ -179,7 +181,7 @@ const Cropper: FC<CropperProps> = ({ image, size = 400, ref }) => {
           } else {
             reject(new Error('Canvas is empty'));
           }
-        }, 'image/png');
+        }, 'image/jpeg');
       });
     }
   };
