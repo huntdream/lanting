@@ -139,7 +139,7 @@ const Edit: React.FC<Props> = () => {
         className='lanting-profile-cropper'
         visible={visible}
         onClose={() => setVisible(false)}
-        width={400}
+        width={432}
       >
         <div className='lanting-profile-cropper-container'>
           <Cropper image={image} ref={cropperRef} />
