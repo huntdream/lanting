@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
-import useSWR from 'swr';
+import { useQuery } from '@tanstack/react-query';
 import { IUser } from 'typing/user';
+import useRequest from 'hooks/useRequest';
 
 interface IAppContext {
   user?: IUser;
@@ -15,7 +16,11 @@ interface Props {
 
 const AppProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser>();
-  const { data } = useSWR('/user/me');
+  const [request] = useRequest();
+  const { data } = useQuery<IUser>({
+    queryKey: ['user', 'me'],
+    queryFn: () => request('/user/me'),
+  });
 
   useEffect(() => {
     setUser(data);

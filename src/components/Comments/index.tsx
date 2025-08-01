@@ -1,10 +1,8 @@
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import './style.scss';
-import useSWR, { useSWRConfig } from 'swr';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { IComments } from 'typing/comment';
-import Avatar from 'components/Avatar';
 import { useUser } from 'context/App';
-import Button from 'components/Button';
 import { useTranslation } from 'react-i18next';
 import useRequest from 'hooks/useRequest';
 import Icon from 'components/Icon';
@@ -19,14 +17,18 @@ interface Props {
 }
 
 const Comments: React.FC<Props> = ({ id, type, canReply, showDetail }) => {
-  const { data } = useSWR<IComments>(`/comments/${type}/${id}`);
-  const { mutate } = useSWRConfig();
+  const [request] = useRequest();
+  const queryClient = useQueryClient();
+  const { data } = useQuery<IComments>({
+    queryKey: ['comments', type, id],
+    queryFn: () => request(`/comments/${type}/${id}`),
+  });
   const [user] = useUser();
   const { t } = useTranslation();
 
   const handleRefresh = useCallback(() => {
-    mutate(`/comments/${type}/${id}`);
-  }, []);
+    queryClient.invalidateQueries({ queryKey: ['comments', type, id] });
+  }, [queryClient, type, id]);
 
   const handleReplySuccess = () => {
     handleRefresh();

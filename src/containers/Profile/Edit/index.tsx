@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr';
+import React, { useEffect, useRef, useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Input from 'components/Input';
 import { useForm } from 'react-hook-form';
 import { IUser } from 'typing/user';
@@ -20,14 +20,34 @@ import './style.scss';
 interface Props {}
 
 const Edit: React.FC<Props> = () => {
-  const { data: user, mutate } = useSWR('/user/me', {
-    revalidateOnFocus: false,
+  const queryClient = useQueryClient();
+  const [fetcher] = useRequest();
+
+  const { data: user } = useQuery<IUser>({
+    queryKey: ['user', 'me'],
+    queryFn: () => fetcher('/user/me'),
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const mutation = useMutation({
+    mutationFn: (updatedUser: IUser) => {
+      return fetcher<IUser, any>('/user/update', {
+        method: 'post',
+        data: updatedUser,
+      });
+    },
+    onSuccess: (data) => {
+      toast('Profile saved!');
+      queryClient.setQueryData(['user', 'me'], data);
+      navigate(`/profile/${data.id}`);
+    },
+    onError: (err: any) => {
+      toast(err?.message);
+    },
+  });
+
   const [visible, setVisible] = useState(false);
   const [image, setImage] = useState<string>('');
   const [cropping, setCropping] = useState(false);
-  const [fetcher] = useRequest();
   const [toast] = useToast();
   const navigate = useNavigate();
 
@@ -45,31 +65,19 @@ const Edit: React.FC<Props> = () => {
   });
 
   useEffect(() => {
-    reset(user);
-  }, [user]);
+    if (user) {
+      reset(user);
+    }
+  }, [user, reset]);
 
   const avatar = getValues('avatar');
 
   const handleSave = (data: IUser) => {
-    setIsSubmitting(true);
     const newUser = {
       ...user,
       ...data,
     };
-    fetcher<IUser, any>('/user/update', {
-      method: 'post',
-      data: newUser,
-    })
-      .then((newUser) => {
-        toast('Profile saved!');
-        setIsSubmitting(false);
-        mutate(newUser);
-        navigate(`/profile/${newUser.id}`);
-      })
-      .catch((err) => {
-        setIsSubmitting(false);
-        toast(err?.message);
-      });
+    mutation.mutate(newUser as IUser);
   };
 
   const handleAvatarChange = (files: IFile[]) => {
@@ -98,58 +106,62 @@ const Edit: React.FC<Props> = () => {
   };
 
   return (
-    <div className='lanting-profile-edit lanting-page'>
-      <form
-        className='form'
-        onSubmit={handleSubmit((data) => handleSave(data))}
-      >
-        <div className='header'>
-          <div className='avatar'>
+    <div className='lanting-edit-profile'>
+      <form onSubmit={handleSubmit(handleSave)}>
+        <div className='lanting-edit-profile-container'>
+          <div className='lanting-edit-profile-avatar'>
             <Avatar src={avatar} size={100} round />
             <Upload
-              accept='image/jpg,image/jpeg,image/png'
-              round
-              showList={false}
+              className='lanting-edit-profile-upload'
               onChange={handleAvatarChange}
             >
-              <Button icon='edit' color='secondary'></Button>
+              <Button>{t('upload.avatar')}</Button>
             </Upload>
           </div>
-
-          <div className='username'>{user?.username}</div>
-        </div>
-
-        <FormItem label='Name' name='name' message={errors.name?.message}>
-          <Input
-            {...register('name', {
-              required: t('textRequired', { type: t('username') }),
-            })}
-          />
-        </FormItem>
-        <FormItem label='Bio' name='bio'>
-          <Textarea {...register('bio')} />
-        </FormItem>
-        <div className='save'>
-          <Button type='submit' loading={isSubmitting}>
-            Save
-          </Button>
+          <div className='lanting-edit-profile-form'>
+            <FormItem
+              label={t('form.username.label')}
+              error={errors.username?.message}
+            >
+              <Input
+                placeholder={t('form.username.placeholder')}
+                {...register('username', {
+                  required: t('form.username.required'),
+                })}
+              />
+            </FormItem>
+            <FormItem label={t('form.name.label')} error={errors.name?.message}>
+              <Input
+                placeholder={t('form.name.placeholder')}
+                {...register('name')}
+              />
+            </FormItem>
+            <FormItem label={t('form.bio.label')} error={errors.bio?.message}>
+              <Textarea
+                placeholder={t('form.bio.placeholder')}
+                {...register('bio')}
+              />
+            </FormItem>
+            <Button
+              type='submit'
+              className='lanting-edit-profile-save'
+              loading={mutation.isPending}
+            >
+              {t('form.save')}
+            </Button>
+          </div>
         </div>
       </form>
       <Modal
-        className='lanting-profile-cropper'
+        title={t('modal.cropper.title')}
         visible={visible}
-        onClose={() => setVisible(false)}
-        width={432}
+        onOk={handleCrop}
+        onCancel={() => setVisible(false)}
+        okButtonProps={{
+          loading: cropping,
+        }}
       >
-        <div className='lanting-profile-cropper-container'>
-          <Cropper image={image} ref={cropperRef} />
-        </div>
-
-        <div className='footer'>
-          <Button color='primary' wide onClick={handleCrop} loading={cropping}>
-            Set New Profile Picture
-          </Button>
-        </div>
+        <Cropper ref={cropperRef} src={image} />
       </Modal>
     </div>
   );

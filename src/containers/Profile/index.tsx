@@ -1,7 +1,8 @@
 import Avatar from 'components/Avatar';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useSWR from 'swr';
+import { useQuery } from '@tanstack/react-query';
+import useRequest from 'hooks/useRequest';
 import { IUser } from 'typing/user';
 import './style.scss';
 import Tabs, { Tab } from 'components/Tabs';
@@ -18,10 +19,12 @@ const Profile: React.FC<Props> = () => {
   const { id, type } = useParams();
   const [activeTab, setActiveTab] = useState(type || 'posts');
   const [user] = useUser();
+  const [request] = useRequest();
 
-  const { data } = useSWR<IUser>(`/user/${id}`, {
-    refreshInterval: 0,
-    shouldRetryOnError: false,
+  const { data } = useQuery<IUser>({
+    queryKey: ['profile', id],
+    queryFn: () => request(`/user/${id}`),
+    enabled: !!id,
   });
 
   const canEdit = data?.id === user?.id;

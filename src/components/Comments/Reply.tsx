@@ -4,9 +4,9 @@ import Avatar from 'components/Avatar';
 import Button from 'components/Button';
 import useRequest from 'hooks/useRequest';
 import { t } from 'i18next';
-import { useSWRConfig } from 'swr';
 import { useUser } from 'context/App';
 import { IComment } from 'typing/comment';
+import { useMutation } from '@tanstack/react-query';
 
 interface Props {
   id: number;
@@ -17,8 +17,19 @@ interface Props {
 const Reply: React.FC<Props> = ({ id, to, onSuccess }) => {
   const [replyText, setReplyText] = useState('');
   const [fetcher] = useRequest();
-  const [loading, setLoading] = useState(false);
   const [user] = useUser();
+
+  const mutation = useMutation({
+    mutationFn: (payload: Partial<IComment>) => {
+      return fetcher.post<any, IComment>('/comments', payload);
+    },
+    onSuccess: (res) => {
+      setReplyText('');
+      if (onSuccess) {
+        onSuccess(res);
+      }
+    },
+  });
 
   const handleReplyChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setReplyText(e.target.value);
@@ -32,21 +43,7 @@ const Reply: React.FC<Props> = ({ id, to, onSuccess }) => {
       interlocutorId: to?.replierId,
     };
 
-    setLoading(true);
-
-    fetcher
-      .post<any, IComment>('/comments', payload)
-      .then((res) => {
-        setReplyText('');
-        setLoading(false);
-
-        if (onSuccess) {
-          onSuccess(res);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    mutation.mutate(payload);
   };
 
   const placeholder = to?.replierId
@@ -69,7 +66,7 @@ const Reply: React.FC<Props> = ({ id, to, onSuccess }) => {
           color='primary'
           className='lanting-comments-reply-publish'
           disabled={!replyText}
-          loading={loading}
+          loading={mutation.isPending}
           onClick={handleSubmit}
         >
           {t('article.publish')}
