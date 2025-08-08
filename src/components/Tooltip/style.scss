@@ -5,6 +5,7 @@
     position: absolute;
     inset: 0px auto auto 0px;
     z-index: 1000;
+    pointer-events: none; // Prevent tooltip from blocking interactions
   }
 
   &-content {
@@ -16,6 +17,10 @@
     color: var(--tooltip-text-color);
     animation: fadeIn 200ms ease;
     margin: 4px;
+    max-width: 250px; // Prevent overly wide tooltips
+    word-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.4;
 
     &--fadeOut {
       animation: fadeOut 200ms ease;

@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
 import cls from 'classnames';
 import './style.scss';
 
@@ -21,36 +27,9 @@ const Tip: React.FC<Props> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState('');
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
-  useEffect(() => {
-    const oberver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentRect) {
-          calcPosition();
-        }
-      }
-    });
-
-    if (ref.current) {
-      oberver.observe(ref.current);
-    }
-
-    return () => oberver.disconnect();
-  }, [placement]);
-
-  useEffect(() => {
-    const handleClose = () => {
-      onClose();
-    };
-
-    if (ref.current && isClosing) {
-      ref.current.addEventListener('animationend', handleClose);
-    }
-
-    return () => ref.current?.removeEventListener('animationend', handleClose);
-  }, [isClosing]);
-
-  const calcPosition = () => {
+  const calcPosition = useCallback(() => {
     if (!ref.current) return;
     const { width, left, top, height } = rect;
 
@@ -69,12 +48,10 @@ const Tip: React.FC<Props> = ({
       case 'bottom':
         x = coorX + width / 2 - w / 2;
         y = coorY + height;
-
         break;
       case 'left':
         x = coorX - w;
         y = coorY + height / 2 - h / 2;
-
         break;
       default:
         x = coorX + width / 2 - w / 2;
@@ -82,11 +59,49 @@ const Tip: React.FC<Props> = ({
         break;
     }
 
-    x = Math.max(0, x);
-    y = Math.max(0, y);
+    // Ensure tooltip stays within viewport bounds
+    const padding = 8;
+    x = Math.max(padding, Math.min(x, window.innerWidth - w - padding));
+    y = Math.max(padding, Math.min(y, window.innerHeight - h - padding));
 
     setTransform(`translate(${x}px, ${y}px)`);
-  };
+  }, [rect, placement]);
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect) {
+          calcPosition();
+        }
+      }
+    });
+
+    if (ref.current) {
+      observer.observe(ref.current);
+      resizeObserverRef.current = observer;
+    }
+
+    return () => {
+      observer.disconnect();
+      resizeObserverRef.current = null;
+    };
+  }, [calcPosition]);
+
+  useEffect(() => {
+    const handleClose = () => {
+      onClose();
+    };
+
+    if (ref.current && isClosing) {
+      ref.current.addEventListener('animationend', handleClose);
+    }
+
+    return () => {
+      if (ref.current) {
+        ref.current.removeEventListener('animationend', handleClose);
+      }
+    };
+  }, [isClosing, onClose]);
 
   return (
     <div
@@ -98,6 +113,9 @@ const Tip: React.FC<Props> = ({
       style={{
         transform,
       }}
+      role='tooltip'
+      id='tooltip'
+      aria-live='polite'
     >
       <div
         className={cls('lanting-tooltip-content', {

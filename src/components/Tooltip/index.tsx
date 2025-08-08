@@ -1,10 +1,13 @@
 import React, {
   MouseEvent,
+  TouchEvent,
   ReactElement,
   ReactNode,
   isValidElement,
   useRef,
   useState,
+  useCallback,
+  useEffect,
 } from 'react';
 import { createPortal } from 'react-dom';
 import Tip, { Placement } from './Tip';
@@ -16,6 +19,7 @@ interface Props {
   timeout?: number;
   children: ReactElement;
   placement?: Placement;
+  disabled?: boolean;
 }
 
 const Tooltip: React.FC<Props> = ({
@@ -23,6 +27,7 @@ const Tooltip: React.FC<Props> = ({
   title,
   timeout = 0,
   placement,
+  disabled = false,
 }) => {
   const timer = useRef<number>(0);
   const [visible, setVisible] = useState(false);
@@ -33,72 +38,123 @@ const Tooltip: React.FC<Props> = ({
   const child = React.Children.only(children) as React.ReactElement;
   const originChildProps = child?.props || {};
 
-  const handleEnter = (event: MouseEvent) => {
-    setIsClosing(false);
-
-    if (!visible) {
-      const target = event.currentTarget as HTMLElement;
-
-      setRect(target.getBoundingClientRect());
-
-      if (timeout > 0) {
-        timer.current = window.setTimeout(() => {
-          setVisible(true);
-        }, timeout);
-      } else {
-        setVisible(true);
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+        timer.current = 0;
       }
-    }
-  };
+    };
+  }, []);
 
-  const handleClose = () => {
+  // Handle escape key to close tooltip
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && visible) {
+        handleClose();
+      }
+    };
+
+    if (visible) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [visible]);
+
+  const handleEnter = useCallback(
+    (event: MouseEvent | TouchEvent) => {
+      if (disabled || !title) return;
+
+      setIsClosing(false);
+
+      if (!visible) {
+        const target = event.currentTarget as HTMLElement;
+
+        setRect(target.getBoundingClientRect());
+
+        if (timeout > 0) {
+          timer.current = window.setTimeout(() => {
+            setVisible(true);
+          }, timeout);
+        } else {
+          setVisible(true);
+        }
+      }
+    },
+    [disabled, title, visible, timeout]
+  );
+
+  const handleClose = useCallback(() => {
     setVisible(false);
     setRect(undefined);
-  };
+  }, []);
 
-  const handleLeave = () => {
+  const handleLeave = useCallback(() => {
     setIsClosing(true);
 
     if (timer.current) {
       clearTimeout(timer.current);
+      timer.current = 0;
     }
-  };
+  }, []);
 
-  const handleMouseEnter = (event: MouseEvent) => {
-    originChildProps?.onMouseEnter?.(event);
+  const handleMouseEnter = useCallback(
+    (event: MouseEvent) => {
+      const originalHandler = (originChildProps as any)?.onMouseEnter;
+      originalHandler?.(event);
 
-    if (isTouch) return;
+      if (isTouch) return;
 
-    handleEnter(event);
-  };
+      handleEnter(event);
+    },
+    [isTouch, handleEnter, originChildProps]
+  );
 
-  const handleMouseLeave = (event: MouseEvent) => {
-    originChildProps?.onMouseLeave?.(event);
+  const handleMouseLeave = useCallback(
+    (event: MouseEvent) => {
+      const originalHandler = (originChildProps as any)?.onMouseLeave;
+      originalHandler?.(event);
 
-    if (isTouch) return;
+      if (isTouch) return;
 
-    handleLeave();
-  };
+      handleLeave();
+    },
+    [isTouch, handleLeave, originChildProps]
+  );
 
-  const handleTouchStart = (event: MouseEvent) => {
-    handleEnter(event);
-    originChildProps?.onTouchStart?.(event);
-  };
+  const handleTouchStart = useCallback(
+    (event: TouchEvent) => {
+      handleEnter(event);
+      const originalHandler = (originChildProps as any)?.onTouchStart;
+      originalHandler?.(event);
+    },
+    [handleEnter, originChildProps]
+  );
 
-  const handleTouchEnd = (event: MouseEvent) => {
-    handleLeave();
-    originChildProps?.onTouchEnd?.(event);
-  };
+  const handleTouchEnd = useCallback(
+    (event: TouchEvent) => {
+      handleLeave();
+      const originalHandler = (originChildProps as any)?.onTouchEnd;
+      originalHandler?.(event);
+    },
+    [handleLeave, originChildProps]
+  );
 
   const childProps = {
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     onTouchStart: handleTouchStart,
     onTouchEnd: handleTouchEnd,
+    'aria-describedby': visible ? 'tooltip' : undefined,
   };
 
   const trigger =
     isValidElement(children) && React.cloneElement(children, childProps);
+
+  if (!title && !disabled) {
+    return children;
+  }
 
   return (
     <>
