@@ -111,57 +111,43 @@ const Edit: React.FC<Props> = () => {
         <div className='lanting-edit-profile-container'>
           <div className='lanting-edit-profile-avatar'>
             <Avatar src={avatar} size={100} round />
-            <Upload
-              className='lanting-edit-profile-upload'
-              onChange={handleAvatarChange}
-            >
-              <Button>{t('upload.avatar')}</Button>
-            </Upload>
+            <div className='lanting-edit-profile-upload'>
+              <Upload onChange={handleAvatarChange}>
+                <Button>{t('edit')}</Button>
+              </Upload>
+            </div>
           </div>
           <div className='lanting-edit-profile-form'>
-            <FormItem
-              label={t('form.username.label')}
-              error={errors.username?.message}
-            >
+            <FormItem label={t('username')} message={errors.username?.message}>
               <Input
-                placeholder={t('form.username.placeholder')}
+                placeholder={t('username')}
                 {...register('username', {
-                  required: t('form.username.required'),
+                  required: t('form.required'),
                 })}
               />
             </FormItem>
-            <FormItem label={t('form.name.label')} error={errors.name?.message}>
-              <Input
-                placeholder={t('form.name.placeholder')}
-                {...register('name')}
-              />
+            <FormItem label='Name' message={errors.name?.message}>
+              <Input placeholder='Name' {...register('name')} />
             </FormItem>
-            <FormItem label={t('form.bio.label')} error={errors.bio?.message}>
-              <Textarea
-                placeholder={t('form.bio.placeholder')}
-                {...register('bio')}
-              />
+            <FormItem label='Bio' message={errors.bio?.message}>
+              <Textarea placeholder='Bio' {...register('bio')} />
             </FormItem>
             <Button
               type='submit'
               className='lanting-edit-profile-save'
               loading={mutation.isPending}
             >
-              {t('form.save')}
+              {t('article.save')}
             </Button>
           </div>
         </div>
       </form>
       <Modal
-        title={t('modal.cropper.title')}
+        title={t('edit')}
         visible={visible}
-        onOk={handleCrop}
-        onCancel={() => setVisible(false)}
-        okButtonProps={{
-          loading: cropping,
-        }}
+        onClose={() => setVisible(false)}
       >
-        <Cropper ref={cropperRef} src={image} />
+        <Cropper ref={cropperRef} image={image} />
       </Modal>
     </div>
   );
